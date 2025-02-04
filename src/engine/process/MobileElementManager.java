@@ -36,12 +36,12 @@ public class MobileElementManager implements MobileInterface {
 
 	@Override
 	public void turnLeft() {
-		car.setDirection(car.getDirection() + 1);
+		car.setDirection(car.getDirection() + Math.PI/4);
 	}
 
 	@Override
 	public void turnRight() {
-		car.setDirection(car.getDirection() - 1);
+		car.setDirection(car.getDirection() - Math.PI/4);
 	}
 
 	public void accelerate() {
