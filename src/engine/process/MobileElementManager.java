@@ -28,10 +28,10 @@ public class MobileElementManager implements MobileInterface {
 	@Override
 	public void moveMainCar() {
 		Block position = car.getPosition();
-		if (position.getColumn() > -1 && position.getColumn() < GameConfiguration.COLUMN_COUNT && position.getLine() > -1 && position.getLine() < GameConfiguration.LINE_COUNT) {
-			Block newPosition = map.getBlock(((int) (position.getLine() + Math.cos(car.getDirection()) * car.getSpeed())), ((int)(position.getColumn() + Math.sin(car.getDirection()) * car.getSpeed())));
-			car.setPosition(newPosition);
-		}
+
+		Block newPosition = map.getBlock((((int) (position.getLine() - Math.sin(car.getDirection()) * car.getSpeed()))), ((int) (position.getColumn() + Math.cos(car.getDirection()) * car.getSpeed())));
+		car.setPosition(newPosition);
+
 	}
 
 	@Override
@@ -45,13 +45,13 @@ public class MobileElementManager implements MobileInterface {
 	}
 
 	public void accelerate() {
-		car.setSpeed(car.getSpeed() + 2);
+		car.setSpeed(car.getSpeed() + 1);
 	}
 
 	public void slow() {
 		int speed = car.getSpeed();
 		if(speed > 0) {
-			car.setSpeed(car.getSpeed() - 2);
+			car.setSpeed(car.getSpeed() - 1);
 		}
 	}
 

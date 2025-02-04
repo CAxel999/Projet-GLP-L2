@@ -68,13 +68,17 @@ public class MainGUI extends JFrame implements Runnable {
 
 	@Override
 	public void run() {
+		int interval = 0;
 		while (true) {
 			try {
 				Thread.sleep(GameConfiguration.GAME_SPEED);
 			} catch (InterruptedException e) {
 				System.out.println(e.getMessage());
 			}
+			interval +=1;
+			if(interval%2==0){
 
+			}
 			manager.nextRound();
 			dashboard.repaint();
 		}

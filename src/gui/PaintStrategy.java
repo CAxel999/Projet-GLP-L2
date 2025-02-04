@@ -16,7 +16,7 @@ import engine.mobile.Car;
  */
 public class PaintStrategy {
 	public void paint(Map map, Graphics graphics) {
-		int blockSize = GameConfiguration.BLOCK_SIZE;
+		/*int blockSize = GameConfiguration.BLOCK_SIZE;
 		Block[][] blocks = map.getBlocks();
 
 		for (int lineIndex = 0; lineIndex < map.getLineCount(); lineIndex++) {
@@ -28,7 +28,7 @@ public class PaintStrategy {
 					graphics.fillRect(block.getColumn() * blockSize, block.getLine() * blockSize, blockSize, blockSize);
 				}
 			}
-		}
+		}*/
 	}
 
 	public void paint(Car car, Graphics graphics) {
@@ -38,10 +38,8 @@ public class PaintStrategy {
 		int y = position.getLine();
 		int x = position.getColumn();
 
-		graphics.setColor(Color.BLUE);
-		graphics.drawLine(x * blockSize + blockSize / 2, y * blockSize, x * blockSize, (y + 1) * blockSize);
-		graphics.drawLine(x * blockSize + blockSize / 2, y * blockSize, (x + 1) * blockSize, (y + 1) * blockSize);
-		graphics.drawLine(x * blockSize + blockSize / 2, y * blockSize, x * blockSize + blockSize / 2, (y + 1) * blockSize);
+		graphics.setColor(Color.RED);
+		graphics.drawRect(x,y,15,45);
 
 	}
 
