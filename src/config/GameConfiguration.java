@@ -1,11 +1,5 @@
 package config;
 
-/**
- * Copyright SEDAMOP - Software Engineering
- * 
- * @author tianxiao.liu@cyu.fr
- *
- */
 public class GameConfiguration {
 	public static final int WINDOW_WIDTH = 1280;
 	public static final int WINDOW_HEIGHT = 1280;

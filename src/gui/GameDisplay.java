@@ -10,12 +10,6 @@ import engine.map.Map;
 import engine.mobile.Car;
 import engine.process.MobileInterface;
 
-/**
- * Copyright SEDAMOP - Software Engineering
- * 
- * @author tianxiao.liu@cyu.fr
- *
- */
 public class GameDisplay extends JPanel {
 
 	private static final long serialVersionUID = 1L;

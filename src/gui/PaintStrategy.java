@@ -8,12 +8,6 @@ import engine.map.Block;
 import engine.map.Map;
 import engine.mobile.Car;
 
-/**
- * Copyright SEDAMOP - Software Engineering
- * 
- * @author tianxiao.liu@cyu.fr
- *
- */
 public class PaintStrategy {
 	public void paint(Map map, Graphics graphics) {
 		/*int blockSize = GameConfiguration.BLOCK_SIZE;

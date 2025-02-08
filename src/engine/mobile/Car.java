@@ -2,12 +2,6 @@ package engine.mobile;
 
 import engine.map.Block;
 
-/**
- * Copyright SEDAMOP - Software Engineering
- *
- * @author tianxiao.liu@cyu.fr
- *
- */
 public class Car extends MobileElement{
 	private int speed;
 	private double direction;
@@ -17,7 +11,9 @@ public class Car extends MobileElement{
 		this.speed = 0;
 		this.direction = Math.PI/2;
 	}
+	public void move(){
 
+	}
 	public int getSpeed() {
 		return speed;
 	}

@@ -5,12 +5,6 @@ import engine.map.Block;
 import engine.map.Map;
 import engine.mobile.Car;
 
-/**
- * Copyright SEDAMOP - Software Engineering
- * 
- * @author tianxiao.liu@cyu.fr
- *
- */
 public class GameBuilder {
 
 	public static Map buildMap() {

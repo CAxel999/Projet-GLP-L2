@@ -16,12 +16,6 @@ import engine.map.Map;
 import engine.process.GameBuilder;
 import engine.process.MobileInterface;
 
-/**
- * Copyright SEDAMOP - Software Engineering
- * 
- * @author tianxiao.liu@cyu.fr
- *
- */
 public class MainGUI extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;

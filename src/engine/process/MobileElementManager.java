@@ -5,12 +5,6 @@ import engine.map.Block;
 import engine.map.Map;
 import engine.mobile.Car;
 
-/**
- * Copyright SEDAMOP - Software Engineering
- * 
- * @author tianxiao.liu@cyu.fr
- *
- */
 public class MobileElementManager implements MobileInterface {
 	private Map map;
 
@@ -28,8 +22,9 @@ public class MobileElementManager implements MobileInterface {
 	@Override
 	public void moveMainCar() {
 		Block position = car.getPosition();
-
-		Block newPosition = map.getBlock((((int) (position.getLine() - Math.sin(car.getDirection()) * car.getSpeed()))), ((int) (position.getColumn() + Math.cos(car.getDirection()) * car.getSpeed())));
+		int x = (((int) (position.getLine()*10 - Math.sin(car.getDirection()) * car.getSpeed())));
+		int y = ((int) (position.getColumn()*10 + Math.cos(car.getDirection()) * car.getSpeed()));
+		Block newPosition = map.getBlock(x/10, y/10);
 		car.setPosition(newPosition);
 
 	}
