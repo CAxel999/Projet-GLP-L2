@@ -1,6 +1,5 @@
 package CityElement;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class MobileElement {

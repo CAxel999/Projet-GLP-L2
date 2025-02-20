@@ -12,12 +12,10 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 public class BlockManager {
-    private GamePanel dashboard;
-    private Block[] block;
-    private int mapBlockNum[][];
+    private final Block[] block;
+    private final int[][] mapBlockNum;
 
-    public BlockManager(GamePanel dashboard){
-        this.dashboard=dashboard;
+    public BlockManager(){
         block = new Block[10];
         mapBlockNum = new int[GameConfiguration.MAX_SCREEN_COL][GameConfiguration.MAX_SCREEN_ROW]; //Used to store all the numbers of the mapDesign file
         getBlockImage();

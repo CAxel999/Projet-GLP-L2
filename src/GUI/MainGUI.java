@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class MainGUI extends JFrame implements Runnable{
     private GamePanel dashboard;
-    private final KeyControls keyControls = new KeyControls();
     private int FPS=60;
 
     public MainGUI(String title) {

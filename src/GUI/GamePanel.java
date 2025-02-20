@@ -9,9 +9,9 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
     private final static Dimension preferedDimension = new Dimension(GameConfiguration.WINDOW_WIDTH, GameConfiguration.WINDOW_HEIGHT);
-    private KeyControls keyControls = new KeyControls();
-    private UserCar userCar=new UserCar(keyControls,this);
-    private BlockManager blockManager = new BlockManager(this);
+    private final KeyControls keyControls = new KeyControls();
+    private final UserCar userCar=new UserCar(keyControls);
+    private final BlockManager blockManager = new BlockManager();
 
     public GamePanel(){
         setPreferredSize(preferedDimension);

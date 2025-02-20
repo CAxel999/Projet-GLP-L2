@@ -10,12 +10,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class UserCar extends MobileElement{
-    private GamePanel dashboard;
-    private KeyControls keyControls;
+    private final KeyControls keyControls;
 
-    public UserCar(KeyControls keyControls, GamePanel dashboard) {
+    public UserCar(KeyControls keyControls) {
         this.keyControls = keyControls;
-        this.dashboard = dashboard;
         setUserCarValues();
         getUserCarImage();
     }
