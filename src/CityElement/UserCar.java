@@ -1,7 +1,6 @@
 package CityElement;
 
 import Config.GameConfiguration;
-import GUI.GamePanel;
 import GUI.KeyControls;
 import javax.imageio.ImageIO;
 import java.awt.*;

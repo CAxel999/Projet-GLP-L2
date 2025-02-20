@@ -1,8 +1,6 @@
 package Block;
 
 import Config.GameConfiguration;
-import GUI.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.BufferedReader;
