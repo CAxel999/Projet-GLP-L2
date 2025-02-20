@@ -44,7 +44,7 @@ public class BlockManager {
             while(col < GameConfiguration.MAX_SCREEN_COL && row < GameConfiguration.MAX_SCREEN_ROW){
                 String line = reader.readLine();
                 while(col < GameConfiguration.MAX_SCREEN_COL){
-                    String numbers[] = line.split(" ");
+                    String[] numbers = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
                     mapBlockNum[col][row]=num;
                     col++;
