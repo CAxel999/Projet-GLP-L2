@@ -1,12 +1,9 @@
 package Test;
-import GUI.MainGUI;
+import GUI.StartMenu;
 
 public class TestGame {
     public static void main(String[] args) {
 
-        MainGUI gameMainGUI = new MainGUI("Auto Ecole");
-        //gameMainGUI.setVisible(true);
-        Thread gameThread = new Thread(gameMainGUI);
-        gameThread.start();
+        StartMenu start = new StartMenu("Auto Ecole");
     }
 }
