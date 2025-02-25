@@ -1,15 +1,19 @@
 package engine.mobile;
 
+import config.GameConfiguration;
+import engine.counters.CyclicCounter;
 import engine.map.Block;
 
 public class Car extends MobileElement{
 	private int speed;
-	private double direction;
+	private CyclicCounter direction;
+	private CarPosition realPosition;
 
 	public Car(Block position) {
 		super(position);
+		this.realPosition = new CarPosition(position.getColumn() * GameConfiguration.BLOCK_SIZE + 20,position.getLine() * GameConfiguration.BLOCK_SIZE + 20);
 		this.speed = 0;
-		this.direction = Math.PI/2;
+		this.direction = new CyclicCounter(Math.PI/2,Math.PI*2);
 	}
 	public void move(){
 
@@ -18,15 +22,19 @@ public class Car extends MobileElement{
 		return speed;
 	}
 
-	public double getDirection() {
+	public CyclicCounter getDirection() {
 		return direction;
+	}
+
+	public CarPosition getRealPosition() {
+		return realPosition;
 	}
 
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 
-	public void setDirection(double direction) {
-		this.direction = direction;
+	public void setRealPosition(CarPosition realPosition) {
+		this.realPosition = realPosition;
 	}
 }

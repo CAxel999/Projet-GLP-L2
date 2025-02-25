@@ -1,14 +1,15 @@
 package engine.process;
 
+import engine.counters.LimitReachedException;
 import engine.mobile.Car;
 
 public interface MobileInterface {
 
 	void set(Car car);
 
-	void turnLeft();
+	void turnLeft() throws LimitReachedException;
 
-	void turnRight();
+	void turnRight() throws LimitReachedException;
 
 	void accelerate();
 

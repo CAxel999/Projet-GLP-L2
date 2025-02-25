@@ -1,14 +1,16 @@
 package engine.map;
 
-public class Map {
+import java.util.HashMap;
+
+public class City {
 	private Block[][] blocks;
-	
+	private HashMap<Block,Road> roads;
 
 
 	private int lineCount;
 	private int columnCount;
 
-	public Map(int lineCount, int columnCount) {
+	public City(int lineCount, int columnCount) {
 		init(lineCount, columnCount);
 
 		for (int lineIndex = 0; lineIndex < lineCount; lineIndex++) {
@@ -16,6 +18,10 @@ public class Map {
 				blocks[lineIndex][columnIndex] = new Block(lineIndex, columnIndex);
 			}
 		}
+		for(int i = 5; i < 25; i++){
+			roads.put(blocks[i][15],new Road(Math.PI/2,10));
+		}
+
 	}
 
 	private void init(int lineCount, int columnCount) {
@@ -23,7 +29,7 @@ public class Map {
 		this.columnCount = columnCount;
 
 		blocks = new Block[lineCount][columnCount];
-
+		roads = new HashMap<Block,Road>();
 	}
 
 	public Block[][] getBlocks() {
@@ -42,5 +48,7 @@ public class Map {
 		return blocks[line][column];
 	}
 
-
+	public HashMap<Block, Road> getRoads() {
+		return roads;
+	}
 }

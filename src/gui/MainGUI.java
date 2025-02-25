@@ -5,14 +5,13 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import config.GameConfiguration;
-import engine.map.Map;
+import engine.counters.LimitReachedException;
+import engine.map.City;
 import engine.process.GameBuilder;
 import engine.process.MobileInterface;
 
@@ -20,7 +19,7 @@ public class MainGUI extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Map map;
+	private City city;
 
 	private final static Dimension preferredSize = new Dimension(GameConfiguration.WINDOW_WIDTH, GameConfiguration.WINDOW_HEIGHT);
 
@@ -43,12 +42,12 @@ public class MainGUI extends JFrame implements Runnable {
 		textField.addKeyListener(keyControls);
 		contentPane.add(textField, BorderLayout.SOUTH);
 
-		map = GameBuilder.buildMap();
-		manager = GameBuilder.buildInitMobile(map);
-		dashboard = new GameDisplay(map, manager);
+		city = GameBuilder.buildMap();
+		manager = GameBuilder.buildInitMobile(city);
+		dashboard = new GameDisplay(city, manager);
 
-		MouseControls mouseControls = new MouseControls();
-		dashboard.addMouseListener(mouseControls);
+		/*MouseControls mouseControls = new MouseControls();
+		dashboard.addMouseListener(mouseControls);*/
 
 		dashboard.setPreferredSize(preferredSize);
 		contentPane.add(dashboard, BorderLayout.CENTER);
@@ -82,24 +81,28 @@ public class MainGUI extends JFrame implements Runnable {
 
 		@Override
 		public void keyPressed(KeyEvent event) {
-			char keyChar = event.getKeyChar();
-			switch (keyChar) {
-			case 'z':
-				manager.accelerate();
-				break;
-			case 's':
-				manager.slow();
-				break;
-			case 'q':
-				manager.turnLeft();
-				break;
-			case 'd':
-				manager.turnRight();
-				break;
-			default:
-				break;
-			}
-		}
+            try {
+                char keyChar = event.getKeyChar();
+                switch (keyChar) {
+                case 'z':
+                    manager.accelerate();
+                    break;
+                case 's':
+                    manager.slow();
+                    break;
+                case 'q':
+                    manager.turnLeft();
+                    break;
+                case 'd':
+                    manager.turnRight();
+                    break;
+                default:
+                    break;
+                }
+            } catch (LimitReachedException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -112,7 +115,7 @@ public class MainGUI extends JFrame implements Runnable {
 		}
 	}
 
-	private class MouseControls implements MouseListener {
+	/*private class MouseControls implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -139,6 +142,6 @@ public class MainGUI extends JFrame implements Runnable {
 		public void mouseExited(MouseEvent e) {
 
 		}
-	}
+	}*/
 
 }

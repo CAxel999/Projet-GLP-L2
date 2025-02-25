@@ -1,17 +1,21 @@
 package engine.process;
 
 import config.GameConfiguration;
+import engine.counters.LimitReachedException;
+import data.MistakeMessage;
 import engine.map.Block;
-import engine.map.Map;
+import engine.map.City;
+import engine.map.Road;
 import engine.mobile.Car;
+import engine.mobile.CarPosition;
 
 public class MobileElementManager implements MobileInterface {
-	private Map map;
+	private City city;
 
 	private Car car;
 
-	public MobileElementManager(Map map) {
-		this.map = map;
+	public MobileElementManager(City city) {
+		this.city = city;
 	}
 
 	@Override
@@ -21,22 +25,40 @@ public class MobileElementManager implements MobileInterface {
 
 	@Override
 	public void moveMainCar() {
-		Block position = car.getPosition();
-		int x = (((int) (position.getLine()*10 - Math.sin(car.getDirection()) * car.getSpeed())));
-		int y = ((int) (position.getColumn()*10 + Math.cos(car.getDirection()) * car.getSpeed()));
-		Block newPosition = map.getBlock(x/10, y/10);
+		CarPosition position = car.getRealPosition();
+		int y = (((int) (position.getY() - Math.sin(car.getDirection().getValue()) * car.getSpeed())));
+		int x = ((int) (position.getX() + Math.cos(car.getDirection().getValue()) * car.getSpeed()));
+		car.getRealPosition().setX(x);
+		car.getRealPosition().setY(y);
+		Block newPosition = city.getBlock(y / GameConfiguration.BLOCK_SIZE,x / GameConfiguration.BLOCK_SIZE);
 		car.setPosition(newPosition);
 
 	}
 
-	@Override
-	public void turnLeft() {
-		car.setDirection(car.getDirection() + Math.PI/4);
+	public void roadVerif(Block block){
+		if(city.getRoads().containsKey(block)){
+			MistakeMessage.setMessage("");
+			Road road = city.getRoads().get(block);
+			if(road.getSpeedLimit() < car.getSpeed()){
+				MistakeMessage.setMessage("Car exceeding speed limit");
+			}
+			if(road.getDirection()-Math.PI/4 > car.getDirection().getValue() || road.getDirection()+Math.PI/4 < car.getDirection().getValue()){
+				MistakeMessage.setMessage("Car direction incorrect");
+			}
+		} else{
+			MistakeMessage.setMessage("Car out of road");
+			System.err.println(car.getRealPosition().getX() +","+car.getRealPosition().getY());
+		}
 	}
 
 	@Override
-	public void turnRight() {
-		car.setDirection(car.getDirection() - Math.PI/4);
+	public void turnLeft() throws LimitReachedException {
+		car.getDirection().increment();
+	}
+
+	@Override
+	public void turnRight() throws LimitReachedException {
+		car.getDirection().decrement();
 	}
 
 	public void accelerate() {
@@ -53,6 +75,7 @@ public class MobileElementManager implements MobileInterface {
 	@Override
 	public void nextRound() {
 		moveMainCar();
+		roadVerif(car.getPosition());
 	}
 
 	@Override

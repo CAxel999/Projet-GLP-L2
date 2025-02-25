@@ -4,9 +4,8 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import config.GameConfiguration;
-import engine.map.Block;
-import engine.map.Map;
+import data.MistakeMessage;
+import engine.map.City;
 import engine.mobile.Car;
 import engine.process.MobileInterface;
 
@@ -14,12 +13,12 @@ public class GameDisplay extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private Map map;
+	private City city;
 	private MobileInterface manager;
 	private PaintStrategy paintStrategy = new PaintStrategy();
 
-	public GameDisplay(Map map, MobileInterface manager) {
-		this.map = map;
+	public GameDisplay(City city, MobileInterface manager) {
+		this.city = city;
 		this.manager = manager;
 	}
 
@@ -27,9 +26,12 @@ public class GameDisplay extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		paintStrategy.paint(map, g);
+		paintStrategy.paint(city, g);
 
 		Car car = manager.getA();
+		if(!MistakeMessage.getMessage().isEmpty()){
+			paintStrategy.paint(MistakeMessage.getMessage(), g);
+		}
 		paintStrategy.paint(car, g);
 
 	}
