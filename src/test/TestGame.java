@@ -1,6 +1,5 @@
 package test;
 
-import gui.MainGUI;
 import gui.StartMenu;
 
 public class TestGame {
