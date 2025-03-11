@@ -32,6 +32,7 @@ public class GameDisplay extends JPanel {
 		if(!MistakeMessage.getMessage().isEmpty()){
 			paintStrategy.paint(MistakeMessage.getMessage(), g);
 		}
+		paintStrategy.paint(car.getSpeed(),g);
 		paintStrategy.paint(car, g);
 
 	}

@@ -3,13 +3,17 @@ package gui;
 import java.awt.*;
 import java.util.HashMap;
 
+import config.CarConfiguration;
 import config.GameConfiguration;
 import engine.map.Block;
 import engine.map.City;
-import engine.map.Road;
+import engine.map.roads.Road;
 import engine.mobile.Car;
-import engine.mobile.CarPosition;
+import engine.mobile.CarPixelPosition;
 
+/**
+ *Strategy for painting graphic elements.
+ */
 public class PaintStrategy {
 	public void paint(City city, Graphics graphics) {
 		int blockSize = GameConfiguration.BLOCK_SIZE;
@@ -23,18 +27,17 @@ public class PaintStrategy {
 	}
 
 	public void paint(Car car, Graphics graphics) {
-		CarPosition position = car.getRealPosition();
-
-
+		CarPixelPosition position = car.getPixelPosition();
 		int y = position.getY();
 		int x = position.getX();
+
 		double direction = car.getDirection().getValue();
 //		if(direction != Math.PI/2){
 			Graphics2D graphics2D = (Graphics2D) graphics;
 			graphics2D.rotate(-direction,x,y);
 			graphics2D.setColor(Color.RED);
 
-			graphics2D.fillRect(x-22,y-8,45,16);
+			graphics2D.fillRect(x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
 			//raphics2D.rotate(direction,x,y);
 //		} else {
 //			graphics.setColor(Color.RED);
@@ -45,6 +48,12 @@ public class PaintStrategy {
 
 
 
+	}
+
+	public void paint(double speed, Graphics graphics){
+		graphics.setColor(Color.RED);
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 50));
+		graphics.drawString(Double.toString(speed),1600,800);
 	}
 
 	public void paint(String message, Graphics graphics){

@@ -96,6 +96,9 @@ public class MainGUI extends JFrame implements Runnable {
                 case 'd':
                     manager.turnRight();
                     break;
+				case ' ':
+					manager.brake();
+					break;
                 default:
                     break;
                 }

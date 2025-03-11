@@ -15,6 +15,8 @@ public interface MobileInterface {
 
 	void slow();
 
+	void brake();
+
 	void moveMainCar();
 
 	void nextRound();

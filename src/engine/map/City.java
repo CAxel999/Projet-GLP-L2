@@ -1,26 +1,24 @@
 package engine.map;
 
+import engine.map.roads.Road;
+import engine.process.CityBuilder;
+
 import java.util.HashMap;
 
 public class City {
 	private Block[][] blocks;
-	private HashMap<Block,Road> roads;
+	private HashMap<Block, Road> roads;
 
 
 	private int lineCount;
 	private int columnCount;
 
 	public City(int lineCount, int columnCount) {
+
 		init(lineCount, columnCount);
 
-		for (int lineIndex = 0; lineIndex < lineCount; lineIndex++) {
-			for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-				blocks[lineIndex][columnIndex] = new Block(lineIndex, columnIndex);
-			}
-		}
-		for(int i = 5; i < 25; i++){
-			roads.put(blocks[i][15],new Road(Math.PI/2,10));
-		}
+		CityBuilder cityBuilder = new CityBuilder();
+		roads = cityBuilder.buildRoads(blocks, lineCount, columnCount);
 
 	}
 

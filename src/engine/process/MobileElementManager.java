@@ -5,17 +5,23 @@ import engine.counters.LimitReachedException;
 import data.MistakeMessage;
 import engine.map.Block;
 import engine.map.City;
-import engine.map.Road;
+import engine.map.roads.Road;
 import engine.mobile.Car;
 import engine.mobile.CarPosition;
 
+/**
+ * Manages mobile elements, like player car and npc.
+ *
+ */
 public class MobileElementManager implements MobileInterface {
 	private City city;
 
 	private Car car;
+	private RoadVisitor roadVisitor;
 
 	public MobileElementManager(City city) {
 		this.city = city;
+		this.roadVisitor = new RoadVisitor();
 	}
 
 	@Override
@@ -26,11 +32,13 @@ public class MobileElementManager implements MobileInterface {
 	@Override
 	public void moveMainCar() {
 		CarPosition position = car.getRealPosition();
-		int y = (((int) (position.getY() - Math.sin(car.getDirection().getValue()) * car.getSpeed())));
-		int x = ((int) (position.getX() + Math.cos(car.getDirection().getValue()) * car.getSpeed()));
+		double y = ((position.getY() - Math.sin(car.getDirection().getValue()) * car.getSpeed()));
+		double x = ((position.getX() + Math.cos(car.getDirection().getValue()) * car.getSpeed()));
 		car.getRealPosition().setX(x);
 		car.getRealPosition().setY(y);
-		Block newPosition = city.getBlock(y / GameConfiguration.BLOCK_SIZE,x / GameConfiguration.BLOCK_SIZE);
+		car.getPixelPosition().setX((int) x);
+		car.getPixelPosition().setY((int) y);
+		Block newPosition = city.getBlock((int) y / GameConfiguration.BLOCK_SIZE,(int) x / GameConfiguration.BLOCK_SIZE);
 		car.setPosition(newPosition);
 
 	}
@@ -41,9 +49,10 @@ public class MobileElementManager implements MobileInterface {
 			Road road = city.getRoads().get(block);
 			if(road.getSpeedLimit() < car.getSpeed()){
 				MistakeMessage.setMessage("Car exceeding speed limit");
-			}
-			if(road.getDirection()-Math.PI/4 > car.getDirection().getValue() || road.getDirection()+Math.PI/4 < car.getDirection().getValue()){
+			} else if(road.getDirection()-Math.PI/4 > car.getDirection().getValue() || road.getDirection()+Math.PI/4 < car.getDirection().getValue()){
 				MistakeMessage.setMessage("Car direction incorrect");
+			} else {
+				city.getRoads().get(block).accept(roadVisitor);
 			}
 		} else{
 			MistakeMessage.setMessage("Car out of road");
@@ -62,13 +71,22 @@ public class MobileElementManager implements MobileInterface {
 	}
 
 	public void accelerate() {
-		car.setSpeed(car.getSpeed() + 1);
+		car.setSpeed(car.getSpeed() + 0.125);
 	}
 
 	public void slow() {
-		int speed = car.getSpeed();
+		double speed = car.getSpeed();
 		if(speed > 0) {
-			car.setSpeed(car.getSpeed() - 1);
+			car.setSpeed(car.getSpeed() - 0.125);
+		}
+	}
+
+	public void brake() {
+		double speed = car.getSpeed();
+		if(speed > 0.5) {
+			car.setSpeed(car.getSpeed() - 0.5);
+		} else if (speed > 0) {
+			car.setSpeed(0);
 		}
 	}
 
