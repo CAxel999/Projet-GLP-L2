@@ -9,4 +9,8 @@ public interface TypeVisitor<T> {
     void visit(TrafficLightRoad road);
     void visit(Stop road);
     void visit(CedezLePassage road);
+
+    default void visit(YieldSign road) {
+
+    }
 }

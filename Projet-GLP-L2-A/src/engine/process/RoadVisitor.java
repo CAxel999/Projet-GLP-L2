@@ -3,7 +3,7 @@ package engine.process;
 import engine.map.*;
 import engine.map.roads.*;
 
-public class RoadVisitor implements TypeVisitor<Void> {
+public abstract class RoadVisitor implements TypeVisitor<Void> {
     private City city;
 
     @Override
@@ -32,7 +32,8 @@ public class RoadVisitor implements TypeVisitor<Void> {
     }
 
     @Override
-    public void visit(CedezLePassage road) {
+    public void visit(YieldSign road) {
 
     }
+
 }
