@@ -1,13 +1,20 @@
 package engine.process;
 
+import config.CarConfiguration;
 import config.GameConfiguration;
+import data.Instruction;
 import engine.counters.LimitReachedException;
 import data.MistakeMessage;
-import engine.map.Block;
+import engine.map.positions.Block;
 import engine.map.City;
+import engine.map.positions.PixelPosition;
 import engine.map.roads.Road;
-import engine.mobile.Car;
-import engine.mobile.CarPosition;
+import engine.mobile.MainCar;
+import engine.map.positions.CarPosition;
+import engine.mobile.NPCCar;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Manages mobile elements, like player car and npc.
@@ -16,92 +23,165 @@ import engine.mobile.CarPosition;
 public class MobileElementManager implements MobileInterface {
 	private City city;
 
-	private Car car;
-	private RoadVisitor roadVisitor;
+	private MainCar mainCar;
+	private ArrayList<NPCCar> npcCars = new ArrayList<NPCCar>();
 
 	public MobileElementManager(City city) {
 		this.city = city;
-		this.roadVisitor = new RoadVisitor();
 	}
 
 	@Override
-	public void set(Car car) {
-		this.car = car;
+	public void set(MainCar mainCar) {
+		this.mainCar = mainCar;
+	}
+
+	@Override
+	public void set(ArrayList<NPCCar> npcCars) {
+		this.npcCars = npcCars;
 	}
 
 	@Override
 	public void moveMainCar() {
-		CarPosition position = car.getRealPosition();
-		double y = ((position.getY() - Math.sin(car.getDirection().getValue()) * car.getSpeed()));
-		double x = ((position.getX() + Math.cos(car.getDirection().getValue()) * car.getSpeed()));
-		car.getRealPosition().setX(x);
-		car.getRealPosition().setY(y);
-		car.getPixelPosition().setX((int) x);
-		car.getPixelPosition().setY((int) y);
+		CarPosition position = mainCar.getRealPosition();
+		double y = ((position.getY() - Math.sin(mainCar.getDirection().getValue()) * mainCar.getSpeed()));
+		double x = ((position.getX() + Math.cos(mainCar.getDirection().getValue()) * mainCar.getSpeed()));
+		position.setX(x);
+		position.setY(y);
+		mainCar.getPixelPosition().setX((int) x);
+		mainCar.getPixelPosition().setY((int) y);
 		Block newPosition = city.getBlock((int) y / GameConfiguration.BLOCK_SIZE,(int) x / GameConfiguration.BLOCK_SIZE);
-		car.setPosition(newPosition);
+		mainCar.setPosition(newPosition);
 
 	}
 
-	public void roadVerif(Block block){
+	@Override
+	public void moveNPCCars() {
+		ArrayList<NPCCar> removeCar = new ArrayList<NPCCar>();
+		for(NPCCar car : npcCars){
+
+			PixelPosition pixelPosition = car.getPixelPosition();
+			Instruction instruction = car.getCurrentInstruction();
+			Iterator<Instruction> iterator = car.getCurrentIterator();
+			double speed = car.getSpeed();
+			Block newPosition;
+
+			if(pixelPosition.getX() < instruction.getPixelPosition().getX() + speed && pixelPosition.getX() > instruction.getPixelPosition().getX() - speed && pixelPosition.getY() < instruction.getPixelPosition().getY() + speed && pixelPosition.getY() > instruction.getPixelPosition().getY() - speed){
+				pixelPosition = instruction.getPixelPosition();
+				if(iterator.hasNext()){
+					instruction = iterator.next();
+					if(speed != instruction.getSpeed()){
+						car.setSpeed(instruction.getSpeed());
+						car.setCurrentIterator(iterator);
+						car.setDirection(instruction.getDirection());
+
+						car.getRealPosition().setX(pixelPosition.getX());
+						car.getRealPosition().setY(pixelPosition.getY());
+
+						newPosition = city.getBlock(pixelPosition.getX() / GameConfiguration.BLOCK_SIZE,pixelPosition.getY() / GameConfiguration.BLOCK_SIZE);
+						car.setPosition(newPosition);
+					}
+				} else {
+					removeCar.add(car);
+				}
+
+			} else {
+				CarPosition position = car.getRealPosition();
+				double y = ((position.getY() - Math.sin(car.getDirection()) * car.getSpeed()));
+				double x = ((position.getX() + Math.cos(car.getDirection()) * car.getSpeed()));
+				position.setX(x);
+				position.setY(y);
+				pixelPosition.setX((int) x);
+				pixelPosition.setY((int) y);
+				newPosition = city.getBlock((int) y / GameConfiguration.BLOCK_SIZE,(int) x / GameConfiguration.BLOCK_SIZE);
+				car.setPosition(newPosition);
+
+				if(car.getSpeed() < instruction.getSpeed()){
+					car.setSpeed(car.getSpeed() + CarConfiguration.CAR_ACCERLERATION);
+				}
+			}
+
+		}
+
+		for(NPCCar car : removeCar){
+			npcCars.remove(car);
+		}
+	}
+
+	@Override
+	public void mainCarRoadroadVerif(MainCar mainCar){
+		RoadVisitor roadVisitor = new RoadVisitor(mainCar);
+		Block block = mainCar.getPosition();
 		if(city.getRoads().containsKey(block)){
+
 			MistakeMessage.setMessage("");
 			Road road = city.getRoads().get(block);
-			if(road.getSpeedLimit() < car.getSpeed()){
+
+			if(road.getSpeedLimit() < mainCar.getSpeed()){
 				MistakeMessage.setMessage("Car exceeding speed limit");
-			} else if(road.getDirection()-Math.PI/4 > car.getDirection().getValue() || road.getDirection()+Math.PI/4 < car.getDirection().getValue()){
-				MistakeMessage.setMessage("Car direction incorrect");
-			} else {
-				city.getRoads().get(block).accept(roadVisitor);
+			} else if(road.getDirection() == 0){
+				if(mainCar.getDirection().getValue() > 2 * CarConfiguration.CAR_ROTATION && mainCar.getDirection().getValue() < (2*Math.PI) - (2 * CarConfiguration.CAR_ROTATION)){
+					MistakeMessage.setMessage("Car direction incorrect");
+				}
 			}
+			else if(road.getDirection()-CarConfiguration.CAR_ROTATION > mainCar.getDirection().getValue() || road.getDirection()+CarConfiguration.CAR_ROTATION < mainCar.getDirection().getValue()){
+				MistakeMessage.setMessage("Car direction incorrect");
+			}
+
+			road.accept(roadVisitor);
+
 		} else{
 			MistakeMessage.setMessage("Car out of road");
-			System.err.println(car.getRealPosition().getX() +","+car.getRealPosition().getY());
+			System.err.println(mainCar.getRealPosition().getX() +","+ mainCar.getRealPosition().getY());
 		}
 	}
 
 	@Override
 	public void turnLeft() throws LimitReachedException {
-		car.getDirection().increment();
+		mainCar.getDirection().increment();
 	}
 
 	@Override
 	public void turnRight() throws LimitReachedException {
-		car.getDirection().decrement();
+		mainCar.getDirection().decrement();
 	}
 
 	public void accelerate() {
-		car.setSpeed(car.getSpeed() + 0.125);
+		mainCar.setSpeed(mainCar.getSpeed() + 0.125);
 	}
 
 	public void slow() {
-		double speed = car.getSpeed();
+		double speed = mainCar.getSpeed();
 		if(speed > 0) {
-			car.setSpeed(car.getSpeed() - 0.125);
+			mainCar.setSpeed(mainCar.getSpeed() - 0.125);
 		}
 	}
 
 	public void brake() {
-		double speed = car.getSpeed();
+		double speed = mainCar.getSpeed();
 		if(speed > 0.5) {
-			car.setSpeed(car.getSpeed() - 0.5);
+			mainCar.setSpeed(mainCar.getSpeed() - 0.5);
 		} else if (speed > 0) {
-			car.setSpeed(0);
+			mainCar.setSpeed(0);
 		}
 	}
 
 	@Override
 	public void nextRound() {
 		moveMainCar();
-		roadVerif(car.getPosition());
+		moveNPCCars();
+		mainCarRoadroadVerif(mainCar);
 	}
 
 	@Override
-	public Car getA() {
-		return car;
+	public MainCar getA() {
+		return mainCar;
 	}
 
-	/*private static int getRandomNumber(int min, int max) {
+	@Override
+	public ArrayList<NPCCar> getNPCCars() {
+		return npcCars;
+	}
+/*private static int getRandomNumber(int min, int max) {
 		return (int) (Math.random() * (max + 1 - min)) + min;
 	}*/
 }

@@ -1,14 +1,14 @@
-package engine.mobile;
+package engine.map.positions;
 
 
 /**
- * Position of the car in pixel
+ * Position in pixel
  */
-public class CarPixelPosition {
+public class PixelPosition {
     private int x;
     private int y;
 
-    public CarPixelPosition(int x, int y) {
+    public PixelPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }

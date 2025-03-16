@@ -6,7 +6,8 @@ import javax.swing.JPanel;
 
 import data.MistakeMessage;
 import engine.map.City;
-import engine.mobile.Car;
+import engine.mobile.MainCar;
+import engine.mobile.NPCCar;
 import engine.process.MobileInterface;
 
 public class GameDisplay extends JPanel {
@@ -28,12 +29,15 @@ public class GameDisplay extends JPanel {
 
 		paintStrategy.paint(city, g);
 
-		Car car = manager.getA();
+		MainCar mainCar = manager.getA();
 		if(!MistakeMessage.getMessage().isEmpty()){
 			paintStrategy.paint(MistakeMessage.getMessage(), g);
 		}
-		paintStrategy.paint(car.getSpeed(),g);
-		paintStrategy.paint(car, g);
+		paintStrategy.paint(mainCar.getSpeed(),g);
+		paintStrategy.paint(mainCar, g);
+		for(NPCCar car : manager.getNPCCars()){
+			paintStrategy.paint(car,g);
+		}
 
 	}
 

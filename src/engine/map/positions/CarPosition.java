@@ -1,4 +1,4 @@
-package engine.mobile;
+package engine.map.positions;
 
 /**
  * Position of the car with floating point number

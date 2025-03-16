@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -12,6 +13,7 @@ import javax.swing.JTextField;
 import config.GameConfiguration;
 import engine.counters.LimitReachedException;
 import engine.map.City;
+import engine.map.roads.TrafficLight;
 import engine.process.GameBuilder;
 import engine.process.MobileInterface;
 
@@ -27,12 +29,12 @@ public class MainGUI extends JFrame implements Runnable {
 
 	private GameDisplay dashboard;
 
-	public MainGUI(String title) {
+	public MainGUI(String title) throws IOException {
 		super(title);
 		init();
 	}
 
-	private void init() {
+	private void init() throws IOException {
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
@@ -69,8 +71,16 @@ public class MainGUI extends JFrame implements Runnable {
 				System.out.println(e.getMessage());
 			}
 			interval +=1;
-			if(interval%2==0){
+			if(interval%300==0){
+				GameBuilder.addNPCCar1(city,manager.getNPCCars());
+				GameBuilder.addNPCCar2(city,manager.getNPCCars());
+			}
+			if(interval==2100){
 
+				interval = 0;
+				for(TrafficLight light : city.getLights1()){
+
+				}
 			}
 			manager.nextRound();
 			dashboard.repaint();

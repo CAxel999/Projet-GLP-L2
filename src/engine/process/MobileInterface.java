@@ -2,10 +2,19 @@ package engine.process;
 
 import engine.counters.LimitReachedException;
 import engine.mobile.Car;
+import engine.mobile.MainCar;
+import engine.mobile.NPCCar;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface MobileInterface {
 
-	void set(Car car);
+	void set(MainCar mainCar);
+
+	void set(ArrayList<NPCCar> npcCars);
+
+	void mainCarRoadroadVerif(MainCar mainCar);
 
 	void turnLeft() throws LimitReachedException;
 
@@ -19,9 +28,13 @@ public interface MobileInterface {
 
 	void moveMainCar();
 
+	void moveNPCCars();
+
 	void nextRound();
 
-	Car getA();
+	MainCar getA();
+
+	ArrayList<NPCCar> getNPCCars();
 
 
 }

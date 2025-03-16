@@ -1,4 +1,4 @@
-package engine.map;
+package engine.map.positions;
 
 public class Block {
 	private int line;

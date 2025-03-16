@@ -1,6 +1,6 @@
 package engine.mobile;
 
-import engine.map.Block;
+import engine.map.positions.Block;
 
 
 public abstract class MobileElement {
