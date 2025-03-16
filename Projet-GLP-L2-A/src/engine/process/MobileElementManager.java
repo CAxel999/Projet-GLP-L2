@@ -17,6 +17,7 @@ import engine.mobile.CarPosition;
 public class MobileElementManager implements MobileInterface {
 	private City city;
 
+
 	private Car car;
 	private RoadVisitor roadVisitor;
 
