@@ -3,7 +3,7 @@ package engine.process;
 import engine.map.*;
 import engine.map.roads.*;
 
-public abstract class RoadVisitor implements TypeVisitor<Void> {
+public  class RoadVisitor implements TypeVisitor<Void> {
     private City city;
 
     @Override
@@ -28,6 +28,11 @@ public abstract class RoadVisitor implements TypeVisitor<Void> {
 
     @Override
     public void visit(Stop road) {
+
+    }
+
+    @Override
+    public void visit(RoadVisitor road) {
 
     }
 

@@ -8,7 +8,7 @@ public interface TypeVisitor<T> {
     void visit(Highway road);
     void visit(TrafficLightRoad road);
     void visit(Stop road);
-    void visit(CedezLePassage road);
+    void visit(RoadVisitor road);
 
     default void visit(YieldSign road) {
 
