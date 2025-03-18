@@ -9,6 +9,8 @@ import engine.map.positions.CarPosition;
 public class MainCar extends Car{
 
 	private CyclicCounter direction;
+	private boolean angleMortGauche;
+	private boolean angleMortDroit;
 
 
 	public MainCar(Block position) {
@@ -24,5 +26,21 @@ public class MainCar extends Car{
 		return direction;
 	}
 
+
+    public boolean isAngleMortGauche() {
+        return angleMortGauche;
+    }
+
+    public void setAngleMortGauche(boolean angleMortGauche) {
+        this.angleMortGauche = angleMortGauche;
+    }
+
+    public boolean isAngleMortDroit() {
+        return angleMortDroit;
+    }
+
+    public void setAngleMortDroit(boolean angleMortDroit) {
+        this.angleMortDroit = angleMortDroit;
+    }
 
 }

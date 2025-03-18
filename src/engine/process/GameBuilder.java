@@ -43,11 +43,25 @@ public class GameBuilder {
 
 	public static void addNPCCar1(City city, ArrayList<NPCCar> npcCars) {
 		Block block = city.getBlock(20, 0);
-		ArrayList<Instruction> instructionHashMap = new ArrayList<Instruction>();
-		PixelPosition pixelPosition1 = new PixelPosition(401,820);
+		ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
+
+		PixelPosition pixelPosition1 = new PixelPosition(430,820);
 		Instruction instruction1 = new Instruction(2.125,0,pixelPosition1);
-		instructionHashMap.add(instruction1);
-		NPCCar npcCar = new NPCCar(block,instructionHashMap,instructionHashMap.iterator(),instruction1);
+		instructionList.add(instruction1);
+
+		PixelPosition pixelPosition2 = new PixelPosition(401,820);
+		Instruction instruction2 = new Instruction(2.125,Math.PI/8,pixelPosition2);
+		instructionList.add(instruction2);
+
+		PixelPosition pixelPosition3 = new PixelPosition(401,820);
+		Instruction instruction3 = new Instruction(2.125,Math.PI/4,pixelPosition3);
+		instructionList.add(instruction3);
+
+		PixelPosition pixelPosition4 = new PixelPosition(460,790);
+		Instruction instruction4 = new Instruction(2.125,Math.PI*6/8,pixelPosition4);
+		instructionList.add(instruction4);
+
+		NPCCar npcCar = new NPCCar(block,instructionList,instructionList.iterator(),instruction1);
 		npcCars.add(npcCar);
 	}
 

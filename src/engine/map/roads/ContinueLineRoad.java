@@ -6,16 +6,17 @@ import engine.process.TypeVisitor;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Crosswalk extends Road {
+public class ContinueLineRoad extends Road{
     private double direction;
-    public Crosswalk(Block position, double direction, double speedLimit, ArrayList<Line2D> limits) {
-        super(position, speedLimit, limits);
-        this.direction = direction;
-    }
+    private Line2D midLimit;
 
-    public double getDirection() {
-        return direction;
+    public ContinueLineRoad(Block position, double direction, double speedLimit, ArrayList<Line2D> limits, Line2D midLimit) {
+        super(position, speedLimit, limits);
+
+        this.direction = direction;
+        this.midLimit = midLimit;
     }
 
     @Override

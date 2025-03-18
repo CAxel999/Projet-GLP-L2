@@ -8,4 +8,7 @@ public interface TypeVisitor<T> {
     void visit(Crosswalk road);
     void visit(Highway road);
     void visit(TrafficLightRoad road);
+    void visit(ContinueLineRoad road);
+    void visit(Crossroad road);
+    void visit(Stop road);
 }

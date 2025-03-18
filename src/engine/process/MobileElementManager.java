@@ -9,6 +9,7 @@ import engine.map.positions.Block;
 import engine.map.City;
 import engine.map.positions.PixelPosition;
 import engine.map.roads.Road;
+import engine.mobile.Car;
 import engine.mobile.MainCar;
 import engine.map.positions.CarPosition;
 import engine.mobile.NPCCar;
@@ -109,7 +110,7 @@ public class MobileElementManager implements MobileInterface {
 
 	@Override
 	public void mainCarRoadroadVerif(MainCar mainCar){
-		RoadVisitor roadVisitor = new RoadVisitor(mainCar);
+		RoadVisitor roadVisitor = new RoadVisitor(mainCar,this);
 		Block block = mainCar.getPosition();
 		if(city.getRoads().containsKey(block)){
 
@@ -118,13 +119,6 @@ public class MobileElementManager implements MobileInterface {
 
 			if(road.getSpeedLimit() < mainCar.getSpeed()){
 				MistakeMessage.setMessage("Car exceeding speed limit");
-			} else if(road.getDirection() == 0){
-				if(mainCar.getDirection().getValue() > 2 * CarConfiguration.CAR_ROTATION && mainCar.getDirection().getValue() < (2*Math.PI) - (2 * CarConfiguration.CAR_ROTATION)){
-					MistakeMessage.setMessage("Car direction incorrect");
-				}
-			}
-			else if(road.getDirection()-CarConfiguration.CAR_ROTATION > mainCar.getDirection().getValue() || road.getDirection()+CarConfiguration.CAR_ROTATION < mainCar.getDirection().getValue()){
-				MistakeMessage.setMessage("Car direction incorrect");
 			}
 
 			road.accept(roadVisitor);
@@ -134,6 +128,12 @@ public class MobileElementManager implements MobileInterface {
 			System.err.println(mainCar.getRealPosition().getX() +","+ mainCar.getRealPosition().getY());
 		}
 	}
+	public boolean directionVerif(double direction, MainCar car){
+		if(direction == 0){
+            return !(car.getDirection().getValue() > 2 * CarConfiguration.CAR_ROTATION) || !(car.getDirection().getValue() < (2 * Math.PI) - (2 * CarConfiguration.CAR_ROTATION));
+		}
+		else return !(direction - CarConfiguration.CAR_ROTATION > car.getDirection().getValue()) && !(direction + CarConfiguration.CAR_ROTATION < car.getDirection().getValue());
+    }
 
 	@Override
 	public void turnLeft() throws LimitReachedException {
@@ -158,6 +158,7 @@ public class MobileElementManager implements MobileInterface {
 
 	public void brake() {
 		double speed = mainCar.getSpeed();
+		mainCar.setBraking(true);
 		if(speed > 0.5) {
 			mainCar.setSpeed(mainCar.getSpeed() - 0.5);
 		} else if (speed > 0) {

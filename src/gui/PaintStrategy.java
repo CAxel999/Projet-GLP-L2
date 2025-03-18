@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 
 import config.CarConfiguration;
+import config.GameConfiguration;
 import engine.map.City;
 import engine.map.roads.Highway;
 import engine.map.roads.Road;
@@ -16,11 +17,9 @@ import engine.mobile.NPCCar;
 public class PaintStrategy {
 	public void paint(City city, Graphics graphics) {
 		graphics.drawImage(city.getMap(),0,0,null);
-		for(Road road : city.getRoads().values()){
-			graphics.setColor(Color.PINK);
-			Highway highway = (Highway) road;
-			graphics.drawLine(highway.getCrossingSection().getTopLeft().getX(),highway.getCrossingSection().getTopLeft().getY(),highway.getCrossingSection().getBottomRight().getX(),highway.getCrossingSection().getBottomRight().getY());
-		}
+		/*for(Road road : city.getRoads().values()){
+			graphics.fillRect(road.getPosition().getColumn() * GameConfiguration.BLOCK_SIZE,road.getPosition().getLine() * GameConfiguration.BLOCK_SIZE,GameConfiguration.BLOCK_SIZE,GameConfiguration.BLOCK_SIZE);
+		}*/
 	}
 
 	public void paint(MainCar mainCar, Graphics graphics) {
@@ -32,9 +31,20 @@ public class PaintStrategy {
 //		if(direction != Math.PI/2){
 			Graphics2D graphics2D = (Graphics2D) graphics;
 			graphics2D.rotate(-direction,x,y);
-			graphics2D.setColor(Color.RED);
+			if(mainCar.isClignoGauche()){
+				graphics.drawImage(CarConfiguration.CAR_LEFTLIGHT,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+			} else if(mainCar.isClignoDroit()){
+				graphics.drawImage(CarConfiguration.CAR_RIGHTLIGHT,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+			} else if(mainCar.isAngleMortGauche()){
+				graphics.drawImage(CarConfiguration.CAR_LEFTDEAD,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2 - 25,null);
+			} else if(mainCar.isAngleMortDroit()){
+				graphics.drawImage(CarConfiguration.CAR_RIGHTDEAD,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+			} else if(mainCar.getBraking()){
+				graphics.drawImage(CarConfiguration.CAR_BRAKING,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+			} else {
+				graphics.drawImage(CarConfiguration.CAR,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+			}
 
-			graphics2D.fillRect(x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
 
 			graphics2D.rotate(direction,x,y);
 //		} else {
@@ -53,11 +63,10 @@ public class PaintStrategy {
 		int x = position.getX();
 
 		double direction = car.getDirection();
-		System.err.println(x +" "+ y);
 //		if(direction != Math.PI/2){
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		graphics2D.rotate(-direction,x,y);
-		graphics2D.setColor(Color.BLUE);
+		graphics2D.setColor(Color.RED);
 
 		graphics2D.fillRect(x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
 		graphics2D.rotate(direction,x,y);
