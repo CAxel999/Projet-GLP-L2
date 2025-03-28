@@ -252,163 +252,383 @@ public class CityBuilder {
         Stop stop1 = new Stop(blocks[5][22], left, limit50,new HashMap<Block, Road>(), new ArrayList<Line2D>(), new Line2D.Double());
 
         //SimpleRoad
-        SimpleRoad spr1= new SimpleRoad(blocks[21][42], down,limit50 ,new ArrayList<Line2D>());
-        SimpleRoad spr2 = new SimpleRoad(blocks[22][42], down, limit50 ,new ArrayList<Line2D>());
-        SimpleRoad spr3 = new SimpleRoad(blocks[22][43], up, limit50 ,new ArrayList<Line2D>());
+        ArrayList<Line2D> sprLimits1 = new ArrayList<>();
+        sprLimits1.add(new Line2D.Double(42*40, 21*40, 42*40, 23*40)); //Bord de la route
+        sprLimits1.add(new Line2D.Double(43*40, 21*40, 43*40, 23*40)); //Ligne continue
+        SimpleRoad spr1= new SimpleRoad(blocks[21][42], down,limit50 ,sprLimits1);
+        SimpleRoad spr2 = new SimpleRoad(blocks[22][42], down, limit50 ,sprLimits1);
+
+        ArrayList<Line2D> spr2Limits = new ArrayList<>();
+        spr2Limits.add(new Line2D.Double(44*40, 21*40, 44*40, 23*40)); //Bord de la route
+        spr2Limits.add(new Line2D.Double(43*40, 21*40, 43*40, 23*40)); //Ligne continue
+        SimpleRoad spr3 = new SimpleRoad(blocks[22][43], up, limit50 ,spr2Limits);
         roads.put(spr1.getPosition(), spr1);
         roads.put(spr2.getPosition(), spr2);
         roads.put(spr3.getPosition(), spr3);
 
+        Line2D l1 = new Line2D.Double(33*40, 19*40, 42*40, 19*40);
+        Line2D l2 = new Line2D.Double(33*40, 20*40, 42*40, 20*40);
         for(int col= 33 ; col <= 41; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[19][col], left,limit50,new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l1); // Bord de la route
+            sprLimits.add(l2); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[19][col], left,limit50,sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l3 = new Line2D.Double(32*40, 21*40, 41*40, 21*40);
+        Line2D l4 = new Line2D.Double(32*40, 20*40, 41*40, 20*40);
         for(int col= 32 ; col <= 40; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[20][col], right, limit50 ,new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l3); // Bord de la route
+            sprLimits.add(l4); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[20][col], right, limit50 ,sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l5 =new Line2D.Double(42*40, 15*40, 42*40, 18*40);
+        Line2D l6 =	new Line2D.Double(43*40, 15*40, 43*40, 18*40);
         for(int line= 15 ; line <= 17; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][42], down, limit50 ,new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l5); // Bord de la route
+            sprLimits.add(l6); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][42], down, limit50 ,sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l7 =new Line2D.Double(44*40, 16*40, 44*40, 19*40);
+        Line2D l8 =new Line2D.Double(43*40, 16*40, 43*40, 19*40);
         for(int line= 16 ; line <= 18; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][43], up, limit50 ,new ArrayList<Line2D>());
-            roads.put(spr.getPosition(), spr);
-        }
-        for(int line= 17 ; line <= 18; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][30], down,limit50 ,new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l7); // Bord de la route
+            sprLimits.add(l8); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][43], up, limit50 ,sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
-        SimpleRoad spr4 = new SimpleRoad(blocks[18][31], up, limit50 ,new ArrayList<Line2D>());
+        Line2D l9 =new Line2D.Double(30*40, 17*40, 30*40, 19*40);
+        Line2D l10 =new Line2D.Double(31*40, 17*40, 31*40, 19*40);
+        for(int line= 17 ; line <= 18; line++){
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l9); // Bord de la route
+            sprLimits.add(l10); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][30], down,limit50 ,sprLimits);
+            roads.put(spr.getPosition(), spr);
+        }
+
+        Line2D l11 =new Line2D.Double(32*40, 17*40, 32*40, 19*40);
+        Line2D l12 =new Line2D.Double(31*40, 17*40, 31*40, 19*40);
+        ArrayList<Line2D> sprLimits2 = new ArrayList<>();
+        sprLimits2.add(l11); // Bord de la route
+        sprLimits2.add(l12); // Ligne continue
+        SimpleRoad spr4 = new SimpleRoad(blocks[18][31], up, limit50 ,sprLimits2);
         roads.put(spr4.getPosition(), spr4);
 
-        SimpleRoad spr5 = new SimpleRoad(blocks[13][43], right, limit50 ,new ArrayList<Line2D>());
+        Line2D l13 =new Line2D.Double(44*40, 14*40, 45*40, 14*40);
+        Line2D l14 =new Line2D.Double(44*40, 13*40, 45*40, 13*40);
+        ArrayList<Line2D> sprLimits3 = new ArrayList<>();
+        sprLimits3.add(l13); // Bord de la route
+        sprLimits3.add(l14); // Ligne continue
+        SimpleRoad spr5 = new SimpleRoad(blocks[13][44], right, limit50 ,sprLimits3);
         roads.put(spr5.getPosition(), spr5);
 
+        Line2D l15 =new Line2D.Double(36*40, 12*40, 41*40, 12*40);
+        Line2D l16 =new Line2D.Double(36*40, 13*40, 41*40, 13*40);
         for(int col= 36 ; col <= 40; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[12][col], left,limit50 ,new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l15); // Bord de la route
+            sprLimits.add(l16); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[12][col], left,limit50 ,sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l17 =new Line2D.Double(35*40, 14*40, 40*40, 14*40);
+        Line2D l18 =new Line2D.Double(35*40, 13*40, 40*40, 13*40);
         for(int col= 35 ; col <= 39; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[13][col], right,limit50 ,new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l17); // Bord de la route
+            sprLimits.add(l18); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[13][col], right,limit50 ,sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
-        SimpleRoad spr6= new SimpleRoad(blocks[8][31], up,limit50 ,new ArrayList<Line2D>());
+        Line2D l19 =new Line2D.Double(32*40, 8*40, 32*40, 9*40);
+        Line2D l20 =new Line2D.Double(31*40, 8*40, 31*40, 9*40);
+        ArrayList<Line2D> sprLimits4 = new ArrayList<>();
+        sprLimits4.add(l19); // Bord de la route
+        sprLimits4.add(l20); // Ligne continue
+        SimpleRoad spr6= new SimpleRoad(blocks[8][31], up,limit50 ,sprLimits4);
         roads.put(spr6.getPosition(), spr6);
 
-        SimpleRoad spr7= new SimpleRoad(blocks[7][30], down,limit50 ,new ArrayList<Line2D>());
+        Line2D l21 =new Line2D.Double(30*40, 7*40, 30*40, 8*40);
+        Line2D l22 =new Line2D.Double(31*40, 7*40, 31*40, 8*40);
+        ArrayList<Line2D> sprLimits5 = new ArrayList<>();
+        sprLimits5.add(l21); // Bord de la route
+        sprLimits5.add(l22); // Ligne continue
+        SimpleRoad spr7= new SimpleRoad(blocks[7][30], down,limit50 ,sprLimits5);
         roads.put(spr7.getPosition(), spr7);
 
+        Line2D l23 =new Line2D.Double(23*40, 5*40, 30*40, 5*40);
+        Line2D l24 =new Line2D.Double(23*40, 6*40, 30*40, 6*40);
         for(int col=23; col <= 29; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[5][col], left, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l23); // Bord de la route
+            sprLimits.add(l24); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[5][col], left, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l25 =new Line2D.Double(22*40, 7*40, 30*40, 7*40);
+        Line2D l26 =new Line2D.Double(22*40, 6*40, 30*40, 6*40);
         for(int col=22; col<= 28; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[6][col], right, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l25); // Bord de la route
+            sprLimits.add(l26); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[6][col], right, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l27 =new Line2D.Double(22*40, 7*40, 22*40, 12*40);
+        Line2D l28 =new Line2D.Double(21*40, 7*40, 21*40, 12*40);
         for(int line=8 ; line<=11; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][21], up, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l27); // Bord de la route
+            sprLimits.add(l28); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][21], up, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l29 =new Line2D.Double(20*40, 7*40, 20*40, 12*40);
+        Line2D l30 =new Line2D.Double(21*40, 7*40, 21*40, 12*40);
         for(int line=7 ; line<=10; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][20], down, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l29); // Bord de la route
+            sprLimits.add(l30); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][20], down, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l31 =new Line2D.Double(23*40, 12*40, 27*40, 12*40);
+        Line2D l32 =new Line2D.Double(23*40, 13*40, 27*40, 13*40);
         for(int col=23; col<= 26; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[12][col], left, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l31); // Bord de la route
+            sprLimits.add(l32); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[12][col], left, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l33 =new Line2D.Double(22*40, 14*40, 27*40, 14*40);
+        Line2D l34 =new Line2D.Double(22*40, 13*40, 27*40, 13*40);
         for(int col=22; col<= 25; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[13][col], right, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l33); // Bord de la route
+            sprLimits.add(l34); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[13][col], right, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l35 =new Line2D.Double(22*40, 15*40, 22*40, 23*40);
+        Line2D l36 =new Line2D.Double(21*40, 15*40, 21*40, 23*40);
         for(int line=15; line<= 22; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][21], up, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l35); // Bord de la route
+            sprLimits.add(l36); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][21], up, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l37 =new Line2D.Double(20*40, 14*40, 20*40, 23*40);
+        Line2D l38 =new Line2D.Double(21*40, 14*40, 21*40, 23*40);
         for(int line=14; line<= 22; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][20], down, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l37); // Bord de la route
+            sprLimits.add(l38); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][20], down, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l39 =new Line2D.Double(15*40, 12*40, 20*40, 12*40);
+        Line2D l40 =new Line2D.Double(15*40, 13*40, 20*40, 13*40);
         for(int col=15; col<= 19; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[12][col], left, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l39); // Bord de la route
+            sprLimits.add(l40); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[12][col], left, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l41 =new Line2D.Double(14*40, 14*40, 20*40, 14*40);
+        Line2D l42 =new Line2D.Double(14*40, 13*40, 20*40, 13*40);
         for(int col=14; col<= 18; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[13][col], right, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l41); // Bord de la route
+            sprLimits.add(l42); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[13][col], right, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l43 =new Line2D.Double(10*40, 7*40, 10*40, 10*40);
+        Line2D l44 =new Line2D.Double(11*40, 7*40, 11*40,10*40);
         for(int line=7; line<= 8; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][10], down, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l43); // Bord de la route
+            sprLimits.add(l44); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][10], down, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l45 =new Line2D.Double(12*40, 7*40, 12*40, 10*40);
+        Line2D l46 =new Line2D.Double(11*40, 7*40, 11*40, 10*40);
         for(int line=8; line<= 9; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][11], up, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l45); // Bord de la route
+            sprLimits.add(l46); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][11], up, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l47 =new Line2D.Double(2*40, 12*40, 8*40, 12*40);
+        Line2D l48 =new Line2D.Double(2*40, 13*40, 8*40, 13*40);
         for(int col=2; col<= 7; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[12][col], left, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l47); // Bord de la route
+            sprLimits.add(l48); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[12][col], left, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l49 =new Line2D.Double(2*40, 14*40, 8*40, 14*40);
+        Line2D l50 =new Line2D.Double(2*40, 13*40, 8*40, 13*40);
         for(int col=2; col<= 6; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[13][col], right, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l49); // Bord de la route
+            sprLimits.add(l50); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[13][col], right, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l51 =new Line2D.Double(10*40, 16*40, 10*40, 18*40);
+        Line2D l52 =new Line2D.Double(11*40, 16*40, 11*40, 18*40);
         for(int line=16; line<= 17; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][10], down, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l51); // Bord de la route
+            sprLimits.add(l52); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][10], down, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l53 =new Line2D.Double(12*40, 16*40, 12*40, 19*40);
+        Line2D l54 =new Line2D.Double(11*40, 16*40, 11*40, 19*40);
         for(int line=17; line<= 18; line++){
-            SimpleRoad spr = new SimpleRoad(blocks[line][11], up, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l53); // Bord de la route
+            sprLimits.add(l54); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][11], up, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l55=new Line2D.Double(3*40, 19*40, 10*40, 19*40); // Bord de la route
+        Line2D l56=new Line2D.Double(3*40, 20*40, 10*40, 20*40); // Ligne continue
         for(int col=3; col<= 9; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[19][col], left, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l55); // Bord de la route
+            sprLimits.add(l56); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[19][col], left, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l57 =new Line2D.Double(2*40, 21*40, 10*40, 21*40);
+        Line2D l58 =new Line2D.Double(2*40, 20*40, 10*40, 20*40);
         for(int col=2; col<= 8; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[20][col], right, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l57); // Bord de la route
+            sprLimits.add(l58); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[20][col], right, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
-        SimpleRoad spr9 = new SimpleRoad(blocks[13][44], right, limit50, new ArrayList<Line2D>());
+
+        ArrayList<Line2D> sprLimits6 = new ArrayList<>();
+        sprLimits6.add(new Line2D.Double(44*40, 14*40, 45*40, 14*40)); // Bord de la route
+        sprLimits6.add(new Line2D.Double(44*40, 13*40, 45*40, 13*40)); // Ligne continue
+        SimpleRoad spr9 = new SimpleRoad(blocks[13][44], right, limit50, sprLimits6);
         roads.put(spr9.getPosition(), spr9);
 
+        Line2D l59 =new Line2D.Double(13*40, 5*40, 20*40, 5*40);
+        Line2D l60 =new Line2D.Double(13*40, 6*40, 20*40, 6*40);
         for(int col=13; col<= 19; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[5][col], right, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l59); // Bord dela route
+            sprLimits.add(l60); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[5][col], left, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
+        Line2D l61 =new Line2D.Double(13*40, 7*40, 20*40, 7*40);
+        Line2D l62 =new Line2D.Double(12*40, 6*40, 20*40, 6*40);
         for(int col=12; col<= 18; col++){
-            SimpleRoad spr = new SimpleRoad(blocks[6][col], right, limit50, new ArrayList<Line2D>());
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l61); // Bord de la route
+            sprLimits.add(l62); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[6][col], right, limit50, sprLimits);
+            roads.put(spr.getPosition(), spr);
+        }
+
+        Line2D l63 =new Line2D.Double(43*40, 5*40, 43*40, 11*40);
+        Line2D l64 =new Line2D.Double(44*40, 5*40, 44*40, 11*40);
+        for(int line=5; line<= 10; line++){
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l63); // Bord de la route
+            sprLimits.add(l64); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][43], down, limit50, sprLimits);
+            roads.put(spr.getPosition(), spr);
+        }
+
+        Line2D l65 =new Line2D.Double(1*40, 14*40, 1*40, 18*40);
+        Line2D l66 =new Line2D.Double(2*40, 14*40, 2*40, 18*40);
+        for(int line=14; line<= 17; line++){
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l65); // Bord de la route
+            sprLimits.add(l66); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][1], down, limit50, sprLimits);
+            roads.put(spr.getPosition(), spr);
+        }
+
+        Line2D l67 =new Line2D.Double(1*40, 5*40, 1*40, 12*40);
+        Line2D l68 =new Line2D.Double(2*40, 5*40, 2*40, 12*40);
+        for(int line=5; line<= 11; line++){
+            ArrayList<Line2D> sprLimits = new ArrayList<>();
+            sprLimits.add(l67); // Bord de la route
+            sprLimits.add(l68); // Ligne continue
+            SimpleRoad spr = new SimpleRoad(blocks[line][1], up, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
 
         //Construct the roads
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 

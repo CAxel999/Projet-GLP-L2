@@ -28,7 +28,9 @@ public abstract class Road {
         return position;
     }
 
-
+    public ArrayList<Line2D> getLimits() {
+        return limits;
+    }
 
     public double getSpeedLimit() {
         return speedLimit;

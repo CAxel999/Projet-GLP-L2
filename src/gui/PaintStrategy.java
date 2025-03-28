@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 import config.CarConfiguration;
 import config.GameConfiguration;
@@ -18,9 +19,15 @@ import engine.mobile.NPCCar;
 public class PaintStrategy {
 	public void paint(City city, Graphics graphics) {
 		//graphics.drawImage(city.getMap(),0,0,null);
+
 		Block[][] blocks = new Block[0][];
-		for(Road road : city.getRoads().values()){
-			graphics.fillRect(road.getPosition().getColumn() * GameConfiguration.BLOCK_SIZE,road.getPosition().getLine() * GameConfiguration.BLOCK_SIZE,GameConfiguration.BLOCK_SIZE,GameConfiguration.BLOCK_SIZE);
+		for(Road road : city.getRoads().values()) {
+			graphics.setColor(Color.GRAY);
+			graphics.fillRect(road.getPosition().getColumn() * GameConfiguration.BLOCK_SIZE, road.getPosition().getLine() * GameConfiguration.BLOCK_SIZE, GameConfiguration.BLOCK_SIZE, GameConfiguration.BLOCK_SIZE);
+			graphics.setColor(Color.RED);
+			for (Line2D line : road.getLimits()) {
+				graphics.drawLine((int) line.getX1(), (int) line.getY1(), (int) line.getX2(), (int) line.getY2());
+			}
 		}
 	}
 
