@@ -1,5 +1,6 @@
 package engine.mobile;
 
+import config.CarConfiguration;
 import engine.map.positions.Block;
 import engine.map.positions.CarPosition;
 import engine.map.positions.PixelPosition;
@@ -13,8 +14,8 @@ public abstract class Car extends MobileElement{
     private boolean priority;
     private boolean braking;
 
-    private Line2D topSide;
-    private Line2D  bottomSide;
+    private Line2D frontSide;
+    private Line2D backSide;
     private Line2D leftSide;
     private Line2D rightSide;
 
@@ -25,6 +26,7 @@ public abstract class Car extends MobileElement{
     public Car(Block position) {
         super(position);
         this.priority = false;
+
     }
     public double getSpeed() {
         return speed;
@@ -42,12 +44,12 @@ public abstract class Car extends MobileElement{
         return priority;
     }
 
-    public Line2D getTopSide() {
-        return topSide;
+    public Line2D getFrontSide() {
+        return frontSide;
     }
 
-    public Line2D getBottomSide() {
-        return bottomSide;
+    public Line2D getBackSide() {
+        return backSide;
     }
 
     public Line2D getLeftSide() {
@@ -57,21 +59,38 @@ public abstract class Car extends MobileElement{
     public Line2D getRightSide() {
         return rightSide;
     }
+
+    public void setFrontSide(Line2D frontSide) {
+        this.frontSide = frontSide;
+    }
+
+    public void setBackSide(Line2D backSide) {
+        this.backSide = backSide;
+    }
+
+    public void setLeftSide(Line2D leftSide) {
+        this.leftSide = leftSide;
+    }
+
+    public void setRightSide(Line2D rightSide) {
+        this.rightSide = rightSide;
+    }
+
     /*public Line2D getFront() {
-        return front;
-    }
+            return front;
+        }
 
-    public Line2D getBack() {
-        return back;
-    }
+        public Line2D getBack() {
+            return back;
+        }
 
-    public Line2D getLeft() {
-        return left;
-    }
+        public Line2D getLeft() {
+            return left;
+        }
 
-    public Line2D getRight() {
-        return right;
-    }*/
+        public Line2D getRight() {
+            return right;
+        }*/
     public boolean isClignoDroit() {
         return clignoDroit;
     }

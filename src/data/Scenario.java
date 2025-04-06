@@ -1,0 +1,39 @@
+package data;
+
+public class Scenario {
+    private int id;
+    private String text;
+    private boolean successful;
+    private boolean failed;
+
+    public Scenario(int id, String text) {
+        this.id = id;
+        this.text = text;
+        this.successful = false;
+        this.failed = false;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public boolean isSuccessful() {
+        return successful;
+    }
+
+    public boolean isFailed() {
+        return failed;
+    }
+
+    public void setSuccessful(boolean successful) {
+        this.successful = successful;
+    }
+
+    public void setFailed(boolean failed) {
+        this.failed = failed;
+    }
+}

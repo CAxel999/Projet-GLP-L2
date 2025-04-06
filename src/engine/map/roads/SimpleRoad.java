@@ -1,7 +1,6 @@
 package engine.map.roads;
 
 import engine.map.positions.Block;
-import engine.map.positions.Zone;
 import engine.process.TypeVisitor;
 
 import java.awt.geom.Line2D;

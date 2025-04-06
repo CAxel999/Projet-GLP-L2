@@ -25,4 +25,13 @@ public class Instruction {
     public PixelPosition getPixelPosition() {
         return pixelPosition;
     }
+
+    @Override
+    public String toString() {
+        return "Instruction{" +
+                "speed=" + speed +
+                ", direction=" + direction +
+                ", pixelPosition=" + pixelPosition +
+                '}';
+    }
 }

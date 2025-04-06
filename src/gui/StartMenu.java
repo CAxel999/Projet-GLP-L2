@@ -124,6 +124,7 @@ public class StartMenu extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             window.dispose();
+            System.exit(0);
         }
 
 

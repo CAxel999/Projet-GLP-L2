@@ -30,6 +30,7 @@ public class PaintStrategy {
 		double direction = mainCar.getDirection().getValue();
 //		if(direction != Math.PI/2){
 			Graphics2D graphics2D = (Graphics2D) graphics;
+
 			graphics2D.rotate(-direction,x,y);
 			if(mainCar.isClignoGauche()){
 				graphics.drawImage(CarConfiguration.CAR_LEFTLIGHT,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
@@ -47,6 +48,11 @@ public class PaintStrategy {
 
 
 			graphics2D.rotate(direction,x,y);
+			graphics2D.setColor(Color.RED);
+			graphics2D.draw(mainCar.getFrontSide());
+			graphics2D.draw(mainCar.getLeftSide());
+			graphics2D.draw(mainCar.getRightSide());
+			graphics2D.draw(mainCar.getBackSide());
 //		} else {
 //			graphics.setColor(Color.RED);
 //
@@ -67,8 +73,10 @@ public class PaintStrategy {
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		graphics2D.rotate(-direction,x,y);
 		graphics2D.setColor(Color.RED);
-
+		System.err.println(car.getPosition().getColumn()*GameConfiguration.BLOCK_SIZE + "," + car.getPosition().getLine()*GameConfiguration.BLOCK_SIZE);
+		//graphics2D.fillRect(car.getPosition().getColumn()*GameConfiguration.BLOCK_SIZE,car.getPosition().getLine()*GameConfiguration.BLOCK_SIZE, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
 		graphics2D.fillRect(x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
+
 		graphics2D.rotate(direction,x,y);
 //		} else {
 //			graphics.setColor(Color.RED);

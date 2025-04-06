@@ -9,9 +9,10 @@ import java.io.IOException;
  * Contains parameter for the car
  */
 public class CarConfiguration {
-    public static final double CAR_ROTATION = Math.PI/64;
+    public static final double CAR_ROTATION = Math.PI/12;
     public static final int CAR_LENGTH = 35;
     public static final int CAR_WIDTH = 25;
+    public static final int CAR_INNERDIAGONAL = (int) Math.sqrt(CAR_LENGTH*CAR_LENGTH + CAR_WIDTH*CAR_WIDTH) - 5;
     public static final double CAR_ACCERLERATION = 0.125;
     public static final BufferedImage CAR;
     public static final BufferedImage CAR_LEFTLIGHT;

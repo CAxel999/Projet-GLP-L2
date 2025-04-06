@@ -1,24 +1,46 @@
 package engine.mobile;
 
+import config.CarConfiguration;
 import config.GameConfiguration;
+import data.Scenario;
 import engine.counters.CyclicCounter;
 import engine.map.positions.Block;
 import engine.map.positions.PixelPosition;
 import engine.map.positions.CarPosition;
+
+import java.awt.geom.Line2D;
+
 
 public class MainCar extends Car{
 
 	private CyclicCounter direction;
 	private boolean angleMortGauche;
 	private boolean angleMortDroit;
-
+	private boolean angleMortGauchePriority;
+	private boolean angleMortDroitPriority;
+	private Scenario scenario;
 
 	public MainCar(Block position) {
 		super(position);
 		setPixelPosition(new PixelPosition(position.getColumn() * GameConfiguration.BLOCK_SIZE + 20,position.getLine() * GameConfiguration.BLOCK_SIZE + 20));
 		setRealPosition(new CarPosition(getPixelPosition().getX(),getPixelPosition().getY()));
 		setSpeed(0);
+		int x = position.getColumn();
+		int y = position.getLine();
+
 		this.direction = new CyclicCounter(Math.PI/2,Math.PI*2);
+		double frontLeftCornerX = (x + Math.cos(this.getDirection().getValue() + 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double frontLeftCornerY = (y - Math.sin(this.getDirection().getValue() + 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double frontRightCornerX = (x + Math.cos(this.getDirection().getValue() - 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double frontRightCornerY = (y - Math.sin(this.getDirection().getValue() - 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double backLeftCornerX = (x + Math.cos(this.getDirection().getValue() + Math.PI - 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double backLeftCornerY = (y - Math.sin(this.getDirection().getValue() + Math.PI - 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double bachRightCornerX = (x + Math.cos(this.getDirection().getValue() + Math.PI + 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double backRightCornerY = (y - Math.sin(this.getDirection().getValue() + Math.PI + 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		super.setFrontSide(new Line2D.Double(frontLeftCornerX,frontLeftCornerY,frontRightCornerX,frontRightCornerY));
+		super.setBackSide(new Line2D.Double(backLeftCornerX,backLeftCornerY,bachRightCornerX,backRightCornerY));
+		super.setLeftSide(new Line2D.Double(frontLeftCornerX,frontLeftCornerY,backLeftCornerX,backLeftCornerY));
+		super.setRightSide(new Line2D.Double(frontRightCornerX,frontRightCornerY,bachRightCornerX,backRightCornerY));
 	}
 
 
@@ -26,8 +48,11 @@ public class MainCar extends Car{
 		return direction;
 	}
 
+	public Scenario getScenario() {
+		return scenario;
+	}
 
-    public boolean isAngleMortGauche() {
+	public boolean isAngleMortGauche() {
         return angleMortGauche;
     }
 
@@ -43,4 +68,23 @@ public class MainCar extends Car{
         this.angleMortDroit = angleMortDroit;
     }
 
+	public boolean isAngleMortGauchePriority() {
+		return angleMortGauchePriority;
+	}
+
+	public void setAngleMortGauchePriority(boolean angleMortGauchePriority) {
+		this.angleMortGauchePriority = angleMortGauchePriority;
+	}
+
+	public boolean isAngleMortDroitPriority() {
+		return angleMortDroitPriority;
+	}
+
+	public void setAngleMortDroitPriority(boolean angleMortDroitPriority) {
+		this.angleMortDroitPriority = angleMortDroitPriority;
+	}
+
+	public void setScenario(Scenario scenario) {
+		this.scenario = scenario;
+	}
 }

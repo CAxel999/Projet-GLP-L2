@@ -16,6 +16,7 @@ import java.util.HashMap;
 public class City {
 	private Block[][] blocks;
 	private HashMap<Block, Road> roads;
+	private ArrayList<Road> hasCar;
 	private ArrayList<TrafficLight> lights1 = new ArrayList<TrafficLight>();
 	private final BufferedImage map = ImageIO.read(new File("src/images/ville.png"));
 
@@ -37,6 +38,7 @@ public class City {
 
 		blocks = new Block[lineCount][columnCount];
 		roads = new HashMap<Block,Road>();
+		hasCar = new ArrayList<Road>();
 	}
 
 	public BufferedImage getMap() {
@@ -61,6 +63,10 @@ public class City {
 
 	public HashMap<Block, Road> getRoads() {
 		return roads;
+	}
+
+	public ArrayList<Road> getHasCar() {
+		return hasCar;
 	}
 
 	public ArrayList<TrafficLight> getLights1() {

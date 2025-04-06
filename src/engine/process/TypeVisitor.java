@@ -11,4 +11,8 @@ public interface TypeVisitor<T> {
     void visit(ContinueLineRoad road);
     void visit(Crossroad road);
     void visit(Stop road);
+    void visit(StopExit road);
+    void visit(ScenarioRoad road);
+    void visit(ResolveRoad road);
+
 }

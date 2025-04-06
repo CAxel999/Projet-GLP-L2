@@ -1,7 +1,6 @@
 package engine.map.roads;
 
 import engine.map.positions.Block;
-import engine.map.positions.Zone;
 import engine.process.TypeVisitor;
 
 import java.awt.geom.Line2D;
@@ -28,13 +27,15 @@ public abstract class Road {
         return position;
     }
 
-
+    public ArrayList<Line2D> getLimits() {
+        return limits;
+    }
 
     public double getSpeedLimit() {
         return speedLimit;
     }
 
-    public boolean isHasCar() {
+    public boolean hasCar() {
         return hasCar;
     }
 

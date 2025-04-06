@@ -1,12 +1,14 @@
 package engine.process;
 
-import config.CarConfiguration;
 import data.MistakeMessage;
 
-import engine.map.positions.Zone;
 import engine.map.roads.*;
 import engine.mobile.MainCar;
 
+
+/**
+ *
+ */
 public class RoadVisitor implements TypeVisitor<Void> {
     private MainCar mainCar;
     private MobileElementManager manager;
@@ -21,12 +23,24 @@ public class RoadVisitor implements TypeVisitor<Void> {
         if(!manager.directionVerif(road.getDirection(),mainCar)){
             MistakeMessage.setMessage("Car direction incorrect");
         }
+
     }
 
     @Override
     public void visit(CrossroadEntry road) {
         if(!manager.directionVerif(road.getDirection(),mainCar)){
             MistakeMessage.setMessage("Car direction incorrect");
+        }
+        mainCar.setPriority(true);
+        for(Road occupied : road.getRoads()){
+            if(occupied.hasCar()){
+                mainCar.setPriority(false);
+            }
+        }
+        if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
+            if(!mainCar.isPriority()){
+                //Car not supposed to go through
+            }
         }
     }
 
@@ -39,14 +53,27 @@ public class RoadVisitor implements TypeVisitor<Void> {
 
     @Override
     public void visit(Highway road) {
-        Zone zone = road.getCrossingSection();
+
         if(!manager.directionVerif(road.getDirection(),mainCar)){
             MistakeMessage.setMessage("Car direction incorrect");
         }
-
-        if(mainCar.getPixelPosition().getX() > zone.getTopLeft().getX() && mainCar.getPixelPosition().getY() > zone.getTopLeft().getY() && mainCar.getPixelPosition().getY() < zone.getBottomRight().getY() && mainCar.getPixelPosition().getX() < zone.getBottomRight().getX()){
-            MistakeMessage.setMessage("Car in zone");
+        if(mainCar.getPosition().equals(road.getPosition())){
+            mainCar.setAngleMortDroitPriority(false);
+            if(mainCar.isAngleMortGauche()){
+                mainCar.setAngleMortGauchePriority(true);
+            }
+        } else {
+            mainCar.setAngleMortGauchePriority(false);
+            if(mainCar.isAngleMortDroit()){
+                mainCar.setAngleMortDroitPriority(true);
+            }
         }
+        if(road.getCrossingSection().intersectsLine(mainCar.getLeftSide()) || road.getCrossingSection().intersectsLine(mainCar.getRightSide()) || road.getCrossingSection().intersectsLine(mainCar.getFrontSide()) || road.getCrossingSection().intersectsLine(mainCar.getBackSide())){
+            if(!(mainCar.isAngleMortGauchePriority() || mainCar.isAngleMortDroitPriority())){
+                //Car not supposed to go through
+            }
+        }
+
     }
 
     @Override
@@ -54,7 +81,14 @@ public class RoadVisitor implements TypeVisitor<Void> {
         if(!manager.directionVerif(road.getDirection(),mainCar)){
             MistakeMessage.setMessage("Car direction incorrect");
         }
-
+        if(road.getLight().compareTo(TrafficLight.RED) == 0){
+            mainCar.setPriority(false);
+        }
+        if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
+            if(!mainCar.isPriority()){
+                //Car not supposed to go through
+            }
+        }
     }
 
     @Override
@@ -72,6 +106,43 @@ public class RoadVisitor implements TypeVisitor<Void> {
         if(!manager.directionVerif(road.getDirection(),mainCar)){
             MistakeMessage.setMessage("Car direction incorrect");
         }
+        if(mainCar.getSpeed() == 0){
+            road.incrementTimeStoped();
+        } else if(!(road.getTimeStoped() == Stop.STOPTIME)){
+            road.resetTimeStoped();
+        }
+        if(road.getTimeStoped() == Stop.STOPTIME){
+            mainCar.setPriority(true);
+            for(Road occupied : road.getRoads()){
+                if(occupied.hasCar()){
+                    mainCar.setPriority(false);
+                }
+            }
+            if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
+                if(!mainCar.isPriority()){
+                    //Car not supposed to go through
+                }
+            }
+        }
+    }
 
+    @Override
+    public void visit(StopExit road) {
+        road.getStopRoad().resetTimeStoped();
+        mainCar.setPriority(false);
+    }
+
+    @Override
+    public void visit(ScenarioRoad road) {
+        if(!manager.directionVerif(road.getDirection(),mainCar)){
+            MistakeMessage.setMessage("Car direction incorrect");
+        }
+    }
+
+    @Override
+    public void visit(ResolveRoad road) {
+        if(!manager.directionVerif(road.getDirection(),mainCar)){
+            MistakeMessage.setMessage("Car direction incorrect");
+        }
     }
 }

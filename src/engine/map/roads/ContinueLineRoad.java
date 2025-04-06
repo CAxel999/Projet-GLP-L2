@@ -1,12 +1,10 @@
 package engine.map.roads;
 
 import engine.map.positions.Block;
-import engine.map.positions.Zone;
 import engine.process.TypeVisitor;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ContinueLineRoad extends Road{
     private double direction;

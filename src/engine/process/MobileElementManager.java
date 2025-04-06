@@ -14,6 +14,8 @@ import engine.mobile.MainCar;
 import engine.map.positions.CarPosition;
 import engine.mobile.NPCCar;
 
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -48,9 +50,26 @@ public class MobileElementManager implements MobileInterface {
 		double x = ((position.getX() + Math.cos(mainCar.getDirection().getValue()) * mainCar.getSpeed()));
 		position.setX(x);
 		position.setY(y);
+
+		double frontLeftCornerX = (x + Math.cos(mainCar.getDirection().getValue() + 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double frontLeftCornerY = (y - Math.sin(mainCar.getDirection().getValue() + 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double frontRightCornerX = (x + Math.cos(mainCar.getDirection().getValue() - 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double frontRightCornerY = (y - Math.sin(mainCar.getDirection().getValue() - 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double backLeftCornerX = (x + Math.cos(mainCar.getDirection().getValue() + Math.PI - 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double backLeftCornerY = (y - Math.sin(mainCar.getDirection().getValue() + Math.PI - 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double bachRightCornerX = (x + Math.cos(mainCar.getDirection().getValue() + Math.PI + 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		double backRightCornerY = (y - Math.sin(mainCar.getDirection().getValue() + Math.PI + 0.62) * CarConfiguration.CAR_INNERDIAGONAL/2);
+		constructCarEdges(mainCar, frontLeftCornerX, frontLeftCornerY, frontRightCornerX, frontRightCornerY, backLeftCornerX, backLeftCornerY, bachRightCornerX, backRightCornerY);
+
 		mainCar.getPixelPosition().setX((int) x);
 		mainCar.getPixelPosition().setY((int) y);
 		Block newPosition = city.getBlock((int) y / GameConfiguration.BLOCK_SIZE,(int) x / GameConfiguration.BLOCK_SIZE);
+
+		Road road = city.getRoads().get(newPosition);
+		if(road != null){
+			road.setHasCar(true);
+			city.getHasCar().add(road);
+		}
 		mainCar.setPosition(newPosition);
 
 	}
@@ -58,11 +77,17 @@ public class MobileElementManager implements MobileInterface {
 	@Override
 	public void moveNPCCars() {
 		ArrayList<NPCCar> removeCar = new ArrayList<NPCCar>();
+		Road road;
 		for(NPCCar car : npcCars){
 
 			PixelPosition pixelPosition = car.getPixelPosition();
+			System.err.println(pixelPosition.getX() +" "+ pixelPosition.getY());
 			Instruction instruction = car.getCurrentInstruction();
+
+
+
 			Iterator<Instruction> iterator = car.getCurrentIterator();
+
 			double speed = car.getSpeed();
 			Block newPosition;
 
@@ -70,17 +95,25 @@ public class MobileElementManager implements MobileInterface {
 				pixelPosition = instruction.getPixelPosition();
 				if(iterator.hasNext()){
 					instruction = iterator.next();
-					if(speed != instruction.getSpeed()){
+					if(speed != instruction.getSpeed()) {
 						car.setSpeed(instruction.getSpeed());
+					}
 						car.setCurrentIterator(iterator);
+						car.setCurrentInstruction(instruction);
 						car.setDirection(instruction.getDirection());
-
+						car.setPixelPosition(pixelPosition);
 						car.getRealPosition().setX(pixelPosition.getX());
 						car.getRealPosition().setY(pixelPosition.getY());
 
-						newPosition = city.getBlock(pixelPosition.getX() / GameConfiguration.BLOCK_SIZE,pixelPosition.getY() / GameConfiguration.BLOCK_SIZE);
+						newPosition = city.getBlock( pixelPosition.getY() / GameConfiguration.BLOCK_SIZE,pixelPosition.getX() / GameConfiguration.BLOCK_SIZE);
 						car.setPosition(newPosition);
-					}
+						road = city.getRoads().get(newPosition);
+
+						if(road != null){
+							road.setHasCar(true);
+							city.getHasCar().add(road);
+						}
+
 				} else {
 					removeCar.add(car);
 				}
@@ -95,6 +128,11 @@ public class MobileElementManager implements MobileInterface {
 				pixelPosition.setY((int) y);
 				newPosition = city.getBlock((int) y / GameConfiguration.BLOCK_SIZE,(int) x / GameConfiguration.BLOCK_SIZE);
 				car.setPosition(newPosition);
+				road = city.getRoads().get(newPosition);
+				if(road != null){
+					road.setHasCar(true);
+					city.getHasCar().add(road);
+				}
 
 				if(car.getSpeed() < instruction.getSpeed()){
 					car.setSpeed(car.getSpeed() + CarConfiguration.CAR_ACCERLERATION);
@@ -120,14 +158,37 @@ public class MobileElementManager implements MobileInterface {
 			if(road.getSpeedLimit() < mainCar.getSpeed()){
 				MistakeMessage.setMessage("Car exceeding speed limit");
 			}
-
+			if(!road.getLimits().isEmpty()){
+				for(Line2D limit : road.getLimits()){
+					if(limit.intersectsLine(mainCar.getLeftSide()) || limit.intersectsLine(mainCar.getRightSide()) || limit.intersectsLine(mainCar.getFrontSide()) || limit.intersectsLine(mainCar.getBackSide())){
+						MistakeMessage.setMessage("Car out of road");
+						//Car out road
+					}
+				}
+			}
 			road.accept(roadVisitor);
 
 		} else{
 			MistakeMessage.setMessage("Car out of road");
-			System.err.println(mainCar.getRealPosition().getX() +","+ mainCar.getRealPosition().getY());
+			//System.err.println(mainCar.getRealPosition().getX() +","+ mainCar.getRealPosition().getY());
 		}
 	}
+
+	public void constructCarEdges(Car car, double frontLeftCornerX, double frontLeftCornerY, double frontRightCornerX, double frontRightCornerY, double backLeftCornerX, double backLeftCornerY, double bachRightCornerX, double backRightCornerY){
+		car.getFrontSide().setLine(frontLeftCornerX,frontLeftCornerY,frontRightCornerX,frontRightCornerY);
+		car.getBackSide().setLine(backLeftCornerX,backLeftCornerY,bachRightCornerX,backRightCornerY);
+		car.getLeftSide().setLine(frontLeftCornerX,frontLeftCornerY,backLeftCornerX,backLeftCornerY);
+		car.getRightSide().setLine(frontRightCornerX,frontRightCornerY,bachRightCornerX,backRightCornerY);
+	}
+
+	public void clearHasCar(){
+		ArrayList<Road> roads = city.getHasCar();
+		for(Road road : roads){
+			road.setHasCar(false);
+		}
+		city.getHasCar().clear();
+	}
+
 	public boolean directionVerif(double direction, MainCar car){
 		if(direction == 0){
             return !(car.getDirection().getValue() > 2 * CarConfiguration.CAR_ROTATION) || !(car.getDirection().getValue() < (2 * Math.PI) - (2 * CarConfiguration.CAR_ROTATION));
@@ -171,6 +232,7 @@ public class MobileElementManager implements MobileInterface {
 		moveMainCar();
 		moveNPCCars();
 		mainCarRoadroadVerif(mainCar);
+		clearHasCar();
 	}
 
 	@Override
