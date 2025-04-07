@@ -438,7 +438,7 @@ public class CityBuilder {
         SimpleRoad spr2 = new SimpleRoad(blocks[22][42], down, limit50 ,sprLimits1);
 
         ArrayList<Line2D> spr2Limits = new ArrayList<>();
-        spr2Limits.add(new Line2D.Double(44*40, 21*40, 44*40, 23*40)); //Bord de la route
+        spr2Limits.add(new Line2D.Double(44*40, 19*40, 44*40, 23*40)); //Bord de la route
         spr2Limits.add(new Line2D.Double(43*40, 21*40, 43*40, 23*40)); //Ligne continue
         SimpleRoad spr3 = new SimpleRoad(blocks[22][43], up, limit50 ,spr2Limits);
         roads.put(spr1.getPosition(), spr1);
@@ -455,7 +455,7 @@ public class CityBuilder {
             roads.put(spr.getPosition(), spr);
         }
 
-        Line2D l3 = new Line2D.Double(32*40, 21*40, 41*40, 21*40);
+        Line2D l3 = new Line2D.Double(30*40, 21*40, 41*40, 21*40);
         Line2D l4 = new Line2D.Double(32*40, 20*40, 41*40, 20*40);
         for(int col= 32 ; col <= 40; col++){
             ArrayList<Line2D> sprLimits = new ArrayList<>();
@@ -485,9 +485,9 @@ public class CityBuilder {
             roads.put(spr.getPosition(), spr);
         }
 
-        Line2D l9 =new Line2D.Double(30*40, 17*40, 30*40, 19*40);
+        Line2D l9 =new Line2D.Double(30*40, 17*40, 30*40, 21*40);
         Line2D l10 =new Line2D.Double(31*40, 17*40, 31*40, 19*40);
-        for(int line= 17 ; line <= 18; line++){
+        for(int line= 17 ; line <= 17; line++){
             ArrayList<Line2D> sprLimits = new ArrayList<>();
             sprLimits.add(l9); // Bord de la route
             sprLimits.add(l10); // Ligne continue
@@ -531,7 +531,7 @@ public class CityBuilder {
             roads.put(spr.getPosition(), spr);
         }
 
-        Line2D l19 =new Line2D.Double(32*40, 8*40, 32*40, 9*40);
+        Line2D l19 =new Line2D.Double(32*40, 5*40, 32*40, 9*40);
         Line2D l20 =new Line2D.Double(31*40, 8*40, 31*40, 9*40);
         ArrayList<Line2D> sprLimits4 = new ArrayList<>();
         sprLimits4.add(l19); // Bord de la route
@@ -547,7 +547,7 @@ public class CityBuilder {
         SimpleRoad spr7= new SimpleRoad(blocks[7][30], down,limit50 ,sprLimits5);
         roads.put(spr7.getPosition(), spr7);
 
-        Line2D l23 =new Line2D.Double(23*40, 5*40, 30*40, 5*40);
+        Line2D l23 =new Line2D.Double(20*40, 5*40, 32*40, 5*40);
         Line2D l24 =new Line2D.Double(23*40, 6*40, 30*40, 6*40);
         for(int col=23; col <= 29; col++){
             ArrayList<Line2D> sprLimits = new ArrayList<>();
@@ -647,7 +647,7 @@ public class CityBuilder {
             roads.put(spr.getPosition(), spr);
         }
 
-        Line2D l43 =new Line2D.Double(10*40, 7*40, 10*40, 10*40);
+        Line2D l43 =new Line2D.Double(10*40, 5*40, 10*40, 10*40);
         Line2D l44 =new Line2D.Double(11*40, 7*40, 11*40,10*40);
         for(int line=7; line<= 8; line++){
             ArrayList<Line2D> sprLimits = new ArrayList<>();
@@ -697,7 +697,7 @@ public class CityBuilder {
             roads.put(spr.getPosition(), spr);
         }
 
-        Line2D l53 =new Line2D.Double(12*40, 16*40, 12*40, 19*40);
+        Line2D l53 =new Line2D.Double(12*40, 16*40, 12*40, 21*40);
         Line2D l54 =new Line2D.Double(11*40, 16*40, 11*40, 19*40);
         for(int line=17; line<= 18; line++){
             ArrayList<Line2D> sprLimits = new ArrayList<>();
@@ -717,7 +717,7 @@ public class CityBuilder {
             roads.put(spr.getPosition(), spr);
         }
 
-        Line2D l57 =new Line2D.Double(2*40, 21*40, 10*40, 21*40);
+        Line2D l57 =new Line2D.Double(2*40, 21*40, 12*40, 21*40);
         Line2D l58 =new Line2D.Double(2*40, 20*40, 10*40, 20*40);
         for(int col=2; col<= 8; col++){
             ArrayList<Line2D> sprLimits = new ArrayList<>();
@@ -734,7 +734,7 @@ public class CityBuilder {
         SimpleRoad spr9 = new SimpleRoad(blocks[13][44], right, limit50, sprLimits6);
         roads.put(spr9.getPosition(), spr9);
 
-        Line2D l59 =new Line2D.Double(13*40, 5*40, 20*40, 5*40);
+        Line2D l59 =new Line2D.Double(10*40, 5*40, 20*40, 5*40);
         Line2D l60 =new Line2D.Double(13*40, 6*40, 20*40, 6*40);
         for(int col=13; col<= 19; col++){
             ArrayList<Line2D> sprLimits = new ArrayList<>();
@@ -754,7 +754,7 @@ public class CityBuilder {
             roads.put(spr.getPosition(), spr);
         }
 
-        Line2D l63 =new Line2D.Double(43*40, 5*40, 43*40, 11*40);
+        Line2D l63 =new Line2D.Double(43*40, 6*40, 43*40, 11*40);
         Line2D l64 =new Line2D.Double(44*40, 5*40, 44*40, 11*40);
         for(int line=5; line<= 10; line++){
             ArrayList<Line2D> sprLimits = new ArrayList<>();
@@ -774,8 +774,8 @@ public class CityBuilder {
             roads.put(spr.getPosition(), spr);
         }
 
-        Line2D l67 =new Line2D.Double(1*40, 5*40, 1*40, 12*40);
-        Line2D l68 =new Line2D.Double(2*40, 5*40, 2*40, 12*40);
+        Line2D l67 =new Line2D.Double(1*40, 5*40, 1*40, 14*40);
+        Line2D l68 =new Line2D.Double(2*40, 6*40, 2*40, 12*40);
         for(int line=5; line<= 11; line++){
             ArrayList<Line2D> sprLimits = new ArrayList<>();
             sprLimits.add(l67); // Bord de la route
@@ -783,7 +783,86 @@ public class CityBuilder {
             SimpleRoad spr = new SimpleRoad(blocks[line][1], up, limit50, sprLimits);
             roads.put(spr.getPosition(), spr);
         }
+        ArrayList<Line2D> spr10Limits = new ArrayList<>();
+        spr10Limits.add(new Line2D.Double(40, 22*40, 40, 23*40));
+        spr10Limits.add(new Line2D.Double(80, 22*40, 80, 23*40));
+        SimpleRoad spr10 = new SimpleRoad(blocks[22][1], up, limit50, spr10Limits);
+        roads.put(spr10.getPosition(), spr10);
 
+        //Entrée d'autoroute
+        Line2D hwe1_line1 = new Line2D.Double(86, 161, 66, 173);
+        Line2D hwe1_line2 = new Line2D.Double(66, 173, 50, 188);
+        Line2D hwe1_line3 = new Line2D.Double(50, 188, 40, 205);
+        ArrayList<Line2D> hwe1_limits = new ArrayList<>();
+        hwe1_limits.add(hwe1_line1);
+        hwe1_limits.add(hwe1_line2);
+        hwe1_limits.add(hwe1_line3);
+        SimpleRoad highwayEntry1 = new SimpleRoad(blocks[4][1],right,limit50,hwe1_limits);
+        roads.put(highwayEntry1.getPosition(), highwayEntry1);
+
+        Line2D hwe2_line = new Line2D.Double(120, 190, 104, 201);
+        ArrayList<Line2D> hwe2_limits = new ArrayList<>();
+        hwe2_limits.add(hwe2_line);
+        SimpleRoad highwayEntry2 = new SimpleRoad(blocks[4][2],right,limit50,hwe2_limits);
+        roads.put(highwayEntry2.getPosition(), highwayEntry2);
+
+        Line2D hwe3_line = new Line2D.Double(160, 171, 120, 190);
+        ArrayList<Line2D> hwe3_limits = new ArrayList<>();
+        hwe3_limits.add(hwe3_line);
+        SimpleRoad highwayEntry3 = new SimpleRoad(blocks[4][3],right,limit50,hwe3_limits);
+        roads.put(highwayEntry3.getPosition(), highwayEntry3);
+
+        Line2D hwe4_line = new Line2D.Double(200, 164, 160, 171);
+        ArrayList<Line2D> hwe4_limits = new ArrayList<>();
+        hwe4_limits.add(hwe4_line);
+        SimpleRoad highwayEntry4 = new SimpleRoad(blocks[4][4],right,limit50,hwe4_limits);
+        roads.put(highwayEntry4.getPosition(), highwayEntry4);
+
+        Line2D hwe5_line = new Line2D.Double(226, 161, 200, 164);
+        ArrayList<Line2D> hwe5_limits = new ArrayList<>();
+        hwe5_limits.add(hwe5_line);
+        SimpleRoad highwayEntry5 = new SimpleRoad(blocks[4][5],right,limit50,hwe5_limits);
+        roads.put(highwayEntry5.getPosition(), highwayEntry5);
+
+        Line2D hwe6_line = new Line2D.Double(104, 201, 80, 241);
+        ArrayList<Line2D> hwe6_limits = new ArrayList<>();
+        hwe6_limits.add(hwe6_line);
+        SimpleRoad highwayEntry6 = new SimpleRoad(blocks[5][2],right,limit50,hwe6_limits);
+        roads.put(highwayEntry6.getPosition(), highwayEntry6);
+
+        Line2D hwe7_line = new Line2D.Double(1600, 160, 1640, 170);
+        ArrayList<Line2D> hwe7_limits = new ArrayList<>();
+        hwe7_limits.add(hwe7_line);
+        SimpleRoad highwayEntry7 = new SimpleRoad(blocks[4][40],right,limit50,hwe7_limits);
+        roads.put(highwayEntry7.getPosition(), highwayEntry7);
+
+        Line2D hwe8_line = new Line2D.Double(1640, 170, 1680, 188);
+        ArrayList<Line2D> hwe8_limits = new ArrayList<>();
+        hwe8_limits.add(hwe8_line);
+        SimpleRoad highwayEntry8 = new SimpleRoad(blocks[4][41],right,limit50,hwe8_limits);
+        roads.put(highwayEntry8.getPosition(), highwayEntry8);
+
+        Line2D hwe9_line = new Line2D.Double(1680, 188, 1695, 201);
+        ArrayList<Line2D> hwe9_limits = new ArrayList<>();
+        hwe9_limits.add(hwe9_line);
+        SimpleRoad highwayEntry9 = new SimpleRoad(blocks[4][42],right,limit50,hwe9_limits);
+        roads.put(highwayEntry9.getPosition(), highwayEntry9);
+
+        Line2D hwe10_line1 = new Line2D.Double(1720, 160, 1740, 178);
+        Line2D hwe10_line2 = new Line2D.Double(1740, 178, 1760, 200);
+        ArrayList<Line2D> hwe10_limits = new ArrayList<>();
+        hwe10_limits.add(hwe10_line1);
+        hwe10_limits.add(hwe10_line2);
+        SimpleRoad highwayEntry10 = new SimpleRoad(blocks[4][43],right,limit50,hwe10_limits);
+        roads.put(highwayEntry10.getPosition(), highwayEntry10);
+
+        Line2D hwe11_line1 = new Line2D.Double(1695, 201, 1708, 217);
+        Line2D hwe11_line2 = new Line2D.Double(1708, 217, 1719, 241);
+        ArrayList<Line2D> hwe11_limits = new ArrayList<>();
+        hwe10_limits.add(hwe11_line1);
+        hwe10_limits.add(hwe11_line2);
+        SimpleRoad highwayEntry11 = new SimpleRoad(blocks[5][42],right,limit50,hwe11_limits);
+        roads.put(highwayEntry11.getPosition(), highwayEntry11);
 
 
         //Giratoire
