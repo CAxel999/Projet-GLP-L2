@@ -29,6 +29,16 @@ public class PaintStrategy {
 				graphics.drawLine((int) line.getX1(), (int) line.getY1(), (int) line.getX2(), (int) line.getY2());
 			}
 		}
+
+		/*graphics.setColor(Color.LIGHT_GRAY);
+		for (int i = 0; i <= GameConfiguration.COLUMN_COUNT; i++) {
+			graphics.drawLine(i * GameConfiguration.BLOCK_SIZE, 0, i * GameConfiguration.BLOCK_SIZE, GameConfiguration.LINE_COUNT * GameConfiguration.BLOCK_SIZE);
+		}
+		for (int i = 0; i <= GameConfiguration.LINE_COUNT; i++) {
+			graphics.drawLine(0, i * GameConfiguration.BLOCK_SIZE, GameConfiguration.COLUMN_COUNT * GameConfiguration.BLOCK_SIZE, i * GameConfiguration.BLOCK_SIZE);
+		}
+
+		 */
 	}
 
 	public void paint(MainCar mainCar, Graphics graphics) {
@@ -77,7 +87,8 @@ public class PaintStrategy {
 		graphics2D.rotate(-direction,x,y);
 		graphics2D.setColor(Color.BLUE);
 
-		graphics2D.fillRect(x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
+		//graphics2D.fillRect(x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
+		graphics.drawImage(CarConfiguration.NPC_CAR,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
 		graphics2D.rotate(direction,x,y);
 //		} else {
 //			graphics.setColor(Color.RED);
@@ -90,10 +101,10 @@ public class PaintStrategy {
 
 	}
 
-	public void paint(double speed, Graphics graphics){
+	public void paint(double speed, Graphics graphics, int x, int y){
 		graphics.setColor(Color.RED);
-		graphics.setFont(new Font("Dialog", Font.PLAIN, 50));
-		graphics.drawString(Double.toString(speed),1600,800);
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 20));
+		graphics.drawString(Double.toString(speed),x,y);
 	}
 
 	public void paint(String message, Graphics graphics){

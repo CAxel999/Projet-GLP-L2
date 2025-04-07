@@ -74,13 +74,16 @@ public class StartMenu extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            MainGUI gameMainGUI = null;
+            //MainGUI gameMainGUI = null;
+            TrainingGUI trainingGUI = null;
             try {
-                gameMainGUI = new MainGUI("Auto Ecole");
+                //gameMainGUI = new MainGUI("Auto Ecole");
+                trainingGUI = new TrainingGUI("Auto Ecole mode entraînement");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            Thread gameThread = new Thread(gameMainGUI);
+            //Thread gameThread = new Thread(gameMainGUI);
+            Thread gameThread = new Thread(trainingGUI);
             gameThread.start();
             setVisible(false);
         }
@@ -99,13 +102,16 @@ public class StartMenu extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            MainGUI gameMainGUI = null;
+            //MainGUI gameMainGUI = null;
+            ExamGUI examenGUI = null;
             try {
-                gameMainGUI = new MainGUI("Auto Ecole");
+                //gameMainGUI = new MainGUI("Auto Ecole");
+                examenGUI = new ExamGUI("Auto Ecole mode examen");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            Thread gameThread = new Thread(gameMainGUI);
+            //Thread gameThread = new Thread(gameMainGUI);
+            Thread gameThread = new Thread(examenGUI);
             gameThread.start();
             setVisible(false);
         }

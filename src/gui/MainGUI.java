@@ -25,7 +25,7 @@ public class MainGUI extends JFrame implements Runnable {
 	private final static Dimension dashboardPreferredSize = new Dimension(GameConfiguration.WINDOW_WIDTH, GameConfiguration.WINDOW_HEIGHT);
 	private final static Dimension preferredSize = new Dimension(GameConfiguration.WINDOW_WIDTH+100, GameConfiguration.WINDOW_HEIGHT);
 
-	private MobileInterface manager;
+	private static MobileInterface manager;
 
 	private GameDisplay dashboard;
 
@@ -119,7 +119,7 @@ public class MainGUI extends JFrame implements Runnable {
 		}
 	}
 
-	private class KeyControls implements KeyListener {
+	static class KeyControls implements KeyListener {
 
 		@Override
 		public void keyPressed(KeyEvent event) {

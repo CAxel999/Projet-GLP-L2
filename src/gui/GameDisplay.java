@@ -33,7 +33,6 @@ public class GameDisplay extends JPanel {
 		if(!MistakeMessage.getMessage().isEmpty()){
 			paintStrategy.paint(MistakeMessage.getMessage(), g);
 		}
-		paintStrategy.paint(mainCar.getSpeed(),g);
 		paintStrategy.paint(mainCar, g);
 		for(NPCCar car : manager.getNPCCars()){
 			paintStrategy.paint(car,g);

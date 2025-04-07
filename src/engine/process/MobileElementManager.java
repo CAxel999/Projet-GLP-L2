@@ -137,12 +137,16 @@ public class MobileElementManager implements MobileInterface {
 
 	@Override
 	public void turnLeft() throws LimitReachedException {
-		mainCar.getDirection().increment();
+		if(mainCar.getSpeed() != 0){
+			mainCar.getDirection().increment();
+		}
 	}
 
 	@Override
 	public void turnRight() throws LimitReachedException {
-		mainCar.getDirection().decrement();
+		if(mainCar.getSpeed() != 0){
+			mainCar.getDirection().decrement();
+		}
 	}
 
 	public void accelerate() {
