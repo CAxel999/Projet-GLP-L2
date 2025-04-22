@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import config.GameConfiguration;
 import data.Mistake;
+import data.Scenario;
 import data.ScenarioMessage;
 import engine.map.City;
 import engine.mobile.MainCar;
@@ -32,14 +33,14 @@ public class GameDisplay extends JPanel {
 		paintStrategy.paint(city, g);
 
 		MainCar mainCar = manager.getA();
-
+		Scenario scenario = mainCar.getScenario();
         if (!GameConfiguration.EXAM) {
-            if(!Mistake.getMessage().isEmpty()){
-                paintStrategy.paintMistake(Mistake.getMessage(), g);
+            if(mainCar.getCurrentMistake() != null){
+                paintStrategy.paintMistake(mainCar.getCurrentMistake().getMessage(), g);
             }
         }
-        if(!ScenarioMessage.getMessage().isEmpty()){
-			paintStrategy.paintScenario(ScenarioMessage.getMessage(), g);
+        if(!(scenario.isSuccessful() || scenario.isFailed())){
+			paintStrategy.paintScenario(mainCar.getScenario().getText(), g);
 		}
 		paintStrategy.paint(mainCar, g);
 		for(NPCCar car : manager.getNPCCars()){

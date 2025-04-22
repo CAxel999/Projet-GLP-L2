@@ -1,6 +1,7 @@
 package engine.process;
 
 import config.GameConfiguration;
+import data.Scenario;
 import engine.map.positions.Block;
 import engine.map.positions.PixelPosition;
 import engine.map.roads.*;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CityBuilder {
-    public void buildRoads(HashMap<Block,Road> roads, Block[][] blocks, int lineCount, int columnCount,ArrayList<TrafficLight> trafficLights){
+    public void buildRoads(HashMap<Block,Road> roads, Block[][] blocks, int lineCount, int columnCount, ArrayList<TrafficLight> trafficLights, HashMap<Integer, Scenario> scenarios){
         double up = Math.PI/2;
         double down = 3*Math.PI/2;
         double left = Math.PI;
@@ -22,7 +23,6 @@ public class CityBuilder {
                 blocks[lineIndex][columnIndex] = new Block(lineIndex, columnIndex);
             }
         }
-
 
         //Highways
         Line2D highwayTopLimit = new Line2D.Double(0,2*GameConfiguration.BLOCK_SIZE,1800,2*GameConfiguration.BLOCK_SIZE);

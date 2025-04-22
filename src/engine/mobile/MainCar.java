@@ -21,6 +21,7 @@ public class MainCar extends Car{
 	private boolean angleMortDroitPriority;
 	private Scenario scenario;
 	private Mistake currentMistake;
+	private boolean mistakesWereNotMade;
 
 	public MainCar(Block position) {
 		super(position);
@@ -96,5 +97,17 @@ public class MainCar extends Car{
 
 	public void setCurrentMistake(Mistake currentMistake) {
 		this.currentMistake = currentMistake;
+	}
+
+	public void resetCurrentMistake() {
+		this.currentMistake = null;
+	}
+
+	public boolean isMistakesWereNotMade() {
+		return mistakesWereNotMade;
+	}
+
+	public void setMistakesWereNotMade(boolean mistakesWereNotMade) {
+		this.mistakesWereNotMade = mistakesWereNotMade;
 	}
 }

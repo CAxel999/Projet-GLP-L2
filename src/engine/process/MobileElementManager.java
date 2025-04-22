@@ -24,12 +24,13 @@ import java.util.Iterator;
  */
 public class MobileElementManager implements MobileInterface {
 	private City city;
-
+	private ScoreManager scoreManager;
 	private MainCar mainCar;
 	private ArrayList<NPCCar> npcCars = new ArrayList<NPCCar>();
 
-	public MobileElementManager(City city) {
+	public MobileElementManager(City city, ScoreManager scoreManager) {
 		this.city = city;
+		this.scoreManager = scoreManager;
 	}
 
 	@Override
@@ -150,29 +151,46 @@ public class MobileElementManager implements MobileInterface {
 
 	@Override
 	public void mainCarRoadroadVerif(MainCar mainCar){
-		RoadVisitor roadVisitor = new RoadVisitor(mainCar,this);
+		RoadVisitor roadVisitor = new RoadVisitor(mainCar,this,scoreManager);
 		Block block = mainCar.getPosition();
+		mainCar.setMistakesWereNotMade(true);
 		if(city.getRoads().containsKey(block)){
 
-			Mistake.setMessage("");
+
 			Road road = city.getRoads().get(block);
 
-			if(road.getSpeedLimit() < mainCar.getSpeed()){
-				Mistake.setMessage("Vous dépassez la limite de vitesse !");
-			}
 			if(!road.getLimits().isEmpty()){
 				for(Line2D limit : road.getLimits()){
 					if(limit.intersectsLine(mainCar.getLeftSide()) || limit.intersectsLine(mainCar.getRightSide()) || limit.intersectsLine(mainCar.getFrontSide()) || limit.intersectsLine(mainCar.getBackSide())){
-						Mistake.setMessage("Vous dépassez de la voie !");
+						mainCar.setMistakesWereNotMade(false);
+						if(!(mainCar.getCurrentMistake().getId() == 1)){
+							Mistake mistake = scoreManager.getMistakes().get(1);
+							mistake.incrementNumber();
+							mainCar.setCurrentMistake(mistake);
+						}
+
 						//Car out road
 					}
+				}
+			}
+			if(road.getSpeedLimit() < mainCar.getSpeed()){
+				mainCar.setMistakesWereNotMade(false);
+				if(mainCar.getCurrentMistake().getId() >= 3){
+					Mistake mistake = scoreManager.getMistakes().get(3);
+					mistake.incrementNumber();
+					mainCar.setCurrentMistake(mistake);
 				}
 			}
 			road.accept(roadVisitor);
 
 		} else{
-			Mistake.setMessage("La voiture n'est plus sur la route !");
-			//System.err.println(mainCar.getRealPosition().getX() +","+ mainCar.getRealPosition().getY());
+			mainCar.setMistakesWereNotMade(false);
+			if(!(mainCar.getCurrentMistake().getId() == 1)){
+				mainCar.setCurrentMistake(scoreManager.getMistakes().get(1));
+			}
+		}
+		if(mainCar.isMistakesWereNotMade()){
+			mainCar.resetCurrentMistake();
 		}
 	}
 

@@ -5,6 +5,7 @@ import engine.map.positions.Block;
 import engine.map.roads.Road;
 import engine.map.roads.TrafficLight;
 import engine.process.CityBuilder;
+import engine.process.ScoreManager;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -24,12 +25,12 @@ public class City {
 	private int lineCount;
 	private int columnCount;
 
-	public City(int lineCount, int columnCount) throws IOException {
+	public City(int lineCount, int columnCount, ScoreManager manager) throws IOException {
 
 		init(lineCount, columnCount);
 
 		CityBuilder cityBuilder = new CityBuilder();
-		cityBuilder.buildRoads(roads, blocks, lineCount, columnCount, lights);
+		cityBuilder.buildRoads(roads, blocks, lineCount, columnCount, lights, manager.getScenarioHashMap());
 
 	}
 

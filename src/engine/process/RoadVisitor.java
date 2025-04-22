@@ -4,7 +4,6 @@ import config.GameConfiguration;
 import data.Mistake;
 
 import data.Scenario;
-import data.ScenarioMessage;
 import engine.map.roads.*;
 import engine.mobile.MainCar;
 
@@ -15,16 +14,23 @@ import engine.mobile.MainCar;
 public class RoadVisitor implements TypeVisitor<Void> {
     private MainCar mainCar;
     private MobileElementManager manager;
+    private ScoreManager scoreManager;
 
-    public RoadVisitor(MainCar mainCar,MobileElementManager manager) {
+    public RoadVisitor(MainCar mainCar,MobileElementManager manager, ScoreManager scoreManager) {
         this.mainCar = mainCar;
         this.manager = manager;
+        this.scoreManager = scoreManager;
     }
 
     @Override
     public void visit(SimpleRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            Mistake.setMessage("Vous êtes dans la mauvaise direction !");
+            mainCar.setMistakesWereNotMade(false);
+            if(mainCar.getCurrentMistake().getId() >= 2){
+                Mistake mistake = scoreManager.getMistakes().get(2);
+                mistake.incrementNumber();
+                mainCar.setCurrentMistake(mistake);
+            }
         }
 
     }
@@ -32,7 +38,12 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(CrossroadEntry road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            Mistake.setMessage("Vous êtes dans la mauvaise direction !");
+            mainCar.setMistakesWereNotMade(false);
+            if(mainCar.getCurrentMistake().getId() >= 2){
+                Mistake mistake = scoreManager.getMistakes().get(2);
+                mistake.incrementNumber();
+                mainCar.setCurrentMistake(mistake);
+            }
         }
         mainCar.setPriority(true);
         for(Road occupied : road.getRoads()){
@@ -42,8 +53,12 @@ public class RoadVisitor implements TypeVisitor<Void> {
         }
         if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
             if(!mainCar.isPriority()){
-                Mistake.setMessage("Vous n'avez pas la priorité !");
-                //Car not supposed to go through
+                mainCar.setMistakesWereNotMade(false);
+                if(mainCar.getCurrentMistake().getId() >= 8){
+                    Mistake mistake = scoreManager.getMistakes().get(8);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
             }
         }
     }
@@ -51,7 +66,12 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(Crosswalk road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            Mistake.setMessage("Vous êtes dans la mauvaise direction !");
+            mainCar.setMistakesWereNotMade(false);
+            if(mainCar.getCurrentMistake().getId() >= 2){
+                Mistake mistake = scoreManager.getMistakes().get(2);
+                mistake.incrementNumber();
+                mainCar.setCurrentMistake(mistake);
+            }
         }
     }
 
@@ -59,7 +79,12 @@ public class RoadVisitor implements TypeVisitor<Void> {
     public void visit(Highway road) {
 
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            Mistake.setMessage("Vous êtes dans la mauvaise direction !");
+            mainCar.setMistakesWereNotMade(false);
+            if(mainCar.getCurrentMistake().getId() >= 2){
+                Mistake mistake = scoreManager.getMistakes().get(2);
+                mistake.incrementNumber();
+                mainCar.setCurrentMistake(mistake);
+            }
         }
         if(mainCar.getPosition().equals(road.getPosition())){
             mainCar.setAngleMortDroitPriority(false);
@@ -74,7 +99,21 @@ public class RoadVisitor implements TypeVisitor<Void> {
         }
         if(road.getCrossingSection().intersectsLine(mainCar.getLeftSide()) || road.getCrossingSection().intersectsLine(mainCar.getRightSide()) || road.getCrossingSection().intersectsLine(mainCar.getFrontSide()) || road.getCrossingSection().intersectsLine(mainCar.getBackSide())){
             if(!(mainCar.isAngleMortGauchePriority() || mainCar.isAngleMortDroitPriority())){
-                Mistake.setMessage("Vous n'avez pas regardé votre angle mort !");
+                mainCar.setMistakesWereNotMade(false);
+                if(mainCar.getCurrentMistake().getId() >= 9){
+                    Mistake mistake = scoreManager.getMistakes().get(9);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
+            }
+
+            if(!(mainCar.isClignoGauche() || mainCar.isClignoDroit())){
+                mainCar.setMistakesWereNotMade(false);
+                if(mainCar.getCurrentMistake().getId() >= 10){
+                    Mistake mistake = scoreManager.getMistakes().get(10);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
             }
         }
 
@@ -83,7 +122,12 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(TrafficLightRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            Mistake.setMessage("Vous êtes dans la mauvaise direction !");
+            mainCar.setMistakesWereNotMade(false);
+            if(mainCar.getCurrentMistake().getId() >= 2){
+                Mistake mistake = scoreManager.getMistakes().get(2);
+                mistake.incrementNumber();
+                mainCar.setCurrentMistake(mistake);
+            }
         }
         mainCar.setPriority(true);
         if(road.getLight().getColor().equals(TrafficLightEnum.RED)){
@@ -91,8 +135,12 @@ public class RoadVisitor implements TypeVisitor<Void> {
         }
         if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
             if(!mainCar.isPriority()){
-                Mistake.setMessage("Vous n'avez pas la priorité !");
-                //Car not supposed to go through
+                mainCar.setMistakesWereNotMade(false);
+                if(mainCar.getCurrentMistake().getId() >= 4){
+                    Mistake mistake = scoreManager.getMistakes().get(4);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
             }
         }
     }
@@ -107,7 +155,12 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(Stop road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            Mistake.setMessage("Vous êtes dans la mauvaise direction !");
+            mainCar.setMistakesWereNotMade(false);
+            if(mainCar.getCurrentMistake().getId() >= 2){
+                Mistake mistake = scoreManager.getMistakes().get(2);
+                mistake.incrementNumber();
+                mainCar.setCurrentMistake(mistake);
+            }
         }
         if(mainCar.getSpeed() == 0){
             road.incrementTimeStoped();
@@ -123,8 +176,12 @@ public class RoadVisitor implements TypeVisitor<Void> {
             }
             if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
                 if(!mainCar.isPriority()){
-                    Mistake.setMessage("Vous n'avez pas la priorité !");
-                    //Car not supposed to go through
+                    mainCar.setMistakesWereNotMade(false);
+                    if(mainCar.getCurrentMistake().getId() >= 5){
+                        Mistake mistake = scoreManager.getMistakes().get(5);
+                        mistake.incrementNumber();
+                        mainCar.setCurrentMistake(mistake);
+                    }
                 }
             }
         }
@@ -139,10 +196,14 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(ScenarioRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            Mistake.setMessage("Vous êtes dans la mauvaise direction !");
+            mainCar.setMistakesWereNotMade(false);
+            if(mainCar.getCurrentMistake().getId() >= 2){
+                Mistake mistake = scoreManager.getMistakes().get(2);
+                mistake.incrementNumber();
+                mainCar.setCurrentMistake(mistake);
+            }
         } else if(mainCar.getScenario() == null){
             mainCar.setScenario(road.getScenario());
-            ScenarioMessage.setMessage(road.getScenario().getText());
         }
 
     }
@@ -150,15 +211,17 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(ResolveRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            Mistake.setMessage("Vous êtes dans la mauvaise direction !");
+            mainCar.setMistakesWereNotMade(false);
+            if(mainCar.getCurrentMistake().getId() >= 2){
+                Mistake mistake = scoreManager.getMistakes().get(2);
+                mistake.incrementNumber();
+                mainCar.setCurrentMistake(mistake);
+            }
         } else if(mainCar.getScenario() != null){
             Scenario scenario = mainCar.getScenario();
             if(scenario.getId() == road.getScenario().getId()){
-                ScenarioMessage.setMessage("");
                 scenario.setSuccessful();
             } else {
-                Mistake.setMessage("Vous avez raté l'instruction !");
-                ScenarioMessage.setMessage("");
                 scenario.setFailed();
             }
         }

@@ -16,6 +16,7 @@ import engine.map.roads.TrafficLight;
 import engine.map.roads.TrafficLightEnum;
 import engine.process.GameBuilder;
 import engine.process.MobileInterface;
+import engine.process.ScoreManager;
 
 public class MainGUI extends JFrame implements Runnable {
 
@@ -27,6 +28,7 @@ public class MainGUI extends JFrame implements Runnable {
 	private final static Dimension preferredSize = new Dimension(GameConfiguration.WINDOW_WIDTH+100, GameConfiguration.WINDOW_HEIGHT);
 
 	private MobileInterface manager;
+	private ScoreManager scoreManager;
 
 	private GameDisplay dashboard;
 	private SpeedDisplay speedDisplay;
@@ -66,9 +68,9 @@ public class MainGUI extends JFrame implements Runnable {
 		angleMortDroitButton.addActionListener(new AngleMortDroitListener());
 
 
-
-		city = GameBuilder.buildMap();
-		manager = GameBuilder.buildInitMobile(city);
+		scoreManager = GameBuilder.buildScore();
+		city = GameBuilder.buildMap(scoreManager);
+		manager = GameBuilder.buildInitMobile(city, scoreManager);
 		dashboard = new GameDisplay(city, manager);
 		speedDisplay = new SpeedDisplay(manager);
 
