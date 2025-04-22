@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class ScoreManager {
     private HashMap<Integer, Scenario> scenarioHashMap;
-    private HashMap<String, Mistake> mistakes;
+    private HashMap<Integer, Mistake> mistakes;
     private ScoreDescription scoreDescription;
     private boolean eliminated;
 
@@ -32,7 +32,7 @@ public class ScoreManager {
                     scoreDescription.setMistake(scoreDescription.getMistake() + "\nVous avez réalisé l'erreur : "+ mistake.getName() + ", qui est une faute éliminatoire, " + number + " fois.");
                     eliminated = true;
                 }
-            } else if(mistake.getName().equals("Priorité non respectée")) {
+            } else if(mistake.getId() == 8) {
                 if(number > 0) {
                     if (number >= 3) {
                         scoreDescription.setMistake(scoreDescription.getMistake() + "\nVous avez réalisé l'erreur : "+ mistake.getName() + " " + number + " fois, ce qui est éliminatoire.");
@@ -60,7 +60,7 @@ public class ScoreManager {
         return scenarioHashMap;
     }
 
-    public HashMap<String, Mistake> getMistakes() {
+    public HashMap<Integer, Mistake> getMistakes() {
         return mistakes;
     }
 
@@ -68,7 +68,7 @@ public class ScoreManager {
         this.scenarioHashMap = scenarioHashMap;
     }
 
-    public void setMistakes(HashMap<String, Mistake> mistakes) {
+    public void setMistakes(HashMap<Integer, Mistake> mistakes) {
         this.mistakes = mistakes;
     }
 

@@ -26,7 +26,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
     public void visit(SimpleRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
             mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake().getId() >= 2){
+            if(mainCar.getCurrentMistake() != null) {
+                if(mainCar.getCurrentMistake().getId() >= 2){
+                    Mistake mistake = scoreManager.getMistakes().get(2);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
+            } else{
                 Mistake mistake = scoreManager.getMistakes().get(2);
                 mistake.incrementNumber();
                 mainCar.setCurrentMistake(mistake);
@@ -39,7 +45,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
     public void visit(CrossroadEntry road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
             mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake().getId() >= 2){
+            if(mainCar.getCurrentMistake() != null) {
+                if(mainCar.getCurrentMistake().getId() >= 2){
+                    Mistake mistake = scoreManager.getMistakes().get(2);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
+            } else{
                 Mistake mistake = scoreManager.getMistakes().get(2);
                 mistake.incrementNumber();
                 mainCar.setCurrentMistake(mistake);
@@ -54,7 +66,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
         if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
             if(!mainCar.isPriority()){
                 mainCar.setMistakesWereNotMade(false);
-                if(mainCar.getCurrentMistake().getId() >= 8){
+                if(mainCar.getCurrentMistake() != null) {
+                    if(mainCar.getCurrentMistake().getId() >= 8){
+                        Mistake mistake = scoreManager.getMistakes().get(8);
+                        mistake.incrementNumber();
+                        mainCar.setCurrentMistake(mistake);
+                    }
+                } else{
                     Mistake mistake = scoreManager.getMistakes().get(8);
                     mistake.incrementNumber();
                     mainCar.setCurrentMistake(mistake);
@@ -67,7 +85,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
     public void visit(Crosswalk road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
             mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake().getId() >= 2){
+            if(mainCar.getCurrentMistake() != null) {
+                if(mainCar.getCurrentMistake().getId() >= 2){
+                    Mistake mistake = scoreManager.getMistakes().get(2);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
+            } else{
                 Mistake mistake = scoreManager.getMistakes().get(2);
                 mistake.incrementNumber();
                 mainCar.setCurrentMistake(mistake);
@@ -80,7 +104,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
 
         if(manager.directionVerif(road.getDirection(), mainCar)){
             mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake().getId() >= 2){
+            if(mainCar.getCurrentMistake() != null) {
+                if(mainCar.getCurrentMistake().getId() >= 2){
+                    Mistake mistake = scoreManager.getMistakes().get(2);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
+            } else{
                 Mistake mistake = scoreManager.getMistakes().get(2);
                 mistake.incrementNumber();
                 mainCar.setCurrentMistake(mistake);
@@ -100,7 +130,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
         if(road.getCrossingSection().intersectsLine(mainCar.getLeftSide()) || road.getCrossingSection().intersectsLine(mainCar.getRightSide()) || road.getCrossingSection().intersectsLine(mainCar.getFrontSide()) || road.getCrossingSection().intersectsLine(mainCar.getBackSide())){
             if(!(mainCar.isAngleMortGauchePriority() || mainCar.isAngleMortDroitPriority())){
                 mainCar.setMistakesWereNotMade(false);
-                if(mainCar.getCurrentMistake().getId() >= 9){
+                if(mainCar.getCurrentMistake() != null) {
+                    if(mainCar.getCurrentMistake().getId() >= 9){
+                        Mistake mistake = scoreManager.getMistakes().get(9);
+                        mistake.incrementNumber();
+                        mainCar.setCurrentMistake(mistake);
+                    }
+                } else{
                     Mistake mistake = scoreManager.getMistakes().get(9);
                     mistake.incrementNumber();
                     mainCar.setCurrentMistake(mistake);
@@ -109,7 +145,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
 
             if(!(mainCar.isClignoGauche() || mainCar.isClignoDroit())){
                 mainCar.setMistakesWereNotMade(false);
-                if(mainCar.getCurrentMistake().getId() >= 10){
+                if(mainCar.getCurrentMistake() != null) {
+                    if(mainCar.getCurrentMistake().getId() >= 10){
+                        Mistake mistake = scoreManager.getMistakes().get(10);
+                        mistake.incrementNumber();
+                        mainCar.setCurrentMistake(mistake);
+                    }
+                } else{
                     Mistake mistake = scoreManager.getMistakes().get(10);
                     mistake.incrementNumber();
                     mainCar.setCurrentMistake(mistake);
@@ -123,7 +165,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
     public void visit(TrafficLightRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
             mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake().getId() >= 2){
+            if(mainCar.getCurrentMistake() != null) {
+                if(mainCar.getCurrentMistake().getId() >= 2){
+                    Mistake mistake = scoreManager.getMistakes().get(2);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
+            } else{
                 Mistake mistake = scoreManager.getMistakes().get(2);
                 mistake.incrementNumber();
                 mainCar.setCurrentMistake(mistake);
@@ -136,7 +184,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
         if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
             if(!mainCar.isPriority()){
                 mainCar.setMistakesWereNotMade(false);
-                if(mainCar.getCurrentMistake().getId() >= 4){
+                if(mainCar.getCurrentMistake() != null) {
+                    if(mainCar.getCurrentMistake().getId() >= 4){
+                        Mistake mistake = scoreManager.getMistakes().get(4);
+                        mistake.incrementNumber();
+                        mainCar.setCurrentMistake(mistake);
+                    }
+                } else{
                     Mistake mistake = scoreManager.getMistakes().get(4);
                     mistake.incrementNumber();
                     mainCar.setCurrentMistake(mistake);
@@ -156,7 +210,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
     public void visit(Stop road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
             mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake().getId() >= 2){
+            if(mainCar.getCurrentMistake() != null) {
+                if(mainCar.getCurrentMistake().getId() >= 2){
+                    Mistake mistake = scoreManager.getMistakes().get(2);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
+            } else{
                 Mistake mistake = scoreManager.getMistakes().get(2);
                 mistake.incrementNumber();
                 mainCar.setCurrentMistake(mistake);
@@ -177,7 +237,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
             if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
                 if(!mainCar.isPriority()){
                     mainCar.setMistakesWereNotMade(false);
-                    if(mainCar.getCurrentMistake().getId() >= 5){
+                    if(mainCar.getCurrentMistake() != null) {
+                        if(mainCar.getCurrentMistake().getId() >= 5){
+                            Mistake mistake = scoreManager.getMistakes().get(5);
+                            mistake.incrementNumber();
+                            mainCar.setCurrentMistake(mistake);
+                        }
+                    } else{
                         Mistake mistake = scoreManager.getMistakes().get(5);
                         mistake.incrementNumber();
                         mainCar.setCurrentMistake(mistake);
@@ -197,7 +263,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
     public void visit(ScenarioRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
             mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake().getId() >= 2){
+            if(mainCar.getCurrentMistake() != null) {
+                if(mainCar.getCurrentMistake().getId() >= 2){
+                    Mistake mistake = scoreManager.getMistakes().get(2);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
+            } else{
                 Mistake mistake = scoreManager.getMistakes().get(2);
                 mistake.incrementNumber();
                 mainCar.setCurrentMistake(mistake);
@@ -212,7 +284,13 @@ public class RoadVisitor implements TypeVisitor<Void> {
     public void visit(ResolveRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
             mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake().getId() >= 2){
+            if(mainCar.getCurrentMistake() != null) {
+                if(mainCar.getCurrentMistake().getId() >= 2){
+                    Mistake mistake = scoreManager.getMistakes().get(2);
+                    mistake.incrementNumber();
+                    mainCar.setCurrentMistake(mistake);
+                }
+            } else{
                 Mistake mistake = scoreManager.getMistakes().get(2);
                 mistake.incrementNumber();
                 mainCar.setCurrentMistake(mistake);

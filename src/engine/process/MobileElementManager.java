@@ -163,19 +163,31 @@ public class MobileElementManager implements MobileInterface {
 				for(Line2D limit : road.getLimits()){
 					if(limit.intersectsLine(mainCar.getLeftSide()) || limit.intersectsLine(mainCar.getRightSide()) || limit.intersectsLine(mainCar.getFrontSide()) || limit.intersectsLine(mainCar.getBackSide())){
 						mainCar.setMistakesWereNotMade(false);
-						if(!(mainCar.getCurrentMistake().getId() == 1)){
+                        if(mainCar.getCurrentMistake() != null) {
+                            if(!(mainCar.getCurrentMistake().getId() == 1)){
+                                Mistake mistake = scoreManager.getMistakes().get(1);
+                                mistake.incrementNumber();
+                                mainCar.setCurrentMistake(mistake);
+                            }
+                        } else{
 							Mistake mistake = scoreManager.getMistakes().get(1);
 							mistake.incrementNumber();
 							mainCar.setCurrentMistake(mistake);
 						}
 
-						//Car out road
+                        //Car out road
 					}
 				}
 			}
 			if(road.getSpeedLimit() < mainCar.getSpeed()){
 				mainCar.setMistakesWereNotMade(false);
-				if(mainCar.getCurrentMistake().getId() >= 3){
+				if (mainCar.getCurrentMistake() != null) {
+					if (mainCar.getCurrentMistake().getId() >= 3) {
+						Mistake mistake = scoreManager.getMistakes().get(3);
+						mistake.incrementNumber();
+						mainCar.setCurrentMistake(mistake);
+					}
+				} else {
 					Mistake mistake = scoreManager.getMistakes().get(3);
 					mistake.incrementNumber();
 					mainCar.setCurrentMistake(mistake);
@@ -185,8 +197,16 @@ public class MobileElementManager implements MobileInterface {
 
 		} else{
 			mainCar.setMistakesWereNotMade(false);
-			if(!(mainCar.getCurrentMistake().getId() == 1)){
-				mainCar.setCurrentMistake(scoreManager.getMistakes().get(1));
+			if(mainCar.getCurrentMistake() != null) {
+				if(!(mainCar.getCurrentMistake().getId() == 1)){
+					Mistake mistake = scoreManager.getMistakes().get(1);
+					mistake.incrementNumber();
+					mainCar.setCurrentMistake(mistake);
+				}
+			} else{
+				Mistake mistake = scoreManager.getMistakes().get(1);
+				mistake.incrementNumber();
+				mainCar.setCurrentMistake(mistake);
 			}
 		}
 		if(mainCar.isMistakesWereNotMade()){
@@ -211,9 +231,9 @@ public class MobileElementManager implements MobileInterface {
 
 	public boolean directionVerif(double direction, MainCar car){
 		if(direction == 0){
-            return car.getDirection().getValue() > 2 * CarConfiguration.CAR_ROTATION && car.getDirection().getValue() < (2 * Math.PI) - (2 * CarConfiguration.CAR_ROTATION);
+            return car.getDirection().getValue() > 5 * CarConfiguration.CAR_ROTATION && car.getDirection().getValue() < (2 * Math.PI) - (4 * CarConfiguration.CAR_ROTATION);
 		}
-		else return direction - CarConfiguration.CAR_ROTATION > car.getDirection().getValue() || direction + CarConfiguration.CAR_ROTATION < car.getDirection().getValue();
+		else return direction - 5 * CarConfiguration.CAR_ROTATION > car.getDirection().getValue() || direction + 5 * CarConfiguration.CAR_ROTATION < car.getDirection().getValue();
     }
 
 	@Override

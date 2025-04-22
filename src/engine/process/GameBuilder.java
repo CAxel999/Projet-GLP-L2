@@ -94,39 +94,39 @@ public class GameBuilder {
 	}
 
 	private static void initializeMistakes(ScoreManager manager){
-		HashMap<String, Mistake> mistakes = new HashMap<>();
-		Mistake mistake1 = new Mistake("Sortie de voie","La voiture sort de sa voie.",true);
-		mistakes.put(mistake1.getName(), mistake1);
+		HashMap<Integer, Mistake> mistakes = new HashMap<>();
+		Mistake mistake1 = new Mistake(1,"Sortie de voie","La voiture sort de sa voie.",true);
+		mistakes.put(mistake1.getId(), mistake1);
 
-		Mistake mistake2 = new Mistake("Contre sens","Vous roulez à contre-sens.",true);
-		mistakes.put(mistake2.getName(), mistake2);
+		Mistake mistake2 = new Mistake(2,"Contre sens","Vous roulez à contre-sens.",true);
+		mistakes.put(mistake2.getId(), mistake2);
 
-		Mistake mistake3 = new Mistake("Dépasser la limite de vitesse","Vous dépassez la limite de vitesse.",true);
-		mistakes.put(mistake3.getName(), mistake3);
+		Mistake mistake3 = new Mistake(3,"Dépasser la limite de vitesse","Vous dépassez la limite de vitesse.",true);
+		mistakes.put(mistake3.getId(), mistake3);
 
-		Mistake mistake4 = new Mistake("Feu non respecté","Vous avez grillé le feu rouge.",true);
-		mistakes.put(mistake4.getName(), mistake4);
+		Mistake mistake4 = new Mistake(4,"Feu non respecté","Vous avez grillé le feu rouge.",true);
+		mistakes.put(mistake4.getId(), mistake4);
 
-		Mistake mistake5 = new Mistake("Stop non respecté","Vous avez grillé le stop.",true);
-		mistakes.put(mistake5.getName(), mistake5);
+		Mistake mistake5 = new Mistake(5,"Stop non respecté","Vous avez grillé le stop.",true);
+		mistakes.put(mistake5.getId(), mistake5);
 
-		Mistake mistake6 = new Mistake("Ligne continue franchie","Vous franchissez une ligne continue.",true);
-		mistakes.put(mistake6.getName(), mistake6);
+		Mistake mistake6 = new Mistake(6,"Ligne continue franchie","Vous franchissez une ligne continue.",true);
+		mistakes.put(mistake6.getId(), mistake6);
 
-		Mistake mistake7 = new Mistake("Piéton non respecté","Vous n'avez pas laissé le piéton passer.",true);
-		mistakes.put(mistake7.getName(), mistake7);
+		Mistake mistake7 = new Mistake(7,"Piéton non respecté","Vous n'avez pas laissé le piéton passer.",true);
+		mistakes.put(mistake7.getId(), mistake7);
 
-		Mistake mistake8 = new Mistake("Priorité non respectée","Vous n'avez pas respecté la priorité.",false);
-		mistakes.put(mistake8.getName(), mistake8);
+		Mistake mistake8 = new Mistake(8,"Priorité non respectée","Vous n'avez pas respecté la priorité.",false);
+		mistakes.put(mistake8.getId(), mistake8);
 
-		Mistake mistake9 = new Mistake("Angle mort non vérifié","Vous n'avez pas vérifié votre angle mort.",false);
-		mistakes.put(mistake9.getName(), mistake9);
+		Mistake mistake9 = new Mistake(9,"Angle mort non vérifié","Vous n'avez pas vérifié votre angle mort.",false);
+		mistakes.put(mistake9.getId(), mistake9);
 
-		Mistake mistake10 = new Mistake("Changement de voie non signalé","Vous n'avez pas signalé votre changement de voie.",false);
-		mistakes.put(mistake10.getName(), mistake10);
+		Mistake mistake10 = new Mistake(10,"Changement de voie non signalé","Vous n'avez pas signalé votre changement de voie.",false);
+		mistakes.put(mistake10.getId(), mistake10);
 
-		Mistake mistake11 = new Mistake("Oubli du clignotant","Vous n'avez pas mis votre clignotant pour tourner.",false);
-		mistakes.put(mistake11.getName(), mistake11);
+		Mistake mistake11 = new Mistake(11,"Oubli du clignotant","Vous n'avez pas mis votre clignotant pour tourner.",false);
+		mistakes.put(mistake11.getId(), mistake11);
 
 		manager.setMistakes(mistakes);
 	}

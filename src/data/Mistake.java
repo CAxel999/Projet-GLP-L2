@@ -1,13 +1,15 @@
 package data;
 
 public class Mistake {
+    private int id;
     private String name;
     private String message;
     private boolean eliminatory;
     private int number;
 
 
-    public Mistake(String name,String message, boolean eliminatory) {
+    public Mistake(int id, String name,String message, boolean eliminatory) {
+        this.id = id;
         this.message = message;
         this.name = name;
         this.eliminatory = eliminatory;
@@ -16,6 +18,10 @@ public class Mistake {
 
     public String getMessage() {
         return message;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {

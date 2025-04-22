@@ -39,8 +39,10 @@ public class GameDisplay extends JPanel {
                 paintStrategy.paintMistake(mainCar.getCurrentMistake().getMessage(), g);
             }
         }
-        if(!(scenario.isSuccessful() || scenario.isFailed())){
-			paintStrategy.paintScenario(mainCar.getScenario().getText(), g);
+		if(scenario != null) {
+			if (!(scenario.isSuccessful() || scenario.isFailed())) {
+				paintStrategy.paintScenario(mainCar.getScenario().getText(), g);
+			}
 		}
 		paintStrategy.paint(mainCar, g);
 		for(NPCCar car : manager.getNPCCars()){
