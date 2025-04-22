@@ -1,12 +1,12 @@
 package engine.map;
 
+import data.Scenario;
 import engine.map.positions.Block;
 import engine.map.roads.Road;
 import engine.map.roads.TrafficLight;
 import engine.process.CityBuilder;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +17,9 @@ public class City {
 	private Block[][] blocks;
 	private HashMap<Block, Road> roads;
 	private ArrayList<Road> hasCar;
-	private ArrayList<TrafficLight> lights1 = new ArrayList<TrafficLight>();
+	private ArrayList<TrafficLight> lights = new ArrayList<TrafficLight>();
 	private final BufferedImage map = ImageIO.read(new File("src/images/ville.png"));
+	private HashMap<Integer,Scenario> scenarioHashMap = new HashMap<Integer,Scenario>();
 
 	private int lineCount;
 	private int columnCount;
@@ -28,7 +29,7 @@ public class City {
 		init(lineCount, columnCount);
 
 		CityBuilder cityBuilder = new CityBuilder();
-		cityBuilder.buildRoads(roads, blocks, lineCount, columnCount);
+		cityBuilder.buildRoads(roads, blocks, lineCount, columnCount, lights);
 
 	}
 
@@ -69,7 +70,11 @@ public class City {
 		return hasCar;
 	}
 
-	public ArrayList<TrafficLight> getLights1() {
-		return lights1;
+	public ArrayList<TrafficLight> getLights() {
+		return lights;
+	}
+
+	public HashMap<Integer, Scenario> getScenarioHashMap() {
+		return scenarioHashMap;
 	}
 }

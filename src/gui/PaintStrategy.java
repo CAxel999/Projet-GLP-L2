@@ -5,8 +5,9 @@ import java.awt.*;
 import config.CarConfiguration;
 import config.GameConfiguration;
 import engine.map.City;
-import engine.map.roads.Highway;
 import engine.map.roads.Road;
+import engine.map.roads.TrafficLight;
+import engine.map.roads.TrafficLightEnum;
 import engine.mobile.MainCar;
 import engine.map.positions.PixelPosition;
 import engine.mobile.NPCCar;
@@ -16,10 +17,23 @@ import engine.mobile.NPCCar;
  */
 public class PaintStrategy {
 	public void paint(City city, Graphics graphics) {
-		graphics.drawImage(city.getMap(),0,0,null);
-		/*for(Road road : city.getRoads().values()){
+		//graphics.drawImage(city.getMap(),0,0,null);
+		for(Road road : city.getRoads().values()){
 			graphics.fillRect(road.getPosition().getColumn() * GameConfiguration.BLOCK_SIZE,road.getPosition().getLine() * GameConfiguration.BLOCK_SIZE,GameConfiguration.BLOCK_SIZE,GameConfiguration.BLOCK_SIZE);
-		}*/
+		}
+
+		for(TrafficLight trafficLight : city.getLights()){
+			int x = trafficLight.getPosition().getX();
+			int y = trafficLight.getPosition().getY();
+			if(trafficLight.getColor().equals(TrafficLightEnum.GREEN)){
+				graphics.drawImage(GameConfiguration.GREEN_LIGHT,x,y,null);
+			} else if(trafficLight.getColor().equals(TrafficLightEnum.ORANGE)){
+				graphics.drawImage(GameConfiguration.ORANGE_LIGHT,x,y,null);
+			} else {
+				graphics.drawImage(GameConfiguration.RED_LIGHT,x,y,null);
+			}
+
+		}
 	}
 
 	public void paint(MainCar mainCar, Graphics graphics) {
@@ -73,10 +87,18 @@ public class PaintStrategy {
 		Graphics2D graphics2D = (Graphics2D) graphics;
 		graphics2D.rotate(-direction,x,y);
 		graphics2D.setColor(Color.RED);
-		System.err.println(car.getPosition().getColumn()*GameConfiguration.BLOCK_SIZE + "," + car.getPosition().getLine()*GameConfiguration.BLOCK_SIZE);
+		//System.err.println(car.getPosition().getColumn()*GameConfiguration.BLOCK_SIZE + "," + car.getPosition().getLine()*GameConfiguration.BLOCK_SIZE);
 		//graphics2D.fillRect(car.getPosition().getColumn()*GameConfiguration.BLOCK_SIZE,car.getPosition().getLine()*GameConfiguration.BLOCK_SIZE, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
-		graphics2D.fillRect(x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
-
+		//graphics2D.fillRect(x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2, CarConfiguration.CAR_LENGTH,CarConfiguration.CAR_WIDTH);
+		if(car.isClignoGauche()){
+			graphics.drawImage(CarConfiguration.NPCCAR_LEFTLIGHT,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+		} else if(car.isClignoDroit()) {
+			graphics.drawImage(CarConfiguration.NPCCAR_RIGHTLIGHT, x - CarConfiguration.CAR_LENGTH / 2, y - CarConfiguration.CAR_WIDTH / 2, null);
+		} else if(car.getBraking()){
+			graphics.drawImage(CarConfiguration.NPCCAR_BRAKING,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+		} else {
+			graphics.drawImage(CarConfiguration.NPCCAR,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+		}
 		graphics2D.rotate(direction,x,y);
 //		} else {
 //			graphics.setColor(Color.RED);
@@ -89,16 +111,23 @@ public class PaintStrategy {
 
 	}
 
-	public void paint(double speed, Graphics graphics){
+	public void paint(double speed, Graphics graphics, int x, int y){
+		speed = speed*6*3.6;
 		graphics.setColor(Color.RED);
-		graphics.setFont(new Font("Dialog", Font.PLAIN, 50));
-		graphics.drawString(Double.toString(speed),1600,800);
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 30));
+		graphics.drawString(Double.toString(speed),x,y);
 	}
 
-	public void paint(String message, Graphics graphics){
+	public void paintMistake(String message, Graphics graphics){
 		graphics.setColor(Color.RED);
-		graphics.setFont(new Font("Dialog", Font.PLAIN, 20));
-		graphics.drawString(message,300,100);
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 30));
+		graphics.drawString(message,900,800);
+	}
+
+	public void paintScenario(String message, Graphics graphics){
+		graphics.setColor(Color.GREEN);
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 30));
+		graphics.drawString(message,500,800);
 	}
 
 }

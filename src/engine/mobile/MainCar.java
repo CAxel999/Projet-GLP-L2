@@ -2,6 +2,7 @@ package engine.mobile;
 
 import config.CarConfiguration;
 import config.GameConfiguration;
+import data.Mistake;
 import data.Scenario;
 import engine.counters.CyclicCounter;
 import engine.map.positions.Block;
@@ -19,6 +20,7 @@ public class MainCar extends Car{
 	private boolean angleMortGauchePriority;
 	private boolean angleMortDroitPriority;
 	private Scenario scenario;
+	private Mistake currentMistake;
 
 	public MainCar(Block position) {
 		super(position);
@@ -86,5 +88,13 @@ public class MainCar extends Car{
 
 	public void setScenario(Scenario scenario) {
 		this.scenario = scenario;
+	}
+
+	public Mistake getCurrentMistake() {
+		return currentMistake;
+	}
+
+	public void setCurrentMistake(Mistake currentMistake) {
+		this.currentMistake = currentMistake;
 	}
 }

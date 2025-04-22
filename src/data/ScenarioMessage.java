@@ -1,6 +1,6 @@
 package data;
 
-public class MistakeMessage {
+public class ScenarioMessage {
     private static String message ="";
 
     public static String getMessage() {
@@ -8,6 +8,6 @@ public class MistakeMessage {
     }
 
     public static void setMessage(String message) {
-        MistakeMessage.message = message;
+        ScenarioMessage.message = message;
     }
 }

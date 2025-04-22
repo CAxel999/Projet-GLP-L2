@@ -29,11 +29,16 @@ public class Scenario {
         return failed;
     }
 
-    public void setSuccessful(boolean successful) {
-        this.successful = successful;
+    public void setSuccessful() {
+        if(!failed){
+            this.successful = true;
+        }
+
     }
 
-    public void setFailed(boolean failed) {
-        this.failed = failed;
+    public void setFailed() {
+        if(!successful) {
+            this.failed = true;
+        }
     }
 }

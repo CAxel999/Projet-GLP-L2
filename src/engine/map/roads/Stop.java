@@ -7,7 +7,6 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class Stop extends Road{
-    public static final int STOPTIME = 120;
     private int timeStoped;
     private double direction;
     private ArrayList<Road> roads;

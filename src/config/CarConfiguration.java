@@ -20,6 +20,10 @@ public class CarConfiguration {
     public static final BufferedImage CAR_LEFTDEAD;
     public static final BufferedImage CAR_RIGHTDEAD;
     public static final BufferedImage CAR_BRAKING;
+    public static final BufferedImage NPCCAR;
+    public static final BufferedImage NPCCAR_LEFTLIGHT;
+    public static final BufferedImage NPCCAR_RIGHTLIGHT;
+    public static final BufferedImage NPCCAR_BRAKING;
 
     static {
         try {
@@ -29,6 +33,10 @@ public class CarConfiguration {
             CAR_LEFTDEAD = ImageIO.read(new File("src/images/angle_mort_gauche.png"));
             CAR_RIGHTDEAD = ImageIO.read(new File("src/images/angle_mort_droit.png"));
             CAR_BRAKING = ImageIO.read(new File("src/images/warning.png"));
+            NPCCAR =  ImageIO.read(new File("src/images/npc_car.png"));;
+            NPCCAR_LEFTLIGHT =  ImageIO.read(new File("src/images/npc_cligno_gauche.png"));;
+            NPCCAR_RIGHTLIGHT =  ImageIO.read(new File("src/images/npc_cligno_droit.png"));;
+            NPCCAR_BRAKING =  ImageIO.read(new File("src/images/npc_warning.png"));;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

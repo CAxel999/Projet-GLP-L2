@@ -4,7 +4,9 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import data.MistakeMessage;
+import config.GameConfiguration;
+import data.Mistake;
+import data.ScenarioMessage;
 import engine.map.City;
 import engine.mobile.MainCar;
 import engine.mobile.NPCCar;
@@ -30,10 +32,15 @@ public class GameDisplay extends JPanel {
 		paintStrategy.paint(city, g);
 
 		MainCar mainCar = manager.getA();
-		if(!MistakeMessage.getMessage().isEmpty()){
-			paintStrategy.paint(MistakeMessage.getMessage(), g);
+
+        if (!GameConfiguration.EXAM) {
+            if(!Mistake.getMessage().isEmpty()){
+                paintStrategy.paintMistake(Mistake.getMessage(), g);
+            }
+        }
+        if(!ScenarioMessage.getMessage().isEmpty()){
+			paintStrategy.paintScenario(ScenarioMessage.getMessage(), g);
 		}
-		paintStrategy.paint(mainCar.getSpeed(),g);
 		paintStrategy.paint(mainCar, g);
 		for(NPCCar car : manager.getNPCCars()){
 			paintStrategy.paint(car,g);

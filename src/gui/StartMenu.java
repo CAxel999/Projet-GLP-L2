@@ -1,5 +1,7 @@
 package gui;
 
+import config.GameConfiguration;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -80,6 +82,7 @@ public class StartMenu extends JFrame {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+            GameConfiguration.EXAM = false;
             Thread gameThread = new Thread(gameMainGUI);
             gameThread.start();
             setVisible(false);
@@ -105,6 +108,7 @@ public class StartMenu extends JFrame {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+            GameConfiguration.EXAM = true;
             Thread gameThread = new Thread(gameMainGUI);
             gameThread.start();
             setVisible(false);

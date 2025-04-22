@@ -1,9 +1,6 @@
 package test;
 
-import gui.MainGUI;
 import gui.StartMenu;
-
-import java.io.IOException;
 
 public class TestGame {
 	public static void main(String[] args) {

@@ -2,6 +2,7 @@ package engine.map.roads;
 
 import engine.map.positions.Block;
 import engine.process.TypeVisitor;
+import org.apache.log4j.Logger;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  *
  */
 public abstract class Road {
+    private static final Logger log = Logger.getLogger(Road.class);
     private Block position;
 
     private double speedLimit;

@@ -4,7 +4,7 @@ import config.CarConfiguration;
 import config.GameConfiguration;
 import data.Instruction;
 import engine.counters.LimitReachedException;
-import data.MistakeMessage;
+import data.Mistake;
 import engine.map.positions.Block;
 import engine.map.City;
 import engine.map.positions.PixelPosition;
@@ -15,7 +15,6 @@ import engine.map.positions.CarPosition;
 import engine.mobile.NPCCar;
 
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -109,6 +108,9 @@ public class MobileElementManager implements MobileInterface {
 						car.setPosition(newPosition);
 						road = city.getRoads().get(newPosition);
 
+						car.setClignoGauche(instruction.isTurningLeft());
+						car.setClignoDroit(instruction.isTurningRight());
+
 						if(road != null){
 							road.setHasCar(true);
 							city.getHasCar().add(road);
@@ -152,16 +154,16 @@ public class MobileElementManager implements MobileInterface {
 		Block block = mainCar.getPosition();
 		if(city.getRoads().containsKey(block)){
 
-			MistakeMessage.setMessage("");
+			Mistake.setMessage("");
 			Road road = city.getRoads().get(block);
 
 			if(road.getSpeedLimit() < mainCar.getSpeed()){
-				MistakeMessage.setMessage("Car exceeding speed limit");
+				Mistake.setMessage("Vous dépassez la limite de vitesse !");
 			}
 			if(!road.getLimits().isEmpty()){
 				for(Line2D limit : road.getLimits()){
 					if(limit.intersectsLine(mainCar.getLeftSide()) || limit.intersectsLine(mainCar.getRightSide()) || limit.intersectsLine(mainCar.getFrontSide()) || limit.intersectsLine(mainCar.getBackSide())){
-						MistakeMessage.setMessage("Car out of road");
+						Mistake.setMessage("Vous dépassez de la voie !");
 						//Car out road
 					}
 				}
@@ -169,7 +171,7 @@ public class MobileElementManager implements MobileInterface {
 			road.accept(roadVisitor);
 
 		} else{
-			MistakeMessage.setMessage("Car out of road");
+			Mistake.setMessage("La voiture n'est plus sur la route !");
 			//System.err.println(mainCar.getRealPosition().getX() +","+ mainCar.getRealPosition().getY());
 		}
 	}
@@ -191,9 +193,9 @@ public class MobileElementManager implements MobileInterface {
 
 	public boolean directionVerif(double direction, MainCar car){
 		if(direction == 0){
-            return !(car.getDirection().getValue() > 2 * CarConfiguration.CAR_ROTATION) || !(car.getDirection().getValue() < (2 * Math.PI) - (2 * CarConfiguration.CAR_ROTATION));
+            return car.getDirection().getValue() > 2 * CarConfiguration.CAR_ROTATION && car.getDirection().getValue() < (2 * Math.PI) - (2 * CarConfiguration.CAR_ROTATION);
 		}
-		else return !(direction - CarConfiguration.CAR_ROTATION > car.getDirection().getValue()) && !(direction + CarConfiguration.CAR_ROTATION < car.getDirection().getValue());
+		else return direction - CarConfiguration.CAR_ROTATION > car.getDirection().getValue() || direction + CarConfiguration.CAR_ROTATION < car.getDirection().getValue();
     }
 
 	@Override

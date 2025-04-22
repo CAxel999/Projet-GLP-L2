@@ -13,6 +13,7 @@ import config.GameConfiguration;
 import engine.counters.LimitReachedException;
 import engine.map.City;
 import engine.map.roads.TrafficLight;
+import engine.map.roads.TrafficLightEnum;
 import engine.process.GameBuilder;
 import engine.process.MobileInterface;
 
@@ -28,6 +29,7 @@ public class MainGUI extends JFrame implements Runnable {
 	private MobileInterface manager;
 
 	private GameDisplay dashboard;
+	private SpeedDisplay speedDisplay;
 
 	private JTextField textField;
 
@@ -63,21 +65,22 @@ public class MainGUI extends JFrame implements Runnable {
 		angleMortGaucheButton.addActionListener(new AngleMortGaucheListener());
 		angleMortDroitButton.addActionListener(new AngleMortDroitListener());
 
-		homeButton.addActionListener(new HomeListener());
-		rightControlPanel.setLayout(new GridLayout(5,1));
+
+
+		city = GameBuilder.buildMap();
+		manager = GameBuilder.buildInitMobile(city);
+		dashboard = new GameDisplay(city, manager);
+		speedDisplay = new SpeedDisplay(manager);
+
+		/*MouseControls mouseControls = new MouseControls();
+		dashboard.addMouseListener(mouseControls);*/
+		rightControlPanel.setLayout(new GridLayout(6,1));
 		rightControlPanel.add(homeButton);
 		rightControlPanel.add(angleMortGaucheButton);
 		rightControlPanel.add(angleMortDroitButton);
 		rightControlPanel.add(clignoGaucheButton);
 		rightControlPanel.add(clignoDroitButton);
-
-		city = GameBuilder.buildMap();
-		manager = GameBuilder.buildInitMobile(city);
-		dashboard = new GameDisplay(city, manager);
-
-		/*MouseControls mouseControls = new MouseControls();
-		dashboard.addMouseListener(mouseControls);*/
-
+		rightControlPanel.add(speedDisplay);
 		dashboard.setPreferredSize(dashboardPreferredSize);
 		contentPane.add(BorderLayout.EAST, rightControlPanel);
 		contentPane.add(BorderLayout.WEST, dashboard);
@@ -107,15 +110,26 @@ public class MainGUI extends JFrame implements Runnable {
 				GameBuilder.addNPCCar1(city,manager.getNPCCars());
 				GameBuilder.addNPCCar2(city,manager.getNPCCars());
 			}
-			if(interval==2100){
-
+			if(interval==450){
+				for(TrafficLight light : city.getLights()){
+					if(light.getColor().equals(TrafficLightEnum.GREEN)){
+						light.setColor(TrafficLightEnum.ORANGE);
+					}
+				}
+			}
+			if(interval==900){
 				interval = 0;
-				for(TrafficLight light : city.getLights1()){
-
+				for(TrafficLight light : city.getLights()){
+					if(light.getColor().equals(TrafficLightEnum.ORANGE)){
+						light.setColor(TrafficLightEnum.RED);
+					} else if(light.getColor().equals(TrafficLightEnum.RED)){
+						light.setColor(TrafficLightEnum.GREEN);
+					}
 				}
 			}
 			manager.nextRound();
 			dashboard.repaint();
+			speedDisplay.repaint();
 		}
 	}
 
