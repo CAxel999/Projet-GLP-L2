@@ -6,6 +6,11 @@ import engine.process.TypeVisitor;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
+/**
+ * Class of a TrafficLightRoad object
+ *
+ * Has a {@link TrafficLight} that can change color, a direction in double and a {@link Line2D} as a priority zone
+ */
 public class TrafficLightRoad extends Road {
     private double direction;
     private TrafficLight light;
@@ -31,12 +36,13 @@ public class TrafficLightRoad extends Road {
         return priorityzone;
     }
 
-    public void setPriorityzone(Line2D priorityzone) {
-        this.priorityzone = priorityzone;
-    }
-
     @Override
     public <T> void accept(TypeVisitor<T> visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return "une route possédant un feu de position" + getPosition().toString();
     }
 }

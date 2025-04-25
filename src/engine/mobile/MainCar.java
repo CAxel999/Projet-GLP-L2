@@ -11,7 +11,11 @@ import engine.map.positions.CarPosition;
 
 import java.awt.geom.Line2D;
 
-
+/**
+ * Class of a MainCar object
+ *
+ * Has a {@link CyclicCounter} for direction, a {@link Scenario}, 4 boolean for verification of dead angles
+ */
 public class MainCar extends Car{
 
 	private CyclicCounter direction;
@@ -20,8 +24,6 @@ public class MainCar extends Car{
 	private boolean angleMortGauchePriority;
 	private boolean angleMortDroitPriority;
 	private Scenario scenario;
-	private Mistake currentMistake;
-	private boolean mistakesWereNotMade;
 
 	public MainCar(Block position) {
 		super(position);
@@ -89,25 +91,5 @@ public class MainCar extends Car{
 
 	public void setScenario(Scenario scenario) {
 		this.scenario = scenario;
-	}
-
-	public Mistake getCurrentMistake() {
-		return currentMistake;
-	}
-
-	public void setCurrentMistake(Mistake currentMistake) {
-		this.currentMistake = currentMistake;
-	}
-
-	public void resetCurrentMistake() {
-		this.currentMistake = null;
-	}
-
-	public boolean isMistakesWereNotMade() {
-		return mistakesWereNotMade;
-	}
-
-	public void setMistakesWereNotMade(boolean mistakesWereNotMade) {
-		this.mistakesWereNotMade = mistakesWereNotMade;
 	}
 }

@@ -1,9 +1,11 @@
 package engine.process;
 
+import data.Mistake;
 import engine.counters.LimitReachedException;
 import engine.mobile.Car;
 import engine.mobile.MainCar;
 import engine.mobile.NPCCar;
+import exception.CarCrashException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +16,7 @@ public interface MobileInterface {
 
 	void set(ArrayList<NPCCar> npcCars);
 
-	void mainCarRoadroadVerif(MainCar mainCar);
+	void mainCarRoadVerif();
 
 	void turnLeft() throws LimitReachedException;
 
@@ -30,11 +32,13 @@ public interface MobileInterface {
 
 	void moveNPCCars();
 
-	void nextRound();
+	void nextRound() throws CarCrashException;
 
 	MainCar getA();
 
 	ArrayList<NPCCar> getNPCCars();
+
+	Mistake getCurrentMistake();
 
 
 }

@@ -9,34 +9,21 @@ import engine.mobile.MainCar;
 
 
 /**
- *
+ *This visitor handles each {@link Road} the {@link MainCar} goes on with a different execution.
  */
 public class RoadVisitor implements TypeVisitor<Void> {
     private MainCar mainCar;
     private MobileElementManager manager;
-    private ScoreManager scoreManager;
 
-    public RoadVisitor(MainCar mainCar,MobileElementManager manager, ScoreManager scoreManager) {
+    public RoadVisitor(MainCar mainCar,MobileElementManager manager) {
         this.mainCar = mainCar;
         this.manager = manager;
-        this.scoreManager = scoreManager;
     }
 
     @Override
     public void visit(SimpleRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake() != null) {
-                if(mainCar.getCurrentMistake().getId() >= 2){
-                    Mistake mistake = scoreManager.getMistakes().get(2);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
-            } else{
-                Mistake mistake = scoreManager.getMistakes().get(2);
-                mistake.incrementNumber();
-                mainCar.setCurrentMistake(mistake);
-            }
+            manager.setCurrentMistake(2);
         }
 
     }
@@ -44,18 +31,8 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(CrossroadEntry road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake() != null) {
-                if(mainCar.getCurrentMistake().getId() >= 2){
-                    Mistake mistake = scoreManager.getMistakes().get(2);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
-            } else{
-                Mistake mistake = scoreManager.getMistakes().get(2);
-                mistake.incrementNumber();
-                mainCar.setCurrentMistake(mistake);
-            }
+            manager.setCurrentMistake(2);
+
         }
         mainCar.setPriority(true);
         for(Road occupied : road.getRoads()){
@@ -65,18 +42,7 @@ public class RoadVisitor implements TypeVisitor<Void> {
         }
         if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
             if(!mainCar.isPriority()){
-                mainCar.setMistakesWereNotMade(false);
-                if(mainCar.getCurrentMistake() != null) {
-                    if(mainCar.getCurrentMistake().getId() >= 8){
-                        Mistake mistake = scoreManager.getMistakes().get(8);
-                        mistake.incrementNumber();
-                        mainCar.setCurrentMistake(mistake);
-                    }
-                } else{
-                    Mistake mistake = scoreManager.getMistakes().get(8);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
+                manager.setCurrentMistake(8);
             }
         }
     }
@@ -84,18 +50,7 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(Crosswalk road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake() != null) {
-                if(mainCar.getCurrentMistake().getId() >= 2){
-                    Mistake mistake = scoreManager.getMistakes().get(2);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
-            } else{
-                Mistake mistake = scoreManager.getMistakes().get(2);
-                mistake.incrementNumber();
-                mainCar.setCurrentMistake(mistake);
-            }
+            manager.setCurrentMistake(2);
         }
     }
 
@@ -103,18 +58,7 @@ public class RoadVisitor implements TypeVisitor<Void> {
     public void visit(Highway road) {
 
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake() != null) {
-                if(mainCar.getCurrentMistake().getId() >= 2){
-                    Mistake mistake = scoreManager.getMistakes().get(2);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
-            } else{
-                Mistake mistake = scoreManager.getMistakes().get(2);
-                mistake.incrementNumber();
-                mainCar.setCurrentMistake(mistake);
-            }
+            manager.setCurrentMistake(2);
         }
         if(mainCar.getPosition().equals(road.getPosition())){
             mainCar.setAngleMortDroitPriority(false);
@@ -129,33 +73,11 @@ public class RoadVisitor implements TypeVisitor<Void> {
         }
         if(road.getCrossingSection().intersectsLine(mainCar.getLeftSide()) || road.getCrossingSection().intersectsLine(mainCar.getRightSide()) || road.getCrossingSection().intersectsLine(mainCar.getFrontSide()) || road.getCrossingSection().intersectsLine(mainCar.getBackSide())){
             if(!(mainCar.isAngleMortGauchePriority() || mainCar.isAngleMortDroitPriority())){
-                mainCar.setMistakesWereNotMade(false);
-                if(mainCar.getCurrentMistake() != null) {
-                    if(mainCar.getCurrentMistake().getId() >= 9){
-                        Mistake mistake = scoreManager.getMistakes().get(9);
-                        mistake.incrementNumber();
-                        mainCar.setCurrentMistake(mistake);
-                    }
-                } else{
-                    Mistake mistake = scoreManager.getMistakes().get(9);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
+                manager.setCurrentMistake(9);
             }
 
             if(!(mainCar.isClignoGauche() || mainCar.isClignoDroit())){
-                mainCar.setMistakesWereNotMade(false);
-                if(mainCar.getCurrentMistake() != null) {
-                    if(mainCar.getCurrentMistake().getId() >= 10){
-                        Mistake mistake = scoreManager.getMistakes().get(10);
-                        mistake.incrementNumber();
-                        mainCar.setCurrentMistake(mistake);
-                    }
-                } else{
-                    Mistake mistake = scoreManager.getMistakes().get(10);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
+                manager.setCurrentMistake(10);
             }
         }
 
@@ -164,18 +86,7 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(TrafficLightRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake() != null) {
-                if(mainCar.getCurrentMistake().getId() >= 2){
-                    Mistake mistake = scoreManager.getMistakes().get(2);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
-            } else{
-                Mistake mistake = scoreManager.getMistakes().get(2);
-                mistake.incrementNumber();
-                mainCar.setCurrentMistake(mistake);
-            }
+            manager.setCurrentMistake(2);
         }
         mainCar.setPriority(true);
         if(road.getLight().getColor().equals(TrafficLightEnum.RED)){
@@ -183,18 +94,7 @@ public class RoadVisitor implements TypeVisitor<Void> {
         }
         if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
             if(!mainCar.isPriority()){
-                mainCar.setMistakesWereNotMade(false);
-                if(mainCar.getCurrentMistake() != null) {
-                    if(mainCar.getCurrentMistake().getId() >= 4){
-                        Mistake mistake = scoreManager.getMistakes().get(4);
-                        mistake.incrementNumber();
-                        mainCar.setCurrentMistake(mistake);
-                    }
-                } else{
-                    Mistake mistake = scoreManager.getMistakes().get(4);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
+                manager.setCurrentMistake(4);
             }
         }
     }
@@ -209,18 +109,7 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(Stop road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake() != null) {
-                if(mainCar.getCurrentMistake().getId() >= 2){
-                    Mistake mistake = scoreManager.getMistakes().get(2);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
-            } else{
-                Mistake mistake = scoreManager.getMistakes().get(2);
-                mistake.incrementNumber();
-                mainCar.setCurrentMistake(mistake);
-            }
+            manager.setCurrentMistake(2);
         }
         if(mainCar.getSpeed() == 0){
             road.incrementTimeStoped();
@@ -236,18 +125,7 @@ public class RoadVisitor implements TypeVisitor<Void> {
             }
             if(road.getPriorityzone().intersectsLine(mainCar.getLeftSide()) || road.getPriorityzone().intersectsLine(mainCar.getRightSide())){
                 if(!mainCar.isPriority()){
-                    mainCar.setMistakesWereNotMade(false);
-                    if(mainCar.getCurrentMistake() != null) {
-                        if(mainCar.getCurrentMistake().getId() >= 5){
-                            Mistake mistake = scoreManager.getMistakes().get(5);
-                            mistake.incrementNumber();
-                            mainCar.setCurrentMistake(mistake);
-                        }
-                    } else{
-                        Mistake mistake = scoreManager.getMistakes().get(5);
-                        mistake.incrementNumber();
-                        mainCar.setCurrentMistake(mistake);
-                    }
+                    manager.setCurrentMistake(5);
                 }
             }
         }
@@ -261,20 +139,10 @@ public class RoadVisitor implements TypeVisitor<Void> {
 
     @Override
     public void visit(ScenarioRoad road) {
+        Scenario scenario = mainCar.getScenario();
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake() != null) {
-                if(mainCar.getCurrentMistake().getId() >= 2){
-                    Mistake mistake = scoreManager.getMistakes().get(2);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
-            } else{
-                Mistake mistake = scoreManager.getMistakes().get(2);
-                mistake.incrementNumber();
-                mainCar.setCurrentMistake(mistake);
-            }
-        } else if(mainCar.getScenario() == null){
+            manager.setCurrentMistake(2);
+        } else if(scenario == null || scenario.isSuccessful() || scenario.isFailed()){
             mainCar.setScenario(road.getScenario());
         }
 
@@ -283,18 +151,7 @@ public class RoadVisitor implements TypeVisitor<Void> {
     @Override
     public void visit(ResolveRoad road) {
         if(manager.directionVerif(road.getDirection(), mainCar)){
-            mainCar.setMistakesWereNotMade(false);
-            if(mainCar.getCurrentMistake() != null) {
-                if(mainCar.getCurrentMistake().getId() >= 2){
-                    Mistake mistake = scoreManager.getMistakes().get(2);
-                    mistake.incrementNumber();
-                    mainCar.setCurrentMistake(mistake);
-                }
-            } else{
-                Mistake mistake = scoreManager.getMistakes().get(2);
-                mistake.incrementNumber();
-                mainCar.setCurrentMistake(mistake);
-            }
+            manager.setCurrentMistake(2);
         } else if(mainCar.getScenario() != null){
             Scenario scenario = mainCar.getScenario();
             if(scenario.getId() == road.getScenario().getId()){
@@ -303,5 +160,20 @@ public class RoadVisitor implements TypeVisitor<Void> {
                 scenario.setFailed();
             }
         }
+    }
+
+    @Override
+    public void visit(GoalRoad road) {
+        if(manager.directionVerif(road.getDirection(), mainCar)){
+            manager.setCurrentMistake(2);
+        } else if(mainCar.getScenario() != null){
+            Scenario scenario = mainCar.getScenario();
+            if(scenario.getId() == road.getScenario().getId()){
+                scenario.setSuccessful();
+            } else {
+                scenario.setFailed();
+            }
+        }
+        GameConfiguration.END = true;
     }
 }

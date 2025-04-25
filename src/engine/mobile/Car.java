@@ -1,13 +1,20 @@
 package engine.mobile;
 
-import config.CarConfiguration;
 import engine.map.positions.Block;
 import engine.map.positions.CarPosition;
 import engine.map.positions.PixelPosition;
+import engine.map.roads.Road;
+import engine.process.ScoreManager;
 
 import java.awt.geom.Line2D;
 
+/**
+ * Class of a car object
+ *
+ * Has a double for speed, a current {@link Road} to log new road encountered, a {@link CarPosition} in double coordinates, a {@link PixelPosition} in int coordinates, a {@link Block} position in block coordinates, 4 edges of {@link Line2D}, 4 boolean for priority, being in braking state, left turn signal and right turn signal
+ */
 public abstract class Car extends MobileElement{
+    private Road currentRoad;
     private double speed;
     private CarPosition realPosition;
     private PixelPosition pixelPosition;
@@ -76,21 +83,6 @@ public abstract class Car extends MobileElement{
         this.rightSide = rightSide;
     }
 
-    /*public Line2D getFront() {
-            return front;
-        }
-
-        public Line2D getBack() {
-            return back;
-        }
-
-        public Line2D getLeft() {
-            return left;
-        }
-
-        public Line2D getRight() {
-            return right;
-        }*/
     public boolean isClignoDroit() {
         return clignoDroit;
     }
@@ -116,8 +108,6 @@ public abstract class Car extends MobileElement{
         this.priority = priority;
     }
 
-
-
     public void setBraking(Boolean braking) {
         this.braking = braking;
     }
@@ -126,8 +116,15 @@ public abstract class Car extends MobileElement{
         this.clignoDroit = clignoDroit;
     }
 
-
     public void setClignoGauche(boolean clignoGauche) {
         this.clignoGauche = clignoGauche;
+    }
+
+    public Road getCurrentRoad() {
+        return currentRoad;
+    }
+
+    public void setCurrentRoad(Road currentRoad) {
+        this.currentRoad = currentRoad;
     }
 }

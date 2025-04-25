@@ -1,6 +1,8 @@
 package engine.map.roads;
 
 import engine.map.positions.Block;
+import engine.map.positions.CarPosition;
+import engine.map.positions.PixelPosition;
 import engine.process.TypeVisitor;
 import org.apache.log4j.Logger;
 
@@ -8,10 +10,11 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 /**
+ * Class of a Road object
  *
+ * Has a {@link Block} position in block coordinates, a speedlimit in double, a boolean for if it has car and an ArrayList of {@link Line2D}
  */
 public abstract class Road {
-    private static final Logger log = Logger.getLogger(Road.class);
     private Block position;
 
     private double speedLimit;

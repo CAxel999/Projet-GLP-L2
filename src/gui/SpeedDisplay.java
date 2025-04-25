@@ -26,6 +26,6 @@ public class SpeedDisplay extends JPanel {
         int y = getHeight();
 
         MainCar mainCar = manager.getA();
-        paintStrategy.paint(mainCar.getSpeed(),g, x/2-10, y/2+10);
+        paintStrategy.paint(mainCar.getSpeed(),g, x/2-30, y/2+10);
     }
 }

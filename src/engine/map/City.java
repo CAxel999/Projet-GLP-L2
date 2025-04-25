@@ -1,5 +1,6 @@
 package engine.map;
 
+import data.Instruction;
 import data.Scenario;
 import engine.map.positions.Block;
 import engine.map.roads.Road;
@@ -14,13 +15,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/**
+ * Class of City object
+ *
+ * Has an Array of {@link Block}, a HashMap of {@link Road}, an ArrayList of road that has a car, an ArrayList of {@link TrafficLight}
+ */
 public class City {
 	private Block[][] blocks;
 	private HashMap<Block, Road> roads;
 	private ArrayList<Road> hasCar;
 	private ArrayList<TrafficLight> lights = new ArrayList<TrafficLight>();
 	private final BufferedImage map = ImageIO.read(new File("src/images/ville.png"));
-	private HashMap<Integer,Scenario> scenarioHashMap = new HashMap<Integer,Scenario>();
+
 
 	private int lineCount;
 	private int columnCount;
@@ -47,18 +54,6 @@ public class City {
 		return map;
 	}
 
-	public Block[][] getBlocks() {
-		return blocks;
-	}
-
-	public int getLineCount() {
-		return lineCount;
-	}
-
-	public int getColumnCount() {
-		return columnCount;
-	}
-
 	public Block getBlock(int line, int column) {
 		return blocks[line][column];
 	}
@@ -73,9 +68,5 @@ public class City {
 
 	public ArrayList<TrafficLight> getLights() {
 		return lights;
-	}
-
-	public HashMap<Integer, Scenario> getScenarioHashMap() {
-		return scenarioHashMap;
 	}
 }

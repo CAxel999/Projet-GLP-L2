@@ -2,6 +2,11 @@ package engine.map.roads;
 
 import engine.map.positions.PixelPosition;
 
+/**
+ * Class of a TrafficLight object
+ *
+ * Has a {@link PixelPosition} for its display, a {@link TrafficLightEnum} fot its colors
+ */
 public class TrafficLight {
     private PixelPosition position;
     private TrafficLightEnum color;
@@ -22,4 +27,5 @@ public class TrafficLight {
     public void setColor(TrafficLightEnum color) {
         this.color = color;
     }
+
 }

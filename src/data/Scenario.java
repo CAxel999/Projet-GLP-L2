@@ -1,5 +1,11 @@
 package data;
 
+
+/**
+ * Class of a Scenario object
+ *
+ * Has an int as an id, a description and two boolean fo the successful and failed status of the scenario
+ */
 public class Scenario {
     private int id;
     private String text;
@@ -33,7 +39,6 @@ public class Scenario {
         if(!failed){
             this.successful = true;
         }
-
     }
 
     public void setFailed() {

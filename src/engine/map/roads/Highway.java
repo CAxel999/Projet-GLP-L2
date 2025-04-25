@@ -7,10 +7,9 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 /**
- *Roads on a highway
+ *Class of a HighWay object
  *
- *Is a chunk of a highway
- *Has a zone that permits to check wether the car is autorized to cross between lines or not
+ *Has a direction in double, a {@link Block} for the second position at le left of the first and a {@link Line2D} as a crossing section
  */
 public class Highway extends Road {
     private double direction;
@@ -39,5 +38,10 @@ public class Highway extends Road {
     @Override
     public <T> void accept(TypeVisitor<T> visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return "une autoroute de position" + getPosition().toString();
     }
 }

@@ -1,5 +1,10 @@
 package data;
 
+/**
+ * Class of a Mistake object
+ *
+ * Has an int as an id, a name, a description a boolean for its eliminatory status and a int for the number of time the mistake was made
+ */
 public class Mistake {
     private int id;
     private String name;
@@ -34,6 +39,7 @@ public class Mistake {
 
     public void incrementNumber() {
         this.number++;
+        System.err.println(number);
     }
 
     public int getNumber() {

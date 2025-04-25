@@ -1,5 +1,8 @@
 package engine.map.positions;
 
+/**
+ * Position with Block coordinates has a column and a line in an Array of Block
+ */
 public class Block {
 	private int line;
 	private int column;

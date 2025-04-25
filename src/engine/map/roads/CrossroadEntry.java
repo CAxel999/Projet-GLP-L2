@@ -7,10 +7,10 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 /**
- *Road at the entries of a cross road
+ * Class of a CrossroadEntry object
  *
- *Is placed at the entries of a crossroad. It can be a cross, a roundabout or a "giratoire".
- *Has a zone that permits to check wether the car is autorized to cross the crossroad or not depending on its priority
+ * Is placed at the entries of a {@link Crossroad}. It can be a cross, a roundabout or a "giratoire".
+ * Has an ArrayList {@link Road} to check for incoming cars, a direction in double and a {@link Line2D} as a priority zone
  */
 public class CrossroadEntry extends Road {
     private double direction;
@@ -42,5 +42,10 @@ public class CrossroadEntry extends Road {
     @Override
     public <T> void accept(TypeVisitor<T> visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return "une entrée de croisement de position" + getPosition().toString();
     }
 }

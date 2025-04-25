@@ -2,6 +2,10 @@ package engine.process;
 
 import engine.map.roads.*;
 
+/**
+ * Generic visitor supporting all type type.
+ *
+ */
 public interface TypeVisitor<T> {
     void visit(SimpleRoad road);
     void visit(CrossroadEntry road);
@@ -13,5 +17,6 @@ public interface TypeVisitor<T> {
     void visit(StopExit road);
     void visit(ScenarioRoad road);
     void visit(ResolveRoad road);
+    void visit(GoalRoad road);
 
 }

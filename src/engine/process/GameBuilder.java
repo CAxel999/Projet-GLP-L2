@@ -15,12 +15,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * Class used to build the elements of the game
+ */
 public class GameBuilder {
 
 	public static City buildMap(ScoreManager manager) throws IOException {
 		return new City(GameConfiguration.LINE_COUNT, GameConfiguration.COLUMN_COUNT, manager);
 	}
 
+	/**
+	 * Initialize the mobile elements from the city, calls for {@link #intializeCar(City, MobileInterface)} and {@link #intializeNPCCar(City, MobileInterface)}
+	 * @param city The {@link City} in which the mobile elements will be put
+	 * @param scoreManager The {@link ScoreManager} used for the user score
+	 * @return The manager for the mobile elements
+	 */
 	public static MobileInterface buildInitMobile(City city, ScoreManager scoreManager) {
 		MobileInterface manager = new MobileElementManager(city, scoreManager);
 
@@ -29,6 +38,10 @@ public class GameBuilder {
 		return manager;
 	}
 
+	/**
+	 * Initialize a {@link ScoreManager}, calls for {@link #intializeScenario(ScoreManager)} and {@link #initializeMistakes(ScoreManager)}
+	 * @return A {@link ScoreManager}
+	 */
 	public static ScoreManager buildScore(){
 		ScoreManager manager = new ScoreManager();
 		intializeScenario(manager);
@@ -36,23 +49,39 @@ public class GameBuilder {
 		return manager;
 	}
 
+	/**
+	 * Initialize the {@link MainCar} on a block from the {@link City}.
+	 * @param city The {@link City} in which the {@link MainCar} is initialized
+	 * @param manager The {@link MobileElementManager} used to manage the {@link MainCar}
+	 */
 	private static void intializeCar(City city, MobileInterface manager) {
 		Block block = city.getBlock(GameConfiguration.LINE_COUNT - 1, (GameConfiguration.COLUMN_COUNT - 1) / 2 -1);
 		MainCar mainCar = new MainCar(block);
 		manager.set(mainCar);
 	}
 
+	/**
+	 * Initialize the {@link NPCCar} in the {@link City}, calls for {@link #addNPCCar1(City, ArrayList)} and {@link #addNPCCar2(City, ArrayList)}
+	 * @param city The {@link City} in which the {@link NPCCar} are initialized
+	 * @param manager The {@link MobileElementManager} used to manage the {@link NPCCar}
+	 */
 	private static void intializeNPCCar(City city, MobileInterface manager) {
 		ArrayList<NPCCar> npcCars = new ArrayList<NPCCar>();
 		addNPCCar1(city, npcCars);
 		addNPCCar2(city, npcCars);
-		//add other npcCars
 
 		manager.set(npcCars);
 	}
 
+	/**
+	 * Initialize the {@link Scenario} which the {@link MainCar} is able to follow.
+	 * @param manager The {@link ScoreManager} used to manage the {@link Scenario}
+	 */
 	private static void intializeScenario(ScoreManager manager) {
 		HashMap<Integer,Scenario> scenarioHashMap = new HashMap<Integer,Scenario>();
+
+		Scenario scenario0 = new Scenario(0,"Scenario d'erreur");
+		scenarioHashMap.put(scenario0.getId(), scenario0);
 
 		Scenario scenario1 = new Scenario(1,"Au croisement, tournez à gauche.");
 		scenarioHashMap.put(scenario1.getId(), scenario1);
@@ -93,6 +122,10 @@ public class GameBuilder {
 		manager.setScenarioHashMap(scenarioHashMap);
 	}
 
+	/**
+	 * Initialize the {@link Mistake} which the {@link MainCar} is able to make.
+	 * @param manager The {@link ScoreManager} used to manage the {@link Mistake}
+	 */
 	private static void initializeMistakes(ScoreManager manager){
 		HashMap<Integer, Mistake> mistakes = new HashMap<>();
 		Mistake mistake1 = new Mistake(1,"Sortie de voie","La voiture sort de sa voie.",true);
@@ -131,6 +164,11 @@ public class GameBuilder {
 		manager.setMistakes(mistakes);
 	}
 
+	/**
+	 * Adds a {@link NPCCar} which drives on the bottom left of the {@link City}
+	 * @param city The {@link City} in which the {@link NPCCar} ise added
+	 * @param npcCars An ArrayList of {@link NPCCar}
+	 */
 	public static void addNPCCar1(City city, ArrayList<NPCCar> npcCars) {
 		Block block = city.getBlock(20, 0);
 		ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
@@ -258,6 +296,11 @@ public class GameBuilder {
 		npcCars.add(npcCar);
 	}
 
+	/**
+	 * Adds a {@link NPCCar} which drives at the top of the {@link City}
+	 * @param city The {@link City} in which the {@link NPCCar} ise added
+	 * @param npcCars An ArrayList of {@link NPCCar}
+	 */
 	public static void addNPCCar2(City city, ArrayList<NPCCar> npcCars) {
 		Block block = city.getBlock(3, 0);
 		ArrayList<Instruction> instructionList = new ArrayList<Instruction>();

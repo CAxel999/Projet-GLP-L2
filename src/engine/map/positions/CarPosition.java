@@ -1,7 +1,7 @@
 package engine.map.positions;
 
 /**
- * Position of the car with floating point number
+ * Position with double coordinates
  */
 public class CarPosition {
     private double x;

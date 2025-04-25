@@ -11,7 +11,11 @@ import java.io.IOException;
  * Contains parameter for the game.
  */
 public class GameConfiguration {
+	public static boolean END;
+	public static boolean DEBUG;
+	public static boolean CRASH;
 	public static boolean EXAM;
+
 	public static final int WINDOW_WIDTH = 1800;
 	public static final int WINDOW_HEIGHT = 920;
 	

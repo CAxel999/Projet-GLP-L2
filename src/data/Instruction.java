@@ -1,8 +1,14 @@
 package data;
 
-import engine.counters.CyclicCounter;
+
 import engine.map.positions.PixelPosition;
 
+
+/**
+ * Class of an Instruction object
+ *
+ * Has double for speed and direction, a {@link PixelPosition} for its end point and two boolean for the display of turn signal
+ */
 public class Instruction {
     private double speed;
     private double direction;
@@ -37,8 +43,6 @@ public class Instruction {
     public boolean isTurningRight() {
         return turningRight;
     }
-
-
 
     @Override
     public String toString() {

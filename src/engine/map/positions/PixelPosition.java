@@ -2,7 +2,7 @@ package engine.map.positions;
 
 
 /**
- * Position in pixel
+ * Position with int coordinate
  */
 public class PixelPosition {
     private int x;

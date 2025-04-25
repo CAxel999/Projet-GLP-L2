@@ -17,7 +17,13 @@ import engine.map.roads.TrafficLightEnum;
 import engine.process.GameBuilder;
 import engine.process.MobileInterface;
 import engine.process.ScoreManager;
+import exception.CarCrashException;
 
+/**
+ * GUI used for the execution of the driving simulation
+ *
+ * This gui displays the city, the cars and the important information for each round.
+ */
 public class MainGUI extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +56,11 @@ public class MainGUI extends JFrame implements Runnable {
 		init();
 	}
 
+	/**
+	 * Initialize the JFrame with it's component.
+	 *
+	 * @throws IOException
+	 */
 	private void init() throws IOException {
 
 		Container contentPane = getContentPane();
@@ -61,7 +72,7 @@ public class MainGUI extends JFrame implements Runnable {
 		contentPane.add(textField, BorderLayout.SOUTH);
 
 		//rightControlPanel components
-
+		homeButton.addActionListener(new HomeListener());
 		clignoGaucheButton.addActionListener(new ClignoGaucheListener());
 		clignoDroitButton.addActionListener(new ClignoDroitListener());
 		angleMortGaucheButton.addActionListener(new AngleMortGaucheListener());
@@ -97,10 +108,17 @@ public class MainGUI extends JFrame implements Runnable {
 		setResizable(false);
 	}
 
+	/**
+	 * The application main loop.
+	 * Updates the application state every incrementation of the loop.
+	 * Handles traffic light transitions and calls nextRound() and repaint().
+	 */
 	@Override
 	public void run() {
 		int interval = 0;
 		run = true;
+		GameConfiguration.END = false;
+		GameConfiguration.CRASH = false;
 		while (run) {
 			try {
 				Thread.sleep(GameConfiguration.GAME_SPEED);
@@ -109,7 +127,7 @@ public class MainGUI extends JFrame implements Runnable {
 			}
 			interval +=1;
 			if(interval%300==0){
-				GameBuilder.addNPCCar1(city,manager.getNPCCars());
+
 				GameBuilder.addNPCCar2(city,manager.getNPCCars());
 			}
 			if(interval==450){
@@ -118,6 +136,7 @@ public class MainGUI extends JFrame implements Runnable {
 						light.setColor(TrafficLightEnum.ORANGE);
 					}
 				}
+				GameBuilder.addNPCCar1(city,manager.getNPCCars());
 			}
 			if(interval==900){
 				interval = 0;
@@ -129,14 +148,40 @@ public class MainGUI extends JFrame implements Runnable {
 					}
 				}
 			}
-			manager.nextRound();
-			dashboard.repaint();
-			speedDisplay.repaint();
-		}
+			if(GameConfiguration.END && GameConfiguration.EXAM){
+				dispose();
+				run=false;
+				ScoreDisplay scoreDisplay = new ScoreDisplay("Note", scoreManager);
+			}
+			else if(GameConfiguration.END){
+				System.err.println("PresqueFIN");
+				dashboard.repaint();
+				run=false;
+			} else {
+				try {
+					manager.nextRound();
+					dashboard.repaint();
+					speedDisplay.repaint();
+				} catch (CarCrashException e) {
+					run = false;
+					GameConfiguration.CRASH = true;
+					dashboard.repaint();
+				}
+			}
+        }
 	}
 
+	/**
+	 * Private class that implements KeyListeners to handle keyboard input.
+	 *
+	 */
 	private class KeyControls implements KeyListener {
 
+		/**
+		 * Method is called depending on which key is pressed and other methods are called to control actions such as accelerating, slowing, braking, and turning to the left or right.
+		 *
+		 * @param event the event to be processed
+		 */
 		@Override
 		public void keyPressed(KeyEvent event) {
             try {
@@ -170,6 +215,12 @@ public class MainGUI extends JFrame implements Runnable {
 
 		}
 
+		/**
+		 * Called when a key is released.
+		 * Handles stopping the braking action when the spacebar is released.
+		 *
+		 * @param event the KeyEvent triggered by the key release
+		 */
         @Override
         public void keyReleased(KeyEvent event) {
             char keyChar = event.getKeyChar();
@@ -185,11 +236,18 @@ public class MainGUI extends JFrame implements Runnable {
 	}
 
 	/**
-	 * Class that implements an ActionListener for the HomeButton
+	 * Private Class that implements an ActionListener for the homebutton to close the MainGUI, stop the game thread window and open StartMenu.
 	 *
 	 */
 	private class HomeListener implements ActionListener {
 
+		/**
+		 * Method called to dispose of the MainGUI window.
+		 * Stop the game thread.
+		 * Open StartMenu.
+		 *
+		 * @param e the event to be processed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose();
@@ -197,8 +255,18 @@ public class MainGUI extends JFrame implements Runnable {
 			StartMenu startMenu = new StartMenu("Auto Ecole");
 		}
 	}
+
+	/**
+	 * Private class that implements an ActionListener for AngleMortGaucheButton.
+	 */
 	private class AngleMortGaucheListener implements ActionListener{
 
+		/**
+		 * Method called when button is trigerred and set the boolean on true when its false and false when it's true.
+		 * Boolean is used to draw the left blind spot of users car.
+		 *
+		 * @param e the event to be processed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			manager.getA().setClignoGauche(false);
@@ -214,8 +282,18 @@ public class MainGUI extends JFrame implements Runnable {
 			textField.requestFocusInWindow();
 		}
 	}
+
+	/**
+	 * Private class that implements an ActionListener for AngleMortDroitButton.
+	 */
 	private class AngleMortDroitListener implements ActionListener{
 
+		/**
+		 * Method called when button is trigerred and set the boolean on true when its false and false when it's true.
+		 * Boolean is used to draw the right blind spot of users car.
+		 *
+		 * @param e the event to be processed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			manager.getA().setClignoGauche(false);
@@ -231,12 +309,19 @@ public class MainGUI extends JFrame implements Runnable {
 			textField.requestFocusInWindow();
 		}
 	}
+
 	/**
 	 * Class that implements an ActionListener for the clignoGauchebutton.
 	 *
 	 */
 	private class ClignoGaucheListener implements ActionListener {
 
+		/**
+		 * Method called when button is trigerred and set the boolean on true when its false and false when it's true.
+		 * Boolean is used to draw the left turn signal of users car.
+		 *
+		 * @param e the event to be processed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			manager.getA().setClignoDroit(false);
@@ -260,6 +345,12 @@ public class MainGUI extends JFrame implements Runnable {
 	 */
 	private class ClignoDroitListener implements ActionListener {
 
+		/**
+		 * Method called when button is trigerred and set the boolean on true when its false and false when it's true.
+		 * Boolean is used to draw the right turn signal of users car.
+		 *
+		 * @param e the event to be processed
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			manager.getA().setClignoGauche(false);
@@ -275,33 +366,4 @@ public class MainGUI extends JFrame implements Runnable {
 			textField.requestFocusInWindow();
 		}
 	}
-	/*private class MouseControls implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			int x = e.getX();
-			int y = e.getY();
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-
-		}
-	}*/
-
 }

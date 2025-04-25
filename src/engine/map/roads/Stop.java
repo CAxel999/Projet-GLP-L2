@@ -6,6 +6,11 @@ import engine.process.TypeVisitor;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
+/**
+ * Class of a Stop object
+ *
+ * Has a direction in double, a time when the {@link engine.mobile.MainCar} was stopped on the road, an ArrrayList {@link Road} to check for incoming cars, a direction in double and a {@link Line2D} as a priority zone
+ */
 public class Stop extends Road{
     private int timeStoped;
     private double direction;
@@ -51,5 +56,10 @@ public class Stop extends Road{
     @Override
     public <T> void accept(TypeVisitor<T> visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return "une route possédant un stop de position" + getPosition().toString();
     }
 }
