@@ -206,7 +206,12 @@ public class MobileElementManager implements MobileInterface {
 		} else{
 			setCurrentMistake(1);
 		}
-		if(mistakesWereNotMade){
+        if(currentMistake != null) {
+            if(lastMistake == null || (currentMistake.getId() != lastMistake.getId())) {
+                currentMistake.incrementNumber();
+            }
+        }
+        if(mistakesWereNotMade){
 			lastMistake = null;
 		} else {
 			lastMistake = currentMistake;
@@ -219,12 +224,8 @@ public class MobileElementManager implements MobileInterface {
 	 */
 	public void setCurrentMistake(int id){
 		mistakesWereNotMade = false;
-		if(currentMistake != null && (currentMistake.getId() <= id)){
-			return;
-		}
-		currentMistake = scoreManager.getMistakes().get(id);
-		if(lastMistake == null || (currentMistake.getId() != lastMistake.getId())) {
-			currentMistake.incrementNumber();
+		if(currentMistake == null || (currentMistake.getId() >= id)){
+			currentMistake = scoreManager.getMistakes().get(id);
 		}
 	}
 
