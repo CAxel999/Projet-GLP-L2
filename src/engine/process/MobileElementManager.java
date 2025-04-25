@@ -209,12 +209,11 @@ public class MobileElementManager implements MobileInterface {
         if(currentMistake != null) {
             if(lastMistake == null || (currentMistake.getId() != lastMistake.getId())) {
                 currentMistake.incrementNumber();
+				lastMistake = currentMistake;
             }
         }
-        if(mistakesWereNotMade){
+		else {
 			lastMistake = null;
-		} else {
-			lastMistake = currentMistake;
 		}
 	}
 
