@@ -20,6 +20,6 @@ Afin de lancer notre projet avec l'IDE Eclipse :
 9. Dans cette nouvelle fenêtre, au milieu, cliquez sur "Classpath" puis à droite sur "Add JARs"
 10. Déroulez le menu jusqu'à ouvrir le dossier libs, sélectionnez "log4j-1.2.17.jar" cliquez sur "OK"
 11. Répétez les étapes 9. et 10. pour "junit-4.11.jar" puis fermez la fenêtre
-12. De retour sur le "Project Explorer", cliquez sur src pour le dérouler puis sur le package test, double-cliquez sur le fichier TestGame.java et enfin cliquez sur la flêche vert représentant le bouton run en haut de la fenêtre.
+12. De retour sur le "Project Explorer", cliquez sur src pour le dérouler puis sur le package test, double-cliquez sur le fichier TestGame.java et enfin cliquez sur la flêche verte représentant le bouton run en haut de la fenêtre.
 13. Vous pouvez aussi le faire avec le fichier TestDebug.java pour lancer le programme en mode debug
    
