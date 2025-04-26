@@ -28,8 +28,8 @@ public class CarConfiguration {
     static {
         try {
             CAR = ImageIO.read(new File("src/images/car.png"));
-            CAR_LEFTLIGHT = ImageIO.read(new File("src/images/cligno_gauche_2.png"));
-            CAR_RIGHTLIGHT = ImageIO.read(new File("src/images/cligno_droit_2.png"));
+            CAR_LEFTLIGHT = ImageIO.read(new File("src/images/cligno_gauche.png"));
+            CAR_RIGHTLIGHT = ImageIO.read(new File("src/images/cligno_droit.png"));
             CAR_LEFTDEAD = ImageIO.read(new File("src/images/angle_mort_gauche.png"));
             CAR_RIGHTDEAD = ImageIO.read(new File("src/images/angle_mort_droit.png"));
             CAR_BRAKING = ImageIO.read(new File("src/images/warning.png"));

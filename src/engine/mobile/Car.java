@@ -14,7 +14,6 @@ import java.awt.geom.Line2D;
  * Has a double for speed, a current {@link Road} to log new road encountered, a {@link CarPosition} in double coordinates, a {@link PixelPosition} in int coordinates, a {@link Block} position in block coordinates, 4 edges of {@link Line2D}, 4 boolean for priority, being in braking state, left turn signal and right turn signal
  */
 public abstract class Car extends MobileElement{
-    private Road currentRoad;
     private double speed;
     private CarPosition realPosition;
     private PixelPosition pixelPosition;
@@ -118,13 +117,5 @@ public abstract class Car extends MobileElement{
 
     public void setClignoGauche(boolean clignoGauche) {
         this.clignoGauche = clignoGauche;
-    }
-
-    public Road getCurrentRoad() {
-        return currentRoad;
-    }
-
-    public void setCurrentRoad(Road currentRoad) {
-        this.currentRoad = currentRoad;
     }
 }
