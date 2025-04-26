@@ -4,7 +4,7 @@ import engine.map.positions.Block;
 import engine.map.positions.CarPosition;
 import engine.map.positions.PixelPosition;
 import engine.process.TypeVisitor;
-import org.apache.log4j.Logger;
+
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;

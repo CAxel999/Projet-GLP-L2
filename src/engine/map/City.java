@@ -1,7 +1,5 @@
 package engine.map;
 
-import data.Instruction;
-import data.Scenario;
 import engine.map.positions.Block;
 import engine.map.roads.Road;
 import engine.map.roads.TrafficLight;

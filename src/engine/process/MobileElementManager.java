@@ -33,7 +33,6 @@ public class MobileElementManager implements MobileInterface {
 	private ArrayList<NPCCar> npcCars = new ArrayList<NPCCar>();
 	private Mistake lastMistake;
 	private Mistake currentMistake;
-	private boolean mistakesWereNotMade;
 
 
 	/**
@@ -187,7 +186,6 @@ public class MobileElementManager implements MobileInterface {
 	public void mainCarRoadVerif(){
 		RoadVisitor roadVisitor = new RoadVisitor(mainCar,this);
 		Block block = mainCar.getPosition();
-		mistakesWereNotMade = true;
 		currentMistake = null;
 		if(city.getRoads().containsKey(block)){
 
@@ -226,7 +224,6 @@ public class MobileElementManager implements MobileInterface {
 	 * @param id id of the mistake currently made
 	 */
 	public void setCurrentMistake(int id){
-		mistakesWereNotMade = false;
 		if(currentMistake == null || (currentMistake.getId() >= id)){
 			currentMistake = scoreManager.getMistakes().get(id);
 		}
