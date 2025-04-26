@@ -1,46 +1,165 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 
+import config.CarConfiguration;
 import config.GameConfiguration;
-import engine.map.Block;
-import engine.map.Map;
+import engine.map.City;
+import engine.map.roads.Road;
+import engine.map.roads.TrafficLight;
+import engine.map.roads.TrafficLightEnum;
 import engine.mobile.Car;
+import engine.mobile.MainCar;
+import engine.map.positions.PixelPosition;
+import engine.mobile.NPCCar;
 
 /**
- * Copyright SEDAMOP - Software Engineering
- * 
- * @author tianxiao.liu@cyu.fr
- *
+ *Strategy for painting graphic elements.
  */
 public class PaintStrategy {
-	public void paint(Map map, Graphics graphics) {
-		/*int blockSize = GameConfiguration.BLOCK_SIZE;
-		Block[][] blocks = map.getBlocks();
+	int timedPaint1;
+	int timedPaint2;
 
-		for (int lineIndex = 0; lineIndex < map.getLineCount(); lineIndex++) {
-			for (int columnIndex = 0; columnIndex < map.getColumnCount(); columnIndex++) {
-				Block block = blocks[lineIndex][columnIndex];
+	public PaintStrategy() {
+		this.timedPaint1 = 0;
+		this.timedPaint2 = 0;
+	}
 
-				if ((lineIndex + columnIndex) % 2 == 0) {
-					graphics.setColor(Color.GRAY);
-					graphics.fillRect(block.getColumn() * blockSize, block.getLine() * blockSize, blockSize, blockSize);
-				}
+	public void paint(City city, Graphics graphics) {
+        if (GameConfiguration.DEBUG) {
+			RoadPaintVisitor visitor = new RoadPaintVisitor(this,graphics);
+            for(Road road : city.getRoads().values()){
+                road.accept(visitor);
+            }
+        } else {
+			graphics.drawImage(city.getMap(),0,0,null);
+		}
+
+        for(TrafficLight trafficLight : city.getLights()){
+			int x = trafficLight.getPosition().getX();
+			int y = trafficLight.getPosition().getY();
+			if(trafficLight.getColor().equals(TrafficLightEnum.GREEN)){
+				graphics.drawImage(GameConfiguration.GREEN_LIGHT,x,y,null);
+			} else if(trafficLight.getColor().equals(TrafficLightEnum.ORANGE)){
+				graphics.drawImage(GameConfiguration.ORANGE_LIGHT,x,y,null);
+			} else {
+				graphics.drawImage(GameConfiguration.RED_LIGHT,x,y,null);
 			}
-		}*/
+
+		}
 	}
 
-	public void paint(Car car, Graphics graphics) {
-		Block position = car.getPosition();
-		int blockSize = GameConfiguration.BLOCK_SIZE;
+	public void paint(MainCar mainCar, Graphics graphics) {
+		PixelPosition position = mainCar.getPixelPosition();
+		int y = position.getY();
+		int x = position.getX();
+		timedPaint1++;
+		double direction = mainCar.getDirection().getValue();
+		Graphics2D graphics2D = (Graphics2D) graphics;
 
-		int y = position.getLine();
-		int x = position.getColumn();
+		graphics2D.rotate(-direction,x,y);
+		if(mainCar.isClignoGauche() && timedPaint1 > 45){
+			graphics.drawImage(CarConfiguration.CAR_LEFTLIGHT,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+			if(timedPaint1 > 90){
+				timedPaint1 = 0;
+			}
+		} else if(mainCar.isClignoDroit() && timedPaint1 > 45){
+			graphics.drawImage(CarConfiguration.CAR_RIGHTLIGHT,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+			if(timedPaint1 > 90){
+				timedPaint1 = 0;
+			}
+		} else if(mainCar.isAngleMortGauche()){
+			graphics.drawImage(CarConfiguration.CAR_LEFTDEAD,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2 - 25,null);
+		} else if(mainCar.isAngleMortDroit()){
+			graphics.drawImage(CarConfiguration.CAR_RIGHTDEAD,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+		} else if(mainCar.getBraking()){
+			graphics.drawImage(CarConfiguration.CAR_BRAKING,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+		} else {
+			graphics.drawImage(CarConfiguration.CAR,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+		}
 
+		graphics2D.rotate(direction,x,y);
+
+		paintCarDebug(graphics2D,mainCar);
+	}
+
+	private void paintCarDebug(Graphics2D graphics2D, Car car){
+		if(GameConfiguration.DEBUG){
+			graphics2D.setColor(Color.RED);
+			graphics2D.draw(car.getFrontSide());
+			graphics2D.draw(car.getLeftSide());
+			graphics2D.draw(car.getRightSide());
+			graphics2D.draw(car.getBackSide());
+		}
+	}
+
+	public void paint(NPCCar car, Graphics graphics) {
+		PixelPosition position = car.getPixelPosition();
+		int y = position.getY();
+		int x = position.getX();
+		timedPaint2++;
+		double direction = car.getDirection();
+		Graphics2D graphics2D = (Graphics2D) graphics;
+		graphics2D.rotate(-direction,x,y);
+		graphics2D.setColor(Color.RED);
+		if(car.isClignoGauche() && timedPaint2 > 45){
+			graphics.drawImage(CarConfiguration.NPCCAR_LEFTLIGHT,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+			if(timedPaint2 > 90){
+				timedPaint2 = 0;
+			}
+		} else if(car.isClignoDroit() && timedPaint2 > 45) {
+			graphics.drawImage(CarConfiguration.NPCCAR_RIGHTLIGHT, x - CarConfiguration.CAR_LENGTH / 2, y - CarConfiguration.CAR_WIDTH / 2, null);
+			if(timedPaint2 > 90){
+				timedPaint2 = 0;
+			}
+		} else if(car.getBraking()){
+			graphics.drawImage(CarConfiguration.NPCCAR_BRAKING,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+		} else {
+			graphics.drawImage(CarConfiguration.NPCCAR,x-CarConfiguration.CAR_LENGTH/2,y-CarConfiguration.CAR_WIDTH/2,null);
+		}
+		graphics2D.rotate(direction,x,y);
+
+		paintCarDebug(graphics2D,car);
+	}
+
+	public void paint(double speed, Graphics graphics, int x, int y){
+		speed = speed*10*3.6;
 		graphics.setColor(Color.RED);
-		graphics.drawRect(x,y,15,45);
-
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 30));
+		graphics.drawString(Double.toString(speed),x,y);
+		graphics.drawString("km/h",x,y + 30);
 	}
 
+	public void paintMistake(String message, Graphics graphics){
+		graphics.setColor(Color.RED);
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 30));
+		graphics.drawString(message,900,900);
+	}
+
+	public void paintScenario(String message, Graphics graphics){
+		graphics.setColor(Color.GREEN);
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 30));
+		graphics.drawString(message,200,900);
+	}
+
+	public void paintCrash(String message, Graphics graphics){
+		graphics.setColor(Color.RED);
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 60));
+		graphics.drawString(message,500,400);
+	}
+
+	public void paintEND(String message, Graphics graphics){
+		graphics.setColor(Color.BLUE);
+		graphics.setFont(new Font("Dialog", Font.PLAIN, 60));
+		graphics.drawString(message,500,400);
+	}
+
+	public void paintArrow(double direction, int x, int y,Graphics g){
+		g.setColor(Color.WHITE);
+		Graphics2D graphics2D = (Graphics2D) g;
+		graphics2D.rotate(-direction + Math.PI/2,x+20,y+20);
+		graphics2D.drawLine(x + 20,y,x+40,y+40);
+		graphics2D.drawLine(x + 20,y,x,y+40);
+		graphics2D.rotate(direction - Math.PI/2,x+20,y+20);
+	}
 }

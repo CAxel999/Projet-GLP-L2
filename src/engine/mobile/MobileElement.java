@@ -1,12 +1,12 @@
 package engine.mobile;
 
-import engine.map.Block;
+import data.Instruction;
+import engine.map.positions.Block;
 
 /**
- * Copyright SEDAMOP - Software Engineering
- * 
- * @author tianxiao.liu@cyu.fr
+ * Class of a MobileElement object
  *
+ * Has a {@link Block} position
  */
 public abstract class MobileElement {
 	private Block position;

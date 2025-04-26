@@ -1,19 +1,12 @@
 package test;
 
-import gui.MainGUI;
+import config.GameConfiguration;
+import gui.StartMenu;
 
-/**
- * Copyright SEDAMOP - Software Engineering
- * 
- * @author tianxiao.liu@cyu.fr
- *
- */
 public class TestGame {
 	public static void main(String[] args) {
-
-		MainGUI gameMainGUI = new MainGUI("Car");
-
-		Thread gameThread = new Thread(gameMainGUI);
-		gameThread.start();
+			GameConfiguration.DEBUG = false;
+			StartMenu startMenu = new StartMenu("Auto Ecole");
 	}
+
 }
