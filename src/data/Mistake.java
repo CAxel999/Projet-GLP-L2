@@ -39,7 +39,6 @@ public class Mistake {
 
     public void incrementNumber() {
         this.number++;
-        System.err.println(number);
     }
 
     public int getNumber() {

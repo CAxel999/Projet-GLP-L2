@@ -101,7 +101,6 @@ public class MobileElementManager implements MobileInterface {
 
 			double speed = car.getSpeed();
 			Block newPosition;
-			System.err.println(car.getPixelPosition().getX() + "," + car.getPixelPosition().getY());
 			if(pixelPosition.getX() < instruction.getPixelPosition().getX() + 3 && pixelPosition.getX() > instruction.getPixelPosition().getX() - 3 && pixelPosition.getY() < instruction.getPixelPosition().getY() + 3 && pixelPosition.getY() > instruction.getPixelPosition().getY() - 3){
 				pixelPosition = instruction.getPixelPosition();
 				if(iterator.hasNext()){
