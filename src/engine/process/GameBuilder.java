@@ -174,120 +174,120 @@ public class GameBuilder {
 		ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
 
 		PixelPosition pixelPosition1 = new PixelPosition(430,820);
-		Instruction instruction1 = new Instruction(2.125,0,pixelPosition1, false, false);
+		Instruction instruction1 = new Instruction(1.375,0,pixelPosition1, false, false);
 		instructionList.add(instruction1);
 
 		PixelPosition pixelPosition2 = new PixelPosition(445,815);
-		Instruction instruction2 = new Instruction(1.9,Math.PI/8,pixelPosition2, true, false);
+		Instruction instruction2 = new Instruction(1.125,Math.PI/8,pixelPosition2, true, false);
 
 		instructionList.add(instruction2);
 
 		PixelPosition pixelPosition3 = new PixelPosition(455,805);
-		Instruction instruction3 = new Instruction(1.75,Math.PI/4,pixelPosition3, true, false);
+		Instruction instruction3 = new Instruction(1,Math.PI/4,pixelPosition3, true, false);
 		instructionList.add(instruction3);
 
 		PixelPosition pixelPosition4 = new PixelPosition(460,790);
-		Instruction instruction4 = new Instruction(1.9,Math.PI*3/8,pixelPosition4,true, false);
+		Instruction instruction4 = new Instruction(1.125,Math.PI*3/8,pixelPosition4,true, false);
 		instructionList.add(instruction4);
 
 		PixelPosition pixelPosition5 = new PixelPosition(460,635);
-		Instruction instruction5 = new Instruction(2.125,Math.PI/2,pixelPosition5,false,false);
+		Instruction instruction5 = new Instruction(1.375,Math.PI/2,pixelPosition5,false,false);
 		instructionList.add(instruction5);
 
 		PixelPosition pixelPosition6 = new PixelPosition(465,620);
-		Instruction instruction6 = new Instruction(1.9,Math.PI*3/8,pixelPosition6,false, false);
+		Instruction instruction6 = new Instruction(1.125,Math.PI*3/8,pixelPosition6,false, false);
 		instructionList.add(instruction6);
 
 		PixelPosition pixelPosition7 = new PixelPosition(475,610);
-		Instruction instruction7 = new Instruction(1.75,Math.PI/4,pixelPosition7,true, false);
+		Instruction instruction7 = new Instruction(1,Math.PI/4,pixelPosition7,true, false);
 		instructionList.add(instruction7);
 
 		PixelPosition pixelPosition8 = new PixelPosition(500,600);
-		Instruction instruction8 = new Instruction(1.75,Math.PI/8,pixelPosition8,true, false);
+		Instruction instruction8 = new Instruction(1,Math.PI/8,pixelPosition8,true, false);
 		instructionList.add(instruction8);
 
 		PixelPosition pixelPosition9 = new PixelPosition(525,575);
-		Instruction instruction9 = new Instruction(1.75,Math.PI/4,pixelPosition9,true, false);
+		Instruction instruction9 = new Instruction(1,Math.PI/4,pixelPosition9,true, false);
 		instructionList.add(instruction9);
 
 		PixelPosition pixelPosition10 = new PixelPosition(530,560);
-		Instruction instruction10 = new Instruction(1.75,Math.PI*3/8,pixelPosition10,true, false);
+		Instruction instruction10 = new Instruction(1,Math.PI*3/8,pixelPosition10,true, false);
 		instructionList.add(instruction10);
 
 		PixelPosition pixelPosition11 = new PixelPosition(530,480);
-		Instruction instruction11 = new Instruction(1.75,Math.PI/2,pixelPosition11,true, false);
+		Instruction instruction11 = new Instruction(1,Math.PI/2,pixelPosition11,true, false);
 		instructionList.add(instruction11);
 
 		PixelPosition pixelPosition12 = new PixelPosition(525,470);
-		Instruction instruction12 = new Instruction(1.75,Math.PI*5/8,pixelPosition12,true, false);
+		Instruction instruction12 = new Instruction(1,Math.PI*5/8,pixelPosition12,true, false);
 		instructionList.add(instruction12);
 
 		PixelPosition pixelPosition13 = new PixelPosition(500,445);
-		Instruction instruction13 = new Instruction(1.75,Math.PI*3/4,pixelPosition13,true, false);
+		Instruction instruction13 = new Instruction(1,Math.PI*3/4,pixelPosition13,true, false);
 		instructionList.add(instruction13);
 
 		PixelPosition pixelPosition14 = new PixelPosition(480,435);
-		Instruction instruction14 = new Instruction(1.75,Math.PI*7/8,pixelPosition14,true, false);
+		Instruction instruction14 = new Instruction(1,Math.PI*7/8,pixelPosition14,true, false);
 		instructionList.add(instruction14);
 
 		PixelPosition pixelPosition15 = new PixelPosition(400,435);
-		Instruction instruction15 = new Instruction(1.75,Math.PI,pixelPosition15,true, false);
+		Instruction instruction15 = new Instruction(1,Math.PI,pixelPosition15,true, false);
 		instructionList.add(instruction15);
 
 		PixelPosition pixelPosition16 = new PixelPosition(390,440);
-		Instruction instruction16 = new Instruction(1.75,Math.PI*9/8,pixelPosition16,false, true);
+		Instruction instruction16 = new Instruction(1,Math.PI*9/8,pixelPosition16,false, true);
 		instructionList.add(instruction16);
 
 		PixelPosition pixelPosition17 = new PixelPosition(350,480);
-		Instruction instruction17 = new Instruction(1.75,Math.PI*5/4,pixelPosition17,false, true);
+		Instruction instruction17 = new Instruction(1,Math.PI*5/4,pixelPosition17,false, true);
 		instructionList.add(instruction17);
 
 		PixelPosition pixelPosition18 = new PixelPosition(345,490);
-		Instruction instruction18 = new Instruction(1.75,Math.PI*11/8,pixelPosition18,false,true);
+		Instruction instruction18 = new Instruction(1,Math.PI*11/8,pixelPosition18,false,true);
 		instructionList.add(instruction18);
 
 		PixelPosition pixelPosition19 = new PixelPosition(340,495);
-		Instruction instruction19 = new Instruction(1.75,Math.PI*5/4,pixelPosition19,false,true);
+		Instruction instruction19 = new Instruction(1,Math.PI*5/4,pixelPosition19,false,true);
 		instructionList.add(instruction19);
 
 		PixelPosition pixelPosition20 = new PixelPosition(330,500);
-		Instruction instruction20 = new Instruction(1.9,Math.PI*9/8,pixelPosition20,false,true);
+		Instruction instruction20 = new Instruction(1.125,Math.PI*9/8,pixelPosition20,false,true);
 		instructionList.add(instruction20);
 
 		PixelPosition pixelPosition21 = new PixelPosition(90,500);
-		Instruction instruction21 = new Instruction(2.125,Math.PI,pixelPosition21,false,false);
+		Instruction instruction21 = new Instruction(1.375,Math.PI,pixelPosition21,false,false);
 		instructionList.add(instruction21);
 
 		PixelPosition pixelPosition22 = new PixelPosition(75,505);
-		Instruction instruction22 = new Instruction(1.9,Math.PI*9/8,pixelPosition22,true,false);
+		Instruction instruction22 = new Instruction(1.125,Math.PI*9/8,pixelPosition22,true,false);
 		instructionList.add(instruction22);
 
 		PixelPosition pixelPosition23 = new PixelPosition(65,515);
-		Instruction instruction23 = new Instruction(1.75,Math.PI*5/4,pixelPosition23,true,false);
+		Instruction instruction23 = new Instruction(1,Math.PI*5/4,pixelPosition23,true,false);
 		instructionList.add(instruction23);
 
 		PixelPosition pixelPosition24 = new PixelPosition(60,530);
-		Instruction instruction24 = new Instruction(1.9,Math.PI*11/8,pixelPosition24,true,false);
+		Instruction instruction24 = new Instruction(1.125,Math.PI*11/8,pixelPosition24,true,false);
 		instructionList.add(instruction24);
 
 		PixelPosition pixelPosition25 = new PixelPosition(60,750);
-		Instruction instruction25 = new Instruction(2.125,Math.PI*3/2,pixelPosition25,false,false);
+		Instruction instruction25 = new Instruction(1.375,Math.PI*3/2,pixelPosition25,false,false);
 		instructionList.add(instruction25);
 
 		PixelPosition pixelPosition26 = new PixelPosition(55,765);
-		Instruction instruction26 = new Instruction(1.9,Math.PI*11/8,pixelPosition26,true,false);
+		Instruction instruction26 = new Instruction(1.125,Math.PI*11/8,pixelPosition26,true,false);
 		instructionList.add(instruction26);
 
 		PixelPosition pixelPosition27 = new PixelPosition(45,775);
-		Instruction instruction27 = new Instruction(1.75,Math.PI*5/4,pixelPosition27,true,false);
+		Instruction instruction27 = new Instruction(1,Math.PI*5/4,pixelPosition27,true,false);
 		instructionList.add(instruction27);
 
 		PixelPosition pixelPosition28 = new PixelPosition(30,780);
-		Instruction instruction28 = new Instruction(1.9,Math.PI*9/8,pixelPosition28,true,false);
+		Instruction instruction28 = new Instruction(1.125,Math.PI*9/8,pixelPosition28,true,false);
 		instructionList.add(instruction28);
 
 		PixelPosition pixelPosition29 = new PixelPosition(0,780);
-		Instruction instruction29 = new Instruction(2.125,Math.PI,pixelPosition29,false,false);
+		Instruction instruction29 = new Instruction(1.375,Math.PI,pixelPosition29,false,false);
 		instructionList.add(instruction29);
 
 		Iterator<Instruction> iterator = instructionList.iterator();
@@ -306,7 +306,7 @@ public class GameBuilder {
 		ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
 
 		PixelPosition pixelPosition1 = new PixelPosition(1800,140);
-		Instruction instruction1 = new Instruction(4.5,0,pixelPosition1,false, false);
+		Instruction instruction1 = new Instruction(3.5,0,pixelPosition1,false, false);
 		instructionList.add(instruction1);
 
 		Iterator<Instruction> iterator = instructionList.iterator();

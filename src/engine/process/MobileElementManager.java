@@ -79,7 +79,11 @@ public class MobileElementManager implements MobileInterface {
 		if(road != null){
 			road.setHasCar(true);
 			city.getHasCar().add(road);
+			if(!mainCar.getPosition().equals(newPosition)){
+				logger.info("La voiture de l'utilisateur est rentrée dans " + road.toString());
+			}
 		}
+
 		mainCar.setPosition(newPosition);
 
 	}
@@ -89,20 +93,17 @@ public class MobileElementManager implements MobileInterface {
 	@Override
 	public void moveNPCCars() {
 		ArrayList<NPCCar> removeCar = new ArrayList<NPCCar>();
-		Road road;
 		for(NPCCar car : npcCars){
 
 			PixelPosition pixelPosition = car.getPixelPosition();
 			Instruction instruction = car.getCurrentInstruction();
 
-
-
 			Iterator<Instruction> iterator = car.getCurrentIterator();
 
 			double speed = car.getSpeed();
 			Block newPosition;
-
-			if(pixelPosition.getX() < instruction.getPixelPosition().getX() + speed && pixelPosition.getX() > instruction.getPixelPosition().getX() - speed && pixelPosition.getY() < instruction.getPixelPosition().getY() + speed && pixelPosition.getY() > instruction.getPixelPosition().getY() - speed){
+			System.err.println(car.getPixelPosition().getX() + "," + car.getPixelPosition().getY());
+			if(pixelPosition.getX() < instruction.getPixelPosition().getX() + 3 && pixelPosition.getX() > instruction.getPixelPosition().getX() - 3 && pixelPosition.getY() < instruction.getPixelPosition().getY() + 3 && pixelPosition.getY() > instruction.getPixelPosition().getY() - 3){
 				pixelPosition = instruction.getPixelPosition();
 				if(iterator.hasNext()){
 					instruction = iterator.next();
@@ -124,17 +125,13 @@ public class MobileElementManager implements MobileInterface {
 						constructNPCCarEdges(car,x,y);
 
 						newPosition = city.getBlock( pixelPosition.getY() / GameConfiguration.BLOCK_SIZE,pixelPosition.getX() / GameConfiguration.BLOCK_SIZE);
-						car.setPosition(newPosition);
-						road = city.getRoads().get(newPosition);
 
 						car.setClignoGauche(instruction.isTurningLeft());
 						car.setClignoDroit(instruction.isTurningRight());
 
-						if(road != null){
-							road.setHasCar(true);
-							city.getHasCar().add(road);
-						}
+						npcRoadHandling(newPosition,car);
 
+						car.setPosition(newPosition);
 				} else {
 					removeCar.add(car);
 				}
@@ -151,23 +148,34 @@ public class MobileElementManager implements MobileInterface {
 				pixelPosition.setX((int) x);
 				pixelPosition.setY((int) y);
 				newPosition = city.getBlock((int) y / GameConfiguration.BLOCK_SIZE,(int) x / GameConfiguration.BLOCK_SIZE);
-				car.setPosition(newPosition);
-				road = city.getRoads().get(newPosition);
-				if(road != null){
-					road.setHasCar(true);
-					city.getHasCar().add(road);
-				}
 
+				npcRoadHandling(newPosition,car);
+
+				car.setPosition(newPosition);
 				if(car.getSpeed() < instruction.getSpeed()){
 					car.setSpeed(car.getSpeed() + CarConfiguration.CAR_ACCERLERATION);
 				}
 			}
 
 		}
-
-
 		for(NPCCar car : removeCar){
 			npcCars.remove(car);
+		}
+	}
+
+	/**
+	 * In the case of the {@link Block} position being one of a {@link  Road}, set hasCar of the road to true, then if the {@link NPCCar} is on a new road creates a log.
+	 * @param newPosition The new {@link Block} position of the car
+	 * @param car A {@link NPCCar}
+	 */
+	public void npcRoadHandling(Block newPosition,Car car){
+		Road road = city.getRoads().get(newPosition);
+		if(road != null){
+			road.setHasCar(true);
+			city.getHasCar().add(road);
+			if(!car.getPosition().equals(newPosition)){
+				logger.debug("Une voiture npc est rentrée dans " + road.toString());
+			}
 		}
 	}
 
@@ -186,10 +194,6 @@ public class MobileElementManager implements MobileInterface {
 
 			Road road = city.getRoads().get(block);
 
-			if(mainCar.getCurrentRoad() == null || !mainCar.getCurrentRoad().equals(road)){
-				mainCar.setCurrentRoad(road);
-				logger.info("La voiture de l'utilisateur est rentrée dans " + road.toString());
-			}
 
 			if(!road.getLimits().isEmpty()){
 				for(Line2D limit : road.getLimits()){
@@ -237,10 +241,7 @@ public class MobileElementManager implements MobileInterface {
 		for(NPCCar car : npcCars){
 			visitor.setCar(car);
 			Road road = city.getRoads().get(car.getPosition());
-			if(car.getCurrentRoad() == null || !car.getCurrentRoad().equals(road)){
-				car.setCurrentRoad(road);
-				logger.debug("Une voiture npc est rentrée dans " + road.toString());
-			}
+			road.accept(visitor);
 		}
 	}
 
@@ -337,21 +338,27 @@ public class MobileElementManager implements MobileInterface {
 
 	/**
 	 * Increment the value of the {@link engine.counters.CyclicCounter} used for the direction of the {@link MainCar}
-	 * @throws LimitReachedException When the {@link engine.counters.CyclicCounter} reaches its limits, here 0 and pi/2
 	 */
 	@Override
-	public void turnLeft() throws LimitReachedException {
-		mainCar.getDirection().increment();
-	}
+	public void turnLeft() {
+        try {
+            mainCar.getDirection().increment();
+        } catch (LimitReachedException e) {
+            logger.trace("La MainCar est passé par la direction 0 en tournant à gauche.");
+        }
+    }
 
 	/**
 	 * Increment the value of the {@link engine.counters.CyclicCounter} used for the direction of the {@link MainCar}
-	 * @throws LimitReachedException When the {@link engine.counters.CyclicCounter} reaches its limits, here 0 and pi/2
 	 */
 	@Override
-	public void turnRight() throws LimitReachedException {
-		mainCar.getDirection().decrement();
-	}
+	public void turnRight() {
+        try {
+            mainCar.getDirection().decrement();
+        } catch (LimitReachedException e) {
+			logger.trace("La MainCar est passé par la direction 0 en tournant à droite.");
+        }
+    }
 
 	/**
 	 * Increments the speed of the {@link MainCar} with the CAR_ACCERLERATION

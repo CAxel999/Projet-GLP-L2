@@ -123,7 +123,7 @@ public class PaintStrategy {
 	}
 
 	public void paint(double speed, Graphics graphics, int x, int y){
-		speed = speed*6*3.6;
+		speed = speed*10*3.6;
 		graphics.setColor(Color.RED);
 		graphics.setFont(new Font("Dialog", Font.PLAIN, 30));
 		graphics.drawString(Double.toString(speed),x,y);
@@ -139,7 +139,7 @@ public class PaintStrategy {
 	public void paintScenario(String message, Graphics graphics){
 		graphics.setColor(Color.GREEN);
 		graphics.setFont(new Font("Dialog", Font.PLAIN, 30));
-		graphics.drawString(message,500,900);
+		graphics.drawString(message,200,900);
 	}
 
 	public void paintCrash(String message, Graphics graphics){
