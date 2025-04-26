@@ -16,7 +16,7 @@ Afin de lancer notre projet avec l'IDE Eclipse :
 5. Nommez le projet comme vous le souhaitez, choisissez le JRE, de préférence la version 21 et cliquez sur "Finish"
 6. Copiez le contenu du dossier src que vous avez télécharger et collez le dans le dossier src se trouvant dans la fenêtre "Project Explorer" de l'IDE Eclipse
 7. Copiez le dossier libs dans le dossier de votre nom de projet.
-8. En cliquant droit sur le dossier portant le nom de votre projet, sélectionnez "Build Path" puis "Configue Build Path"
+8. En cliquant droit sur le dossier portant le nom de votre projet, sélectionnez "Build Path" puis "Configure Build Path"
 9. Dans cette nouvelle fenêtre, au milieu, cliquez sur "Classpath" puis à droite sur "Add JARs"
 10. Déroulez le menu jusqu'à ouvrir le dossier libs, sélectionnez "log4j-1.2.17.jar" cliquez sur "OK"
 11. Répétez les étapes 9. et 10. pour "junit-4.11.jar" puis fermez la fenêtre
