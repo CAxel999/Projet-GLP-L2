@@ -20,7 +20,7 @@ public class CityBuilder {
         double left = Math.PI;
         double right = 0;
 
-        double limit50 = 2.3;
+        double limit50 = 1.5;
         for (int lineIndex = 0; lineIndex < lineCount; lineIndex++) {
             for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
                 blocks[lineIndex][columnIndex] = new Block(lineIndex, columnIndex);
@@ -42,7 +42,7 @@ public class CityBuilder {
             }else if(columnIndex >= 43){
                 limits.add(highwayBottomLimit2);
             }
-            Highway highway = new Highway(blocks[3][columnIndex],0,4,limits,blocks[2][columnIndex], new Line2D.Double(columnIndex*GameConfiguration.BLOCK_SIZE,3*GameConfiguration.BLOCK_SIZE,columnIndex*GameConfiguration.BLOCK_SIZE+GameConfiguration.BLOCK_SIZE,3*GameConfiguration.BLOCK_SIZE));
+            Highway highway = new Highway(blocks[3][columnIndex],0,3.625,limits,blocks[2][columnIndex], new Line2D.Double(columnIndex*GameConfiguration.BLOCK_SIZE,3*GameConfiguration.BLOCK_SIZE,columnIndex*GameConfiguration.BLOCK_SIZE+GameConfiguration.BLOCK_SIZE,3*GameConfiguration.BLOCK_SIZE));
             roads.put(highway.getPosition(),highway);
             roads.put(highway.getSecondPosition(),highway);
         }
